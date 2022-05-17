@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -10,9 +10,7 @@ import {
   View,
 } from 'react-native';
 import Bottomtab from './src/navigators/BottomTab'
-
 const App = () => {
-
   return (
     <SafeAreaView style={{flex:1}}>
       <Bottomtab/>
