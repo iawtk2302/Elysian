@@ -10,10 +10,11 @@ import {
   View,
 } from 'react-native';
 import Bottomtab from './src/navigators/BottomTab'
+import Navigation from './src/navigators/Navigation';
 const App = () => {
   return (
     <SafeAreaView style={{flex:1}}>
-      <Bottomtab/>
+      <Navigation/>
     </SafeAreaView>
   );
 };

@@ -1,7 +1,6 @@
 import { StyleSheet, Text } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import COLORS from '../common/Color';
@@ -12,7 +11,6 @@ import User from '../screens/user';
 const Tab = createMaterialBottomTabNavigator();
 const Bottomtab = () => {
   return (
-    <NavigationContainer>
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let iconName;
@@ -36,7 +34,6 @@ const Bottomtab = () => {
           return <Icon style={{}} name={iconName} size={24} color={color1} />;
         },
         headerShown: false,
-        // tabBarLabel: () => { return null },
         tabBarStyle: {
           height: 60
         },
@@ -59,11 +56,10 @@ const Bottomtab = () => {
       })} barStyle={{ backgroundColor: 'white' }} activeColor={COLORS.custom}
         inactiveColor={COLORS.gray}>
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Order" component={Order} />
+        <Tab.Screen name="Order" component={Order}/>
         <Tab.Screen name="Activities" component={Activities} />
         <Tab.Screen name="User" component={User} />
       </Tab.Navigator>
-    </NavigationContainer>
   )
 }
 
