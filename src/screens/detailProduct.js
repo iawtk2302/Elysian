@@ -6,9 +6,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 const DetailProduct = () => {
     const router = useRoute();
-    const [selectedSize,setSelectedSize]=useState();
-    const [value3Index,setvalue3Index]=useState(0);
-    let radio_props = router.params.size.map(e=>{return{label:e.name,value:e.percent}})
     return (
         <View style={styles.container}>
             <ScrollView>
