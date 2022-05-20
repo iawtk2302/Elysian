@@ -24,10 +24,9 @@ const App = () => {
     console.log(user);
     console.log(auth().currentUser)
     if (initializing) setInitializing(false);
-    if(auth().currentUser != null)
-      if(auth().currentUser.displayName !== 'null')
+    if(auth().currentUser !== null)
       // console.log(auth().currentUser.email.toString())
-        if (auth().currentUser.displayName == 'null') { 
+        if (auth().currentUser.displayName !== 'null') { 
           setProfileUpdated(true);
         }
     console.log(profileUpdated)
@@ -55,10 +54,17 @@ const App = () => {
       </View>
     );
   return (
+<<<<<<< HEAD
     <SafeAreaView style={{flex:1}}>
       <Navigation/>
     </SafeAreaView>
   );
+=======
+    <View style={{flex: 1}}>
+      <Bottomtab />
+    </View>
+  );  
+>>>>>>> Khanh_SignIn_SignUp
 };
 
 const styles = StyleSheet.create({
