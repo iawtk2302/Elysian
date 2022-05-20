@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React,{useState, useEffect} from 'react';
+=======
+import React, {useEffect} from 'react';
+>>>>>>> duclong_checkOrder
 
 import {
   SafeAreaView,
@@ -9,10 +13,14 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+<<<<<<< HEAD
 import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register'
+=======
+import Bottomtab from './src/navigators/BottomTab';
+>>>>>>> duclong_checkOrder
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -53,14 +61,17 @@ const App = () => {
       </View>
     );
   return (
+<<<<<<< HEAD
     <SafeAreaView style={{flex:1}}>
       <Navigation/>
+=======
+    <SafeAreaView style={{flex: 1}}>
+      <Bottomtab />
+>>>>>>> duclong_checkOrder
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  
-});
+const styles = StyleSheet.create({});
 
 export default App;

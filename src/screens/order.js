@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { StyleSheet, View, FlatList, ActivityIndicator, SectionList, Text} from 'react-native'
 import React,{useState,useEffect,useRef} from 'react'
 import ItemProduct from '../components/itemProduct'
@@ -5,6 +6,11 @@ import firestore from '@react-native-firebase/firestore';
 import HeaderOrder from '../components/headerOrder';
 import ItemCategory from '../components/itemCategory';
 import COLORS from '../common/Color';
+=======
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+
+>>>>>>> duclong_checkOrder
 const Order = () => {
   const [loading, setLoading] = useState(true);
   const [section, setSection] = useState([]);
@@ -203,11 +209,15 @@ const Order = () => {
       )}
       />
     </View>
-  )
-}
+  );
+};
 
-export default Order
+export default Order;
 
+<<<<<<< HEAD
 const styles = StyleSheet.create({
   
 })
+=======
+const styles = StyleSheet.create({});
+>>>>>>> duclong_checkOrder
