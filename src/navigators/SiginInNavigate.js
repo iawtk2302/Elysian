@@ -12,7 +12,7 @@ const SiginInNavigate = () => {
     <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="SignIn" component={SignIn} />
-            <Stack.Screen name="Register" component={Register} />
+            {/* <Stack.Screen name="Register" component={Register} /> */}
             <Stack.Screen name="Vertify" component={Vertify} />
           </Stack.Navigator>
         </NavigationContainer>

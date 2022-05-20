@@ -20,10 +20,10 @@ const SignIn = ({navigation}) => {
   
     async function signInWithPhoneNumber(phoneNumber) {
       try {
-        console.log(phoneNumber);
+        // console.log(phoneNumber);
         const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
         await setConfirm(confirmation);
-        console.log(confirm);
+        // console.log(confirm);
       } catch (error) {
         console.log(error);
         ToastAndroid.show("Recheck your phone number", 4)
@@ -36,7 +36,7 @@ const SignIn = ({navigation}) => {
     }
   
     async function confirmCode() {
-      console.log(confirm);
+    //   console.log(confirm);
       try {
         await confirm.confirm(code);
         console.log('success');
@@ -76,7 +76,7 @@ const SignIn = ({navigation}) => {
                 style={styles.gg}
                 activeOpacity={0.7}
                 onPress={() => {
-                  confirmCode();
+                //   confirmCode();
                 }}>
                 <Image
                   style={styles.imggg}
@@ -93,7 +93,7 @@ const SignIn = ({navigation}) => {
                 style={styles.gg}
                 activeOpacity={0.7}
                 onPress={() => {
-                  auth().signOut();
+                //   auth().signOut();
                 }}>
                 <Image
                   style={styles.imggg}
