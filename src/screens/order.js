@@ -10,5 +10,5 @@ const Order = () => {
 };
 
 export default Order;
-//hello
+
 const styles = StyleSheet.create({});

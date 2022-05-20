@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -9,17 +9,15 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import Bottomtab from './src/navigators/BottomTab'
+import Bottomtab from './src/navigators/BottomTab';
 const App = () => {
   return (
-    <SafeAreaView style={{flex:1}}>
-      <Bottomtab/>
+    <SafeAreaView style={{flex: 1}}>
+      <Bottomtab />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  
-});
+const styles = StyleSheet.create({});
 
 export default App;
