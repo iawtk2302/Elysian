@@ -30,8 +30,8 @@ const Register = ({setProfileUpdated}) => {
     .then(() => {
       // console.log('added');
     });
-    // await auth().currentUser.updateProfile({displayName: inputs.name});
-    // setProfileUpdated(true)
+    await auth().currentUser.updateProfile({displayName: inputs.name});
+    setProfileUpdated(true)
   }
   const validate = () => {  
     // console.log(inputs)
