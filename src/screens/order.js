@@ -32,6 +32,20 @@ const Order = () => {
     title:'Sinh tố',
     index:4,
     select:'false',
+  },{
+    title:'Cà phê',
+    index:5,
+    select:'false',
+  },
+  {
+    title:'Sữa chua',
+    index:6,
+    select:'false',
+  },
+  {
+    title:'Nước ép',
+    index:7,
+    select:'false',
   },]);
   const sectionRef=useRef(null);
   const getToppings=async()=>{
@@ -64,6 +78,9 @@ const Order = () => {
   const dataL=[]
   const dataDX=[]
   const dataST=[]
+  const dataCF=[]
+  const dataNE=[]
+  const dataSC=[]
    await firestore()
     .collection('Products')
     .get()
@@ -83,6 +100,15 @@ const Order = () => {
         }
         else if(documentSnapshot.data().type==='Sinh Tố') {
           dataST.push(documentSnapshot.data())
+        }
+        else if(documentSnapshot.data().type==='Cà phê') {
+          dataCF.push(documentSnapshot.data())
+        }
+        else if(documentSnapshot.data().type==='Sữa chua') {
+          dataSC.push(documentSnapshot.data())
+        }
+        else if(documentSnapshot.data().type==='Nước ép') {
+          dataNE.push(documentSnapshot.data())
         }
       });
     }); 
@@ -106,6 +132,18 @@ const Order = () => {
       {
         title:'Sinh tố',
         data:dataST
+      },
+      {
+        title:'Cà phê',
+        data:dataCF
+      },
+      {
+        title:'Sữa chua',
+        data:dataSC
+      },
+      {
+        title:'Nước ép',
+        data:dataNE
       },
     ]  
     return tempSection
@@ -149,7 +187,7 @@ const Order = () => {
     <View style={{flex:1}}>
       <HeaderOrder/>
       <FlatList
-      style={{height:50, backgroundColor:'white',paddingLeft:8}}
+      style={{height:50, backgroundColor:'white',paddingLeft:8,}}
         horizontal={true}
         data={dataCategory}
         renderItem={({item})=><ItemCategory item={item} dataCategory={dataCategory} setDataCategory={setDataCategory} scroll={scroll}/>}
