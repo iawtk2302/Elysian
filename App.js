@@ -10,14 +10,10 @@ import {
   View,
 } from 'react-native';
 import Bottomtab from './src/navigators/BottomTab'
-<<<<<<< HEAD
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register'
-=======
-import Navigation from './src/navigators/Navigation';
->>>>>>> screenOrder
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -59,17 +55,10 @@ const App = () => {
       </View>
     );
   return (
-<<<<<<< HEAD
-    <View>
-      <Bottomtab />
-    </View>
-  );  
-=======
     <SafeAreaView style={{flex:1}}>
       <Navigation/>
     </SafeAreaView>
   );
->>>>>>> screenOrder
 };
 
 const styles = StyleSheet.create({
