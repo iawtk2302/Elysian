@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
+import BtnCompletePayment from './BtnCompletePayment';
 
 const TotalPayment = ({total}) => {
   return (
@@ -30,22 +31,11 @@ const TotalPayment = ({total}) => {
             <Text style={{color: 'white'}}>Giao hàng - 2 sản phẩm</Text>
             <Text style={{fontWeight: '600', color: 'white'}}>{total}</Text>
           </View>
-          <TouchableOpacity>
-            <View
-              style={{
-                width: 100,
-                backgroundColor: 'white',
-                alignItems: 'center',
-                borderRadius: 20,
-                height: 40,
-                justifyContent: 'center',
-              }}>
-              <Text style={{color: COLORS.custom}}>Đặt hàng</Text>
-            </View>
-          </TouchableOpacity>
+          <BtnCompletePayment total={total} />
         </View>
       </View>
     </View>
   );
 };
+
 export default TotalPayment;

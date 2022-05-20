@@ -9,9 +9,15 @@ import React from 'react';
 import ProductPayment from './ProductPayment';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
+import {useNavigation} from '@react-navigation/native';
 
 const PaymentDetail = ({arrProduct}) => {
-  console.log(JSON.stringify(arrProduct, null, 4));
+  const Navigation = useNavigation();
+
+  const navProduct = () => {
+    Navigation.push('Order');
+  };
+
   return (
     <View style={[styles.aroundContainer, {flex: 4}]}>
       <View
@@ -21,7 +27,7 @@ const PaymentDetail = ({arrProduct}) => {
           justifyContent: 'space-between',
         }}>
         <Text>Sản phẩm đã chọn</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navProduct}>
           <View style={styles.btnContainer}>
             <Text style={{color: COLORS.custom}}>+ Thêm</Text>
           </View>

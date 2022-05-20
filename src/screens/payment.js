@@ -5,29 +5,30 @@ import HeaderPayment from '../components/HeaderPayment';
 import AddressPayment from '../components/AddressPayment';
 import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
+import fireAuth from '@react-native-firebase/auth';
 
 let user = '';
 
 firestore()
   .collection('Users')
-  .get()
-  .then(querySnapshot => {
-    querySnapshot.forEach(documentSnapshot => {
-      user = documentSnapshot.data();
-      user.id = documentSnapshot.id;
-    });
+  .doc(fireAuth().currentUser.uid)
+  .onSnapshot(documentSnapshot => {
+    user = documentSnapshot.data();
+    user.id = documentSnapshot.id;
   });
 
 let address = '';
 firestore()
   .collection('Addresses')
-  .where('userID', '==', 'EPLYsefKEt3Qb1zFx611')
+  .where('userID', '==', fireAuth().currentUser.uid)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(documentSnapshot => {
       address = documentSnapshot.data();
     });
   });
+
+console.log(fireAuth().currentUser.uid);
 
 const arrProduct = [
   {
@@ -46,7 +47,7 @@ const arrProduct = [
   },
 ];
 
-const payment = () => {
+const Payment = () => {
   const total = () => {
     let totalPrice = 0;
     for (let item of arrProduct) {
@@ -67,4 +68,4 @@ const payment = () => {
     </View>
   );
 };
-export default payment;
+export default Payment;

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React,{useState, useEffect} from 'react';
-=======
-import React, {useEffect} from 'react';
->>>>>>> duclong_checkOrder
+import React, {useState, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -13,14 +9,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-<<<<<<< HEAD
 import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
-import Register from './src/screens/Register'
-=======
-import Bottomtab from './src/navigators/BottomTab';
->>>>>>> duclong_checkOrder
+import Register from './src/screens/Register';
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -29,15 +21,14 @@ const App = () => {
   function onAuthStateChanged(user) {
     setUser(user);
     console.log(user);
-    console.log(auth().currentUser)
+    console.log(auth().currentUser);
     if (initializing) setInitializing(false);
-    if(auth().currentUser !== null)
-      // console.log(auth().currentUser.email.toString())
-        if (auth().currentUser.displayName !== 'null') { 
-          setProfileUpdated(true);
-        }
-    console.log(profileUpdated)
-
+    if (auth().currentUser !== null)
+      if (auth().currentUser.displayName !== 'null') {
+        // console.log(auth().currentUser.email.toString())
+        setProfileUpdated(true);
+      }
+    console.log(profileUpdated);
   }
 
   useEffect(() => {
@@ -61,13 +52,8 @@ const App = () => {
       </View>
     );
   return (
-<<<<<<< HEAD
-    <SafeAreaView style={{flex:1}}>
-      <Navigation/>
-=======
     <SafeAreaView style={{flex: 1}}>
-      <Bottomtab />
->>>>>>> duclong_checkOrder
+      <Navigation />
     </SafeAreaView>
   );
 };
