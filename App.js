@@ -9,8 +9,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import Bottomtab from './src/navigators/BottomTab'
-import firestore from '@react-native-firebase/firestore';
+import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register'
@@ -54,17 +53,10 @@ const App = () => {
       </View>
     );
   return (
-<<<<<<< HEAD
     <SafeAreaView style={{flex:1}}>
       <Navigation/>
     </SafeAreaView>
   );
-=======
-    <View style={{flex: 1}}>
-      <Bottomtab />
-    </View>
-  );  
->>>>>>> Khanh_SignIn_SignUp
 };
 
 const styles = StyleSheet.create({
