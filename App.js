@@ -24,10 +24,9 @@ const App = () => {
     console.log(user);
     console.log(auth().currentUser)
     if (initializing) setInitializing(false);
-    if(auth().currentUser != null)
-      if(auth().currentUser.displayName !== 'null')
+    if(auth().currentUser !== null)
       // console.log(auth().currentUser.email.toString())
-        if (auth().currentUser.displayName == 'null') { 
+        if (auth().currentUser.displayName !== 'null') { 
           setProfileUpdated(true);
         }
     console.log(profileUpdated)
@@ -55,7 +54,7 @@ const App = () => {
       </View>
     );
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Bottomtab />
     </View>
   );  

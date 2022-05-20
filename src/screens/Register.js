@@ -10,13 +10,15 @@ const Register = () => {
     {label: ' Nam', value: 'nam'},
     {label: ' Nữ', value: 'nữ'},
   ]);
-  const SetProfile = () => {
+  const [displayName, setDisplayname] = useState('')
+
+  const SetProfile = async() => {
     console.log('first')
-    // await auth().currentUser.updateEmail('bakhanhct2@gmail.com')
+    await auth().currentUser.updateProfile({displayName: displayName})
   }
   return (
     <View style={styles.container}>
-      <Input placeholder="Nhập tên của bạn" />
+      <Input placeholder="Nhập tên của bạn" onChangeText={(text) => {setDisplayname(text)}}/>
       <Input placeholder="Nhập họ của bạn" />
       <Input placeholder="Nhập email của bạn" />
       <Input placeholder="Chọn ngày sinh" iconName={'calendar'} />
@@ -29,7 +31,7 @@ const Register = () => {
         setValue={setValue}
         setItems={setItems}
       />
-      <TouchableOpacity style={styles.btnLogin}  onPress={SetProfile()}>
+      <TouchableOpacity style={styles.btnLogin}  onPress={() => SetProfile()}>
           <Text style={{alignSelf: 'center', fontSize: 17, color: 'black'}}>
             Tạo tài khoản
           </Text>
