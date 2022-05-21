@@ -25,7 +25,7 @@ const PhoneVertify = ({setHasPhone}) => {
       </View>
       <View style={styles.body}>
         <Input
-          keyboardType="numeric"
+          keyboardType="phone-pad"
           placeholder="Nhập số điện thoại"
           onChangeText={text => {
             setPhoneNumber(text);

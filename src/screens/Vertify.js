@@ -2,16 +2,18 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import firestore from '@react-native-firebase/firestore';
 
 const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone}) => {
   const [phoneNumber, setPhoneNumber] = useState('0396891589');
   const [timetoResend, setTimetoResend] = useState('3:00');
   const [code, setCode] = useState('');
+  const [user, setUser] = useState(null)
   async function confirmCode() {
     try {
-      console.log(confirm);
+      // console.log(confirm);
       await confirm.confirm(code);
-      console.log('success');
+      // console.log('success');
     } catch (error) {
       console.log('Invalid code.');
     }
@@ -23,17 +25,30 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone}) => {
         code,
       );
       let userData = await auth().currentUser.linkWithCredential(credential);
-      // setUser(userData.user);
+      setUser(userData.user);
       setHasPhone(true)
+      UpdateUser()
     } catch (error) {
       if (error.code == 'auth/invalid-verification-code') {
         console.log('Invalid code.');
       } else {
         console.log(error);
-        if(error == 'auth/unknown] User has already been linked to the given provider')
-        setHasPhone(true)
+        // if(error == 'auth/unknown] User has already been linked to the given provider')
+        //   setHasPhone(true)
       }
     }
+  }
+  const UpdateUser = async() => {
+    const user = auth().currentUser
+    let userInfo
+    userInfo = {phoneNumber: user.phoneNumber, name: user.displayName}
+    await firestore()
+    .collection('Users')
+    .doc(auth().currentUser.uid)
+    .set(userInfo)
+    .then(() => {
+      // console.log('added');
+    });
   }
   // if(profileUpdated)
   return (

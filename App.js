@@ -40,6 +40,7 @@ const App = () => {
   }
 
   useEffect(() => {
+    setHasPhone(false)
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);

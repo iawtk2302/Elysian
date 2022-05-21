@@ -40,16 +40,6 @@ const SignIn = ({navigation}) => {
     // });
     // navigation.navigate('PhoneVirtify');
   }
-
-  async function confirmCode() {
-    //   console.log(confirm);
-    try {
-      await confirm.confirm(code);
-      console.log('success');
-    } catch (error) {
-      console.log('Invalid code.');
-    }
-  }
   if (!confirm)
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -64,6 +54,7 @@ const SignIn = ({navigation}) => {
             <Text style={{alignSelf: 'center'}}>Chào mừng đến với Elysian</Text>
             <Text style={styles.name}>ELYSIAN</Text>
             <Input
+              keyboardType="phone-pad"
               placeholder="Nhập số điện thoai"
               onChangeText={text => setPhone(text)}
             />
@@ -82,7 +73,7 @@ const SignIn = ({navigation}) => {
               style={styles.gg}
               activeOpacity={0.7}
               onPress={() => {
-                googleLogin()
+                googleLogin();
               }}>
               <Image
                 style={styles.imggg}
@@ -98,9 +89,7 @@ const SignIn = ({navigation}) => {
             <TouchableOpacity
               style={styles.gg}
               activeOpacity={0.7}
-              onPress={
-                onFacebookButtonPress
-              }>
+              onPress={onFacebookButtonPress}>
               <Image
                 style={styles.imggg}
                 source={require('../assets/facebook.png')}
@@ -115,7 +104,7 @@ const SignIn = ({navigation}) => {
         </View>
       </TouchableWithoutFeedback>
     );
-  return <Vertify confirm={confirm}/>;
+  return <Vertify confirm={confirm} />;
 };
 
 export default SignIn;
