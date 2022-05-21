@@ -4,7 +4,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-// import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import database from '@react-native-firebase/database';
 
 //d9:99:c9:3a:8b:bf:84:8c:a5:db:3a:d4:4f:41:a3:91:35:3e:ce:62
