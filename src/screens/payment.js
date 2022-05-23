@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import HeaderPayment from '../components/HeaderPayment';
 import AddressPayment from '../components/AddressPayment';
@@ -7,28 +7,7 @@ import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
 import fireAuth from '@react-native-firebase/auth';
 
-let user = '';
-
-firestore()
-  .collection('Users')
-  .doc(fireAuth().currentUser.uid)
-  .onSnapshot(documentSnapshot => {
-    user = documentSnapshot.data();
-    user.id = documentSnapshot.id;
-  });
-
 let address = '';
-firestore()
-  .collection('Addresses')
-  .where('userID', '==', fireAuth().currentUser.uid)
-  .get()
-  .then(querySnapshot => {
-    querySnapshot.forEach(documentSnapshot => {
-      address = documentSnapshot.data();
-    });
-  });
-
-console.log(fireAuth().currentUser.uid);
 
 const arrProduct = [
   {
@@ -46,26 +25,42 @@ const arrProduct = [
     price: '20000',
   },
 ];
+const total = () => {
+  let totalPrice = 0;
+  for (let item of arrProduct) {
+    totalPrice += parseInt(item.amount) * parseInt(item.price);
+  }
+  return totalPrice;
+};
 
 const Payment = () => {
-  const total = () => {
-    let totalPrice = 0;
-    for (let item of arrProduct) {
-      totalPrice += parseInt(item.amount) * parseInt(item.price);
-    }
-    //console.log(totalPrice);
-    return totalPrice;
-  };
-
-  console.log(total());
+  const [rel, setRel] = useState(false);
+  useEffect(() => {
+    const loadAddress = async () => {
+      await firestore()
+        .collection('Addresses')
+        .where('userID', '==', fireAuth().currentUser.uid)
+        .where('selected', '==', true)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(documentSnapshot => {
+            address = documentSnapshot.data();
+            setRel(true);
+            console.log('address: ' + documentSnapshot.data());
+          });
+        });
+    };
+    loadAddress();
+  }, []);
+  console.log('reload: ' + rel);
   return (
-    //Payment
     <View style={{flex: 1}}>
       <HeaderPayment />
-      <AddressPayment user={user} address={address} />
+      <AddressPayment address={address} />
       <PaymentDetail arrProduct={arrProduct} />
-      <TotalPayment total={total()} />
+      <TotalPayment total={total()} arrProduct={arrProduct} />
     </View>
   );
 };
+
 export default Payment;

@@ -4,7 +4,7 @@ import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import BtnCompletePayment from './BtnCompletePayment';
 
-const TotalPayment = ({total}) => {
+const TotalPayment = ({total, arrProduct}) => {
   return (
     <View style={[styles.aroundContainer, {flex: 2}]}>
       <View style={{flex: 1}}>
@@ -31,7 +31,7 @@ const TotalPayment = ({total}) => {
             <Text style={{color: 'white'}}>Giao hàng - 2 sản phẩm</Text>
             <Text style={{fontWeight: '600', color: 'white'}}>{total}</Text>
           </View>
-          <BtnCompletePayment total={total} />
+          <BtnCompletePayment total={total} arrProduct={arrProduct} />
         </View>
       </View>
     </View>

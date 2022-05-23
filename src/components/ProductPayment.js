@@ -1,6 +1,7 @@
 import {Text, View, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
+import styles from '../styles/View.Payment.container';
 
 const ProductPayment = ({item}) => {
   return (
@@ -15,13 +16,15 @@ const ProductPayment = ({item}) => {
           <Ionicons name="pencil-outline" style={{fontSize: 20}} />
         </TouchableOpacity>
         <TouchableOpacity style={{paddingStart: 20}}>
-          <Text>
+          <Text style={styles.textColor}>
             x{item.amount} {item.name}
           </Text>
-          <Text>Kích cỡ: {item.size}</Text>
+          <Text>
+            Kích cỡ: <Text style={styles.textColor}> {item.size}</Text>
+          </Text>
         </TouchableOpacity>
       </View>
-      <Text>{item.price}</Text>
+      <Text style={styles.textColor}>{item.price}đ</Text>
     </View>
   );
 };

@@ -3,13 +3,14 @@ import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
+import {useNavigation} from '@react-navigation/native';
 
-const AddressPayment = ({user, address}) => {
+const AddressPayment = ({address}) => {
   return (
-    <View style={[styles.aroundContainer, {flex: 6}]}>
+    <View style={[styles.aroundContainer, {flex: 5}]}>
       <Header />
       <BodyAddress address={address} />
-      <BodyUser user={user} />
+      <BodyUser address={address} />
       <Bot />
     </View>
   );
@@ -32,15 +33,7 @@ const Bot = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
-    <View
-      style={{
-        flex: 1,
-        marginStart: 20,
-        marginEnd: 20,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row',
-      }}>
+    <View style={styles.addressContain}>
       <Text>Lưu thông tin giao hàng cho lần sau</Text>
       <Switch
         trackColor={{false: COLORS.gray, true: COLORS.backgroundWeak}}
@@ -53,8 +46,14 @@ const Bot = () => {
 };
 
 const BodyAddress = ({address}) => {
+  const navigation = useNavigation();
+
+  const NavMoreAddresses = () => {
+    navigation.push('MoreAddresses');
+  };
   return (
-    <View
+    <TouchableOpacity
+      onPress={NavMoreAddresses}
       style={{
         paddingStart: 20,
         paddingEnd: 20,
@@ -63,31 +62,35 @@ const BodyAddress = ({address}) => {
       }}>
       <View style={{flex: 7}}>
         <Text style={[styles.bold, {fontSize: 18}]}>{address.detail}</Text>
-        <Text>
-          {address.detail +
-            ', ' +
-            address.village +
-            ', ' +
-            address.ward +
-            ', ' +
-            address.district +
-            ', ' +
-            address.province}
-        </Text>
+        {address == '' ? (
+          <Text>loading...</Text>
+        ) : (
+          <Text>
+            {address.detail +
+              ', ' +
+              address.village +
+              ', ' +
+              address.ward +
+              ', ' +
+              address.district +
+              ', ' +
+              address.province}
+          </Text>
+        )}
       </View>
-      <TouchableOpacity>
+      <View style={{justifyContent: 'center'}}>
         <Ionicons name="chevron-forward-outline" style={{fontSize: 20}} />
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
-const BodyUser = ({user}) => {
+const BodyUser = ({address}) => {
   return (
     <View style={{flexDirection: 'row', flex: 2, alignItems: 'center'}}>
       <View style={{padding: 20, flex: 1}}>
-        <Text style={{fontSize: 18, color: 'black'}}>{user.userName}</Text>
-        <Text>{user.phone}</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>{address.name}</Text>
+        <Text>{address.phone}</Text>
       </View>
       <View
         style={{
