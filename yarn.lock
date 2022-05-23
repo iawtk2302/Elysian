@@ -5908,6 +5908,7 @@ react-native-screens@^3.13.1:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+<<<<<<< HEAD
 react-native-select-multiple@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-select-multiple/-/react-native-select-multiple-2.1.0.tgz#1cc9b3c2a694d85ab5861d035f2252c20b943a08"
@@ -5927,6 +5928,8 @@ react-native-swiper@^1.6.0:
   dependencies:
     prop-types "^15.5.10"
 
+=======
+>>>>>>> addPayment
 react-native-tab-view@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz#1f8d7a835ab4f5b1b1407ec8dddc1053b53fa3c6"

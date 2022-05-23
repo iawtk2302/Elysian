@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet} from 'react-native';
+import React from 'react';
+import {TopTabs} from '../navigators/Navigation';
 
 const activities = () => {
   return (
     <View>
-      <Text>activities</Text>
+      <TopTabs/>
     </View>
   )
 }
 
 export default activities
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
