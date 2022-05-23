@@ -1,41 +1,141 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Keyboard} from 'react-native';
 import React, {useState} from 'react';
 import Input from '../components/input';
 import DropDownPicker from 'react-native-dropdown-picker';
-import auth from '@react-native-firebase/auth'
-const Register = () => {
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import DatePicker from 'react-native-date-picker'
+
+
+const Register = ({setProfileUpdated}) => {
+  const [date, setDate] = useState(new Date())
+  const [openpicker, setOpenPicker] = useState(false)
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
+  const [genderFill, setGenderFill] = useState(true)
   const [items, setItems] = useState([
     {label: ' Nam', value: 'nam'},
     {label: ' Nữ', value: 'nữ'},
   ]);
-  const [displayName, setDisplayname] = useState('')
-
-  const SetProfile = async() => {
-    console.log('first')
-    await auth().currentUser.updateProfile({displayName: displayName})
+  const [inputs, setInputs] = useState([
+  ]);
+  const [errors, setErrors] = useState({});
+  const [displayName, setDisplayname] = useState('');
+  const UpdateProfile = async () => {
+    // console.log(inputs)
+    await firestore()
+    .collection('Users')
+    .doc(auth().currentUser.uid)
+    .set(inputs)
+    .then(() => {
+      // console.log('added');
+    });
+    await auth().currentUser.updateProfile({displayName: inputs.name});
+    setProfileUpdated(true)
   }
+  const validate = () => {  
+    // console.log(inputs)
+    let isFull = true
+    // console.log(auth().currentUser.uid);
+    Keyboard.dismiss();
+    if (!inputs.email) {
+      isFull = false
+      handleErrors('Vui lòng nhập email', 'email');
+    }
+    if (!inputs.name) {
+      isFull = false
+      handleErrors('Vui lòng nhập tên', 'name');
+    }
+    if (!inputs.dateofbirth) {
+      isFull = false
+      handleErrors('Vui lòng nhập ngày sinh', 'dateofbirth');
+    }
+    if(!inputs.gender){
+      setGenderFill(false)
+    }
+    // console.log(value)
+
+    if(isFull){
+      // setInputs(prevState => ({...prevState, ['dateofbirth']: date}))
+      UpdateProfile()
+    }
+    // if (inputs.email != '' && inputs.password != '') {
+    //   signIn(inputs.email, inputs.password);
+    // }
+  };
+
+  const handleErrors = (errorsMessage, input) => {
+    setErrors(prevState => ({...prevState, [input]: errorsMessage}));
+  };
+
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({...prevState, [input]: text}));
+  };
+
+  const SetProfile = async () => {
+    // console.log('first');
+    // await auth().currentUser.updateProfile({displayName: displayName});
+  };
+
   return (
     <View style={styles.container}>
-      <Input placeholder="Nhập tên của bạn" onChangeText={(text) => {setDisplayname(text)}}/>
-      <Input placeholder="Nhập họ của bạn" />
-      <Input placeholder="Nhập email của bạn" />
-      <Input placeholder="Chọn ngày sinh" iconName={'calendar'} />
+      <Input
+        placeholder="Nhập tên của bạn"
+        onChangeText={text => {
+          handleOnChange(text, 'name');
+        }}
+        error={errors.name}
+      />
+      {/* <Input placeholder="Nhập họ của bạn" onChangeText={(text) => handleOnChange(text, '')}/> */}
+      <Input
+        placeholder="Nhập email của bạn"
+        onChangeText={text => {
+          handleOnChange(text, 'email');
+        }}
+        error={errors.email}
+      />
+      <Input
+        value={date.toLocaleDateString()}
+        placeholder="Chọn ngày sinh"
+        iconName={'calendar'}
+        onPress={() => {setOpenPicker(true)}}
+        onChangeText={text => {
+          handleOnChange(text, 'dateofbirth');
+        }}
+        error={errors.dateofbirth}
+      />
       <DropDownPicker
         placeholder=" Chọn giới tính"
         open={open}
         value={value}
         items={items}
         setOpen={setOpen}
-        setValue={setValue}
+        setValue={(value) => {setValue(value)}}
         setItems={setItems}
+        onChangeValue={() => {setInputs(prevState => ({...prevState, ['gender']: value})); setGenderFill(true)}}
       />
-      <TouchableOpacity style={styles.btnLogin}  onPress={() => SetProfile()}>
-          <Text style={{alignSelf: 'center', fontSize: 17, color: 'black'}}>
-            Tạo tài khoản
-          </Text>
-        </TouchableOpacity>
+      {!genderFill && <Text style={{marginLeft: 6, fontSize: 12, color: 'red'}}>Vui lòng nhập giới tính</Text>}
+      <TouchableOpacity style={styles.btnLogin} onPress={() => validate()}>
+        <Text style={{alignSelf: 'center', fontSize: 17, color: 'black'}}>
+          Tạo tài khoản 
+        </Text>
+      </TouchableOpacity>
+      <DatePicker
+        modal
+        mode='date'
+        open={openpicker}
+        date={date}
+        onConfirm={(date) => {
+          setOpenPicker(false)
+          setDate(date)
+          setInputs(prevState => ({...prevState, ['dateofbirth']: date.toLocaleDateString()}))
+          // console.log(inputs.dateofbirth)
+          // console.log(date)
+        }}
+        onCancel={() => {
+          setOpenPicker(false)
+        }}
+      />
     </View>
   );
 };

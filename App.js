@@ -20,15 +20,15 @@ const App = () => {
 
   function onAuthStateChanged(user) {
     setUser(user);
-    console.log(user);
-    console.log(auth().currentUser)
+    // console.log(user);
+    // console.log(auth().currentUser)
     if (initializing) setInitializing(false);
     if(auth().currentUser !== null)
       // console.log(auth().currentUser.email.toString())
-        if (auth().currentUser.displayName !== 'null') { 
+        if (auth().currentUser.displayName !== null) {  
           setProfileUpdated(true);
         }
-    console.log(profileUpdated)
+    // console.log(profileUpdated)
 
   }
 
@@ -49,12 +49,12 @@ const App = () => {
   if (!profileUpdated)
     return (
       <View style={{flex: 1}}>
-        <Register />
+        <Register setProfileUpdated={setProfileUpdated} />
       </View>
     );
   return (
     <SafeAreaView style={{flex:1}}>
-      <Navigation/>
+      <Navigation />
     </SafeAreaView>
   );
 };

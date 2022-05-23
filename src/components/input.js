@@ -22,6 +22,7 @@ const Input = ({label, iconName, error, password, ...props}) => {
         <Icon
           name={iconName}
           style={{color: '#000', fontSize: 16, marginRight: 5}}
+          {...props}
         />
         {/* {password && (
           <Icon
