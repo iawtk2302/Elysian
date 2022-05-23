@@ -12,12 +12,8 @@ import {
 import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
-<<<<<<< HEAD
 import Register from './src/screens/Register'
 import PhoneVertify from './src/screens/PhoneVertify';
-=======
-import Register from './src/screens/Register';
->>>>>>> addPayment
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -25,24 +21,6 @@ const App = () => {
   const [hasPhone, setHasPhone] = useState(false)
   function onAuthStateChanged(user) {
     setUser(user);
-<<<<<<< HEAD
-    // console.log(user);
-    
-    if (initializing) setInitializing(false);
-    if(auth().currentUser !== null){
-      if (auth().currentUser.displayName !== null) {  
-        setProfileUpdated(true);
-      }
-      if(auth().currentUser.phoneNumber != null){
-        setHasPhone(true)
-      }
-    }
-    // console.log(user)
-      // console.log(auth().currentUser.email.toString())
-        
-    // console.log(profileUpdated)
-
-=======
     console.log(user);
     console.log(auth().currentUser);
     if (initializing) setInitializing(false);
@@ -52,7 +30,6 @@ const App = () => {
         setProfileUpdated(true);
       }
     console.log(profileUpdated);
->>>>>>> addPayment
   }
 
   useEffect(() => {
@@ -83,11 +60,7 @@ const App = () => {
       </View>
     );
   return (
-<<<<<<< HEAD
     <SafeAreaView style={{flex:1}}>
-=======
-    <SafeAreaView style={{flex: 1}}>
->>>>>>> addPayment
       <Navigation />
     </SafeAreaView>
   );

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   StyleSheet,
   Text,
@@ -63,11 +62,6 @@ const Home = ({navigation}) => {
     // LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
     getData();
   }, []);
-=======
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
-import firestore from '@react-native-firebase/firestore';
->>>>>>> addPayment
 
   return (
     <View
@@ -184,7 +178,6 @@ import firestore from '@react-native-firebase/firestore';
 
 export default Home;
 
-<<<<<<< HEAD
 const styles = StyleSheet.create({
   header: {
     height: 60,
@@ -193,6 +186,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
 });
-=======
-const styles = StyleSheet.create({});
->>>>>>> addPayment
