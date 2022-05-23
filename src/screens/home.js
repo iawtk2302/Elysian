@@ -65,7 +65,7 @@ const Home = ({navigation}) => {
 
   return (
     <View
-      style={{flex: 1, paddingHorizontal: 15, borderRadius: 100}}
+      style={{flex: 1, borderRadius: 100}}
       nestedScrollEnabled={false}>
         <View style={styles.header}>
           <Image
@@ -81,7 +81,7 @@ const Home = ({navigation}) => {
             style={{fontSize: 20, position: 'absolute', right: 10}}
           />
         </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal: 15}}>
         <Text style={{fontSize: 19, fontWeight: 'bold', color: 'black'}}>
           Bộ sưu tập
         </Text>
@@ -180,9 +180,9 @@ export default Home;
 
 const styles = StyleSheet.create({
   header: {
-    height: 50,
+    height: 60,
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: 10,
+    backgroundColor: 'white'
   },
 });

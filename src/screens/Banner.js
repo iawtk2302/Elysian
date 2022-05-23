@@ -26,7 +26,7 @@ const Banner = ({route}) => {
       </SharedElement>
 
       <View style={{paddingHorizontal: 16}}>
-        <Text>{text}</Text>
+        <Text style={{color: 'black', fontSize: 15}}>{text}</Text>
       </View>
     </View>
   );
