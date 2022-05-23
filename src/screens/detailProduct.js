@@ -31,11 +31,9 @@ const DetailProduct = () => {
     }
     const renderLabel = (label, style) => {
         return (
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{marginLeft: 10}}>
-              <Text style={{fontSize:16}}>{label.name}</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor:'red', width:240, justifyContent:'space-between'}}>
+            <Text style={{fontSize:16}}>{label.name}</Text>
               <Text style={{fontSize:16}}>{label.price}</Text>
-            </View>
           </View>
         )
       }
