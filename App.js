@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React,{useState, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -21,15 +21,22 @@ const App = () => {
   const [hasPhone, setHasPhone] = useState(false)
   function onAuthStateChanged(user) {
     setUser(user);
-    console.log(user);
-    console.log(auth().currentUser);
+    // console.log(user);
+    
     if (initializing) setInitializing(false);
-    if (auth().currentUser !== null)
-      if (auth().currentUser.displayName !== 'null') {
-        // console.log(auth().currentUser.email.toString())
+    if(auth().currentUser !== null){
+      if (auth().currentUser.displayName !== null) {  
         setProfileUpdated(true);
       }
-    console.log(profileUpdated);
+      if(auth().currentUser.phoneNumber != null){
+        setHasPhone(true)
+      }
+    }
+    // console.log(user)
+      // console.log(auth().currentUser.email.toString())
+        
+    // console.log(profileUpdated)
+
   }
 
   useEffect(() => {
@@ -66,6 +73,8 @@ const App = () => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  
+});
 
 export default App;
