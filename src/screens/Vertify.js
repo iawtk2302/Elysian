@@ -4,8 +4,8 @@ import auth from '@react-native-firebase/auth';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import firestore from '@react-native-firebase/firestore';
 
-const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone}) => {
-  const [phoneNumber, setPhoneNumber] = useState('0396891589');
+const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber}) => {
+  // const [phoneNumber, setPhoneNumber] = useState('0396891589');
   const [timetoResend, setTimetoResend] = useState('3:00');
   const [code, setCode] = useState('');
   const [user, setUser] = useState(null)
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomWidth: 1,
     borderRadius: 5,
+    color: 'black'
   },
 
   underlineStyleHighLighted: {

@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import Input from '../components/input';
 import auth from '@react-native-firebase/auth';
 import Vertify from './Vertify';
+import { signOut } from '../utils/Auth';
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const PhoneVertify = ({setHasPhone}) => {
   const [phoneNumber, setPhoneNumber] = useState('0396891589');
@@ -16,6 +18,9 @@ const PhoneVertify = ({setHasPhone}) => {
   if(!confirm)
   return (
     <View style={styles.container}>
+      <View style={{alignItems: 'flex-end', marginRight: -20, marginTop: 15}}>
+        <Icon name='times-circle' size={30} onPress={signOut}/>
+      </View>
       <View style={styles.header}>
         <Text style={styles.txtHeader}>Xác nhận mã OTP</Text>
         <Text style={styles.txtNoti}>

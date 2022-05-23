@@ -104,7 +104,7 @@ const SignIn = ({navigation}) => {
         </View>
       </TouchableWithoutFeedback>
     );
-  return <Vertify confirm={confirm} />;
+  return <Vertify confirm={confirm} phoneNumber={phone}/>;
 };
 
 export default SignIn;

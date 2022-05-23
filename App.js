@@ -32,7 +32,7 @@ const App = () => {
         setHasPhone(true)
       }
     }
-    console.log(user)
+    // console.log(user)
       // console.log(auth().currentUser.email.toString())
         
     // console.log(profileUpdated)
