@@ -14,14 +14,19 @@ import firestore from '@react-native-firebase/firestore';
 
 const ActivityDelivery = () => {
   const [dataOrder, setDataOrder] = useState([]);
+    const [listId, setListId] = useState([]);
   
     const getData = async () => {
       const list =[]
       const listDelivery = [];
+      const listCancel = [];
+      const listComplete = [];
+      const listid = [];
       await firestore().collection('Orders')
       .get()
         .then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {
+            listid.push(documentSnapshot.id);
             // console.log(documentSnapshot.id)
             list.push(documentSnapshot.data())
             switch (documentSnapshot.data().status) {
@@ -117,8 +122,8 @@ export default ActivityDelivery
 
 const styles = StyleSheet.create({
   header: {
-    height: 50,
-    justifyContent: 'center',
-    backgroundColor: COLORS.custom,
-  },
+        height: 50,
+        justifyContent: 'center',
+        backgroundColor: COLORS.custom,
+      },
 })
