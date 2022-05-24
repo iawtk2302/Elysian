@@ -14,6 +14,7 @@ import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register'
 import PhoneVertify from './src/screens/PhoneVertify';
+import { notificationListener, requestUserPermission } from './src/utils/pushnotification_helper';
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -41,6 +42,8 @@ const App = () => {
 
   useEffect(() => {
     setHasPhone(false)
+    requestUserPermission()
+    notificationListener()
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);

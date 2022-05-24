@@ -11,7 +11,8 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import OnGoing from '../screens/onGoing';
 import OrderHistory from '../screens/orderHistory';
 import COLORS from '../common/Color';
-
+import ItemNotification from '../components/ItemNotification';
+import Banner from '../screens/Banner';
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -24,6 +25,8 @@ const Navigation = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
+        <Stack.Screen name="ItemNotification" component={ItemNotification} />
+        <Stack.Screen name="Banner" component={Banner} />
       </Stack.Navigator>
     </NavigationContainer>
   );
