@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity,ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { useRoute } from '@react-navigation/native'
 import NumberFormat from 'react-number-format'
@@ -12,9 +12,10 @@ const DetailProduct = () => {
     const [price, setPrice] = useState(router.params.item.price);
     const [count, setCount] = useState(1);
     const [selectedTopping, setselectedTopping] = useState([])
+    const total= (parseInt(size.price)+parseInt(price)+ selectedTopping.reduce((total,currentValue)=>total+parseInt(currentValue.value.price),0))*count
     const topping = router.params.topping.map((e) => {
         return {
-            label: {name:e.name,price:e.price},
+            label: { name: e.name, price: e.price },
             value: e
         }
     })
@@ -31,19 +32,26 @@ const DetailProduct = () => {
     }
     const renderLabel = (label, style) => {
         return (
-          <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor:'red', width:240, justifyContent:'space-between'}}>
-            <Text style={{fontSize:16}}>{label.name}</Text>
-              <Text style={{fontSize:16}}>{label.price}</Text>
-          </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: 300, justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 16 }}>{label.name}</Text>
+                <NumberFormat
+                    value={parseInt(label.price)}
+                    displayType="text"
+                    thousandSeparator
+                    suffix='đ'
+                    renderText={(value) => <Text>{value}</Text>}
+                />
+            </View>
         )
-      }
+    }
     return (
-        <View style={styles.container}>
+        <View style={{flex:1}}>
+            <ScrollView style={styles.container}>
             <View>
                 <View style={styles.imgContainer}>
                     <Image source={{ uri: router.params.item.linkImage }} style={styles.img} />
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 10, alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 10, alignItems: 'center', backgroundColor:'white' }}>
                     <View>
                         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{router.params.item.name}</Text>
                         <NumberFormat
@@ -56,13 +64,13 @@ const DetailProduct = () => {
                     </View>
                     <Icon name='heart-outline' size={24} />
                 </View>
-                <View style={{ paddingHorizontal: 16 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Size</Text>
+                <View style={{ paddingHorizontal: 16, marginTop:20, backgroundColor:'white'}}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, marginTop:10 }}>Size</Text>
                     <Text>Chọn 1 loại size</Text>
                     <ButtonGroup size={router.params.size} item={router.params.item} onSelect={setSize} />
                 </View>
-                <View style={{ paddingHorizontal: 16, height: 220 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Topping</Text>
+                <View style={{ height: 380, backgroundColor:'white', marginTop:20, paddingHorizontal:16 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, marginTop:10 }}>Topping</Text>
                     <Text>Chọn tối đa 2 loại</Text>
                     <SelectMultiple
                         renderLabel={renderLabel}
@@ -71,8 +79,10 @@ const DetailProduct = () => {
                         onSelectionsChange={onSelectionsChange}
                         maxSelect={2} />
                 </View>
+                <View style={{height:130}}/>
             </View>
-            <View style={{ flex: 1 }}>
+        </ScrollView>
+        <View style={{ height:'15%', position:'absolute', bottom: 0, width:'100%', backgroundColor:'white' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', paddingHorizontal: 110, flex: 0.5 }}>
                     <Icon name='remove-circle-outline' size={32} color={count > 1 ? COLOR.custom : 'gray'} onPress={() => decreaseCount()} />
                     <Text style={{ fontSize: 24, fontWeight: '600', color: COLOR.custom }}>{count}</Text>
@@ -81,11 +91,11 @@ const DetailProduct = () => {
                 <View style={{ flex: 0.5 }}>
                     <TouchableOpacity style={{ borderRadius: 5, backgroundColor: COLOR.custom, height: 45, marginHorizontal: 16, justifyContent: 'center', alignItems: 'center' }}>
                         <NumberFormat
-                            value={parseInt(price)}
+                            value={total}
                             displayType="text"
                             thousandSeparator
                             suffix='đ'
-                            renderText={(value) => <Text style={{color:'white'}}>Thêm vào giỏ : {value}</Text>}
+                            renderText={(value) => <Text style={{ color: 'white' }}>Thêm vào giỏ : {value}</Text>}
                         />
                     </TouchableOpacity>
                 </View>
@@ -99,10 +109,12 @@ export default DetailProduct
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:'#F5F5F5'
     },
     imgContainer: {
         height: 200,
-        borderRadius: 10,
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
         backgroundColor: '#F6F1E7',
         justifyContent: 'center',
     },
