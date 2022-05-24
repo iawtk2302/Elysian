@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 const ItemProduct = ({item,topping,size}) => {
   const navigator=useNavigation()
   return (
-    <TouchableOpacity style={styles.container} onPress={()=>{navigator.navigate('Detail',{item:item,topping:topping,size:size})}}>
+    <TouchableOpacity style={styles.container} onPress={()=>{navigator.push('Detail',{item:item,topping:topping,size:size})}}>
       <View style={styles.imgContainer}>
         <Image source={{ uri: item.linkImage }} style={styles.img} />
       </View>

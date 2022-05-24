@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 const HeaderOrder = () => {
   const Navigation = useNavigation();
   const navPayment = () => {
-    Navigation.navigate('Payment');
+    Navigation.push('Payment');
   };
   return (
     <View style={styles.container}>

@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity,ScrollView } from 'react-native'
 import React, { useState } from 'react'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import NumberFormat from 'react-number-format'
 import Icon from 'react-native-vector-icons/Ionicons'
 import ButtonGroup from '../components/buttonGroup'
 import COLOR from '../common/Color'
 import SelectMultiple from 'react-native-select-multiple'
+import { useDispatch, useSelector } from 'react-redux'
+import { addProduct } from '../redux/orderSlice'
 const DetailProduct = () => {
     const router = useRoute();
+    const navigation=useNavigation();
     const [size, setSize] = useState(router.params.size[0]);
     const [price, setPrice] = useState(router.params.item.price);
     const [count, setCount] = useState(1);
@@ -19,6 +22,19 @@ const DetailProduct = () => {
             value: e
         }
     })
+    const dispatch=useDispatch();
+    const handleSummit=()=>{
+        const value={
+            product:router.params.item,
+            size:size,
+            topping:[...selectedTopping.map((e)=>{return{...e.value}})],
+            count:count,
+            total:total
+        }
+        const action=addProduct(value);
+        dispatch(action);
+        navigation.navigate("Order")
+    }
     const onSelectionsChange = (selectedFruits) => {
         setselectedTopping(selectedFruits)
     }
@@ -47,7 +63,7 @@ const DetailProduct = () => {
     return (
         <View style={{flex:1}}>
             <ScrollView style={styles.container}>
-            <View>
+            <View >
                 <View style={styles.imgContainer}>
                     <Image source={{ uri: router.params.item.linkImage }} style={styles.img} />
                 </View>
@@ -89,7 +105,7 @@ const DetailProduct = () => {
                     <Icon name='add-circle-outline' size={32} color={COLOR.custom} onPress={() => increaseCount()} />
                 </View>
                 <View style={{ flex: 0.5 }}>
-                    <TouchableOpacity style={{ borderRadius: 5, backgroundColor: COLOR.custom, height: 45, marginHorizontal: 16, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity style={{ borderRadius: 5, backgroundColor: COLOR.custom, height: 45, marginHorizontal: 16, justifyContent: 'center', alignItems: 'center' }} onPress={handleSummit}>
                         <NumberFormat
                             value={total}
                             displayType="text"
@@ -113,8 +129,6 @@ const styles = StyleSheet.create({
     },
     imgContainer: {
         height: 200,
-        borderBottomLeftRadius:10,
-        borderBottomRightRadius:10,
         backgroundColor: '#F6F1E7',
         justifyContent: 'center',
     },

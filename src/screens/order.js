@@ -6,7 +6,7 @@ import {
   SectionList,
   Text,
 } from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ItemProduct from '../components/itemProduct';
 import firestore from '@react-native-firebase/firestore';
 import HeaderOrder from '../components/headerOrder';
@@ -163,11 +163,11 @@ const Order = () => {
     setLoading(false);
   };
   useEffect(() => {
-    addSection();
+    addSection()
   }, []);
   if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator color={COLORS.custom} />
       </View>
     );
@@ -190,13 +190,13 @@ const Order = () => {
     }
   };
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <HeaderOrder />
       <FlatList
-        style={{height: 50, backgroundColor: 'white', paddingLeft: 8}}
+        style={{ height: 50, backgroundColor: 'white', paddingLeft: 8 }}
         horizontal={true}
         data={dataCategory}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <ItemCategory
             item={item}
             dataCategory={dataCategory}
@@ -210,10 +210,10 @@ const Order = () => {
         ref={sectionRef}
         sections={section}
         keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <ItemProduct item={item} topping={topping} size={size} />
         )}
-        renderSectionHeader={({section: {title}}) => (
+        renderSectionHeader={({ section: { title } }) => (
           <Text
             style={{
               fontSize: 18,
