@@ -26,7 +26,14 @@ const Navigation = () => {
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
         <Stack.Screen name="ItemNotification" component={ItemNotification} />
-        <Stack.Screen name="Banner" component={Banner} />
+        <Stack.Screen name="Banner" component={Banner} 
+        options={{
+          gestureEnabled: true,
+          transitionSpec: {
+            open: {animation: 'timing', config: {duration: 300}},
+            close: {animation: 'timing', config: {duration: 300}},
+          }
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
