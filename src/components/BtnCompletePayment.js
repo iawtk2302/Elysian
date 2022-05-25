@@ -19,6 +19,7 @@ const BtnCompletePayment = ({total, arrProduct}) => {
         userID: fireAuth().currentUser.uid,
         OrderID: (orderID = Date.now()),
         idAddress: address.idAddress,
+        state: 'waiting',
       })
       .then(() => {
         addOrderDetailToFirebase();

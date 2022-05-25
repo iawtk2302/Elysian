@@ -22,8 +22,9 @@ export default StyleSheet.create({
       backgroundColor: COLORS.custom,
     },
     tabBarLabelStyle: {
-      fontSize: 10,
+      fontSize: 13,
       textTransform: 'none',
+      fontWeight: '500',
     },
   },
 });
