@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React,{useEffect} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Bottomtab from './BottomTab';
 import DetailProduct from '../screens/detailProduct';
@@ -12,18 +11,13 @@ import {createSharedElementStackNavigator} from 'react-navigation-shared-element
 import OnGoing from '../screens/onGoing';
 import WaiToConFirm from '../screens/waitToConfirm';
 import COLORS from '../common/Color';
-<<<<<<< HEAD
 import firestore from '@react-native-firebase/firestore'
 import Banner from '../screens/Banner';
 import Notification from '../screens/Notification';
 const Stack = createSharedElementStackNavigator();
-=======
 import styles from '../styles/View.TopTab.Nav';
 import CancelledOrder from '../screens/cancelledOrder';
 import CompletedOder from '../screens/completedOder';
-
-const Stack = createNativeStackNavigator();
->>>>>>> addPayment
 const Tab = createMaterialTopTabNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
 const Navigation = () => {

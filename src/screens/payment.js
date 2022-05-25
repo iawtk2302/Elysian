@@ -6,14 +6,8 @@ import AddressPayment from '../components/AddressPayment';
 import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
 import fireAuth from '@react-native-firebase/auth';
-<<<<<<< HEAD
-
-
-let address = '';
-=======
 import {useDispatch} from 'react-redux';
 import {setValue, setSelected} from '../redux/addressSlice';
->>>>>>> addPayment
 
 const arrProduct = [
   {
