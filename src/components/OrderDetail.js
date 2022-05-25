@@ -1,11 +1,29 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/View.OrderDetail';
 import {Divider} from 'react-native-paper';
 import COLORS from '../common/Color';
 import BtnActionOrder from './BtnActionOrder';
+import fireStore from '@react-native-firebase/firestore';
 
 const OrderDetail = ({item}) => {
+  const [rel, setRel] = useState(false);
+  useEffect(() => {
+    const loadProductDetail = async () => {
+      fireStore()
+        .collection('Products')
+        .doc(item.productID)
+        .get()
+        .then(documentSnapshot => {
+          item.price = documentSnapshot.data().price;
+          item.image = documentSnapshot.data().linkImage;
+          item.name = documentSnapshot.data().name;
+          setRel(true);
+        });
+    };
+
+    loadProductDetail();
+  }, []);
   return (
     <View style={styles.container}>
       <View padding={10}>

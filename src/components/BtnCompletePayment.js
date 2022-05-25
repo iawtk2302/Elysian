@@ -4,18 +4,21 @@ import firestore from '@react-native-firebase/firestore';
 import fireAuth from '@react-native-firebase/auth';
 import COLORS from '../common/Color';
 import styles from '../styles/View.Payment.container';
+import {useSelector} from 'react-redux';
+import {selectedAddress} from '../redux/addressSlice';
 
 const BtnCompletePayment = ({total, arrProduct}) => {
-  let orderIDD = '';
+  let orderID = '';
+  let address = useSelector(selectedAddress);
   const addOrderToFireBase = async () => {
     await firestore()
       .collection('Orders')
       .add({
         createTime: Date.now().toLocaleString(),
-        status: 1,
         totalCost: total.toString(),
         userID: fireAuth().currentUser.uid,
-        OrderID: (orderIDD = Date.now()),
+        OrderID: (orderID = Date.now()),
+        idAddress: address.idAddress,
       })
       .then(() => {
         addOrderDetailToFirebase();
@@ -28,7 +31,8 @@ const BtnCompletePayment = ({total, arrProduct}) => {
         amount: item.amount,
         productID: item.id,
         size: item.size,
-        OrderID: orderIDD,
+        OrderID: orderID,
+        state: 'waiting',
       });
     }
   };

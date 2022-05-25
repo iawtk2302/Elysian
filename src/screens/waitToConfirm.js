@@ -1,6 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {View, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import OrderDetail from '../components/OrderDetail';
+import fireStore from '@react-native-firebase/firestore';
+import fireAuth from '@react-native-firebase/auth';
 
 const data = [
   {
@@ -13,16 +15,45 @@ const data = [
     state: 'waiting',
   },
 ];
+let listOrder = [];
 
 const WaiToConFirm = () => {
+  const [listOrderDetail, setListOrderDetail] = useState([]);
+  useEffect(() => {
+    const loadListOrder = async () => {
+      await fireStore()
+        .collection('Orders')
+        .where('userID', '==', fireAuth().currentUser.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(documentSnapshot => {
+            listOrder = [...listOrder, documentSnapshot.data()];
+          });
+        });
+      for (let item of listOrder) {
+        await fireStore()
+          .collection('OrderDetails')
+          .where('OrderID', '==', item.OrderID)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+              setListOrderDetail(prev => [...prev, documentSnapshot.data()]);
+              console.log(JSON.stringify(listOrderDetail, null, 2));
+            });
+          });
+      }
+    };
+    loadListOrder();
+  }, []);
+
   return (
-    <View>
-      {data.map((item, index) => (
+    <ScrollView>
+      {listOrderDetail.map((item, index) => (
         <View key={index}>
           <OrderDetail item={item} />
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 

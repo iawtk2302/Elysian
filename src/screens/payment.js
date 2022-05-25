@@ -11,18 +11,18 @@ import {setValue, selectedAddress, setSelected} from '../redux/addressSlice';
 
 const arrProduct = [
   {
-    id: 1234,
-    name: 'tà tửa',
-    amount: '10',
+    id: '0T79W1nrU1chxFeEvozw',
+    name: 'Trà Xanh',
+    amount: '4',
     size: 'L',
-    price: '10000',
+    price: '39000',
   },
   {
-    id: 1235,
-    name: 'caffe',
+    id: '5dWKjhwQOqPL4vqDWnpY',
+    name: 'Sữa Tươi Long Nhãn Táo Đỏ',
     amount: '2',
     size: 'S',
-    price: '20000',
+    price: '30000',
   },
 ];
 const total = () => {
