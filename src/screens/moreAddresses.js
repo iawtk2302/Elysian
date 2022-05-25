@@ -5,13 +5,15 @@ import styles from '../../src/styles/View.Payment.container';
 import firestore from '@react-native-firebase/firestore';
 import fireAuth from '@react-native-firebase/auth';
 import COLORS from '../common/Color';
+import {useDispatch, useSelector} from 'react-redux';
+import {setSelected, setValue, selectedID} from '../redux/addressSlice';
 
 export default function MoreAddresses({navigation}) {
   return (
     <View>
       <Top navigation={navigation} />
       <ScrollView>
-        <Body />
+        <Body navigation={navigation} />
         <Bot />
         <View style={{height: 100}} />
       </ScrollView>
@@ -33,11 +35,11 @@ const Top = ({navigation}) => {
   );
 };
 
-const Body = () => {
+const Body = ({navigation}) => {
   const [update, setUpdate] = useState([]);
   useEffect(() => {
     const getMoreAddress = async () => {
-      firestore()
+      await firestore()
         .collection('Addresses')
         .where('userID', '==', fireAuth().currentUser.uid)
         .get()
@@ -53,9 +55,9 @@ const Body = () => {
   return (
     <View style={{marginTop: 20}}>
       {update.map((address, index) => (
-        <TouchableOpacity key={index}>
-          <Address address={address} />
-        </TouchableOpacity>
+        <View key={index}>
+          <Address address={address} navigation={navigation} />
+        </View>
       ))}
     </View>
   );
@@ -77,38 +79,48 @@ const Bot = () => {
   );
 };
 
-const Address = ({address}) => {
+const Address = ({address, navigation}) => {
+  const dispatch = useDispatch();
+  const changeAdd = () => {
+    dispatch(setValue(address));
+    dispatch(setSelected(address.idAddress));
+    navigation.goBack();
+  };
   return (
-    <View style={styles.moreAddressContainer}>
-      <View style={{flex: 9}}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', paddingBottom: 5}}>{address.name}</Text>
-          {address.selected == true ? (
-            <Text style={{color: COLORS.custom, paddingStart: 10}}>
-              [Mặc định]
+    <TouchableOpacity onPress={changeAdd}>
+      <View style={styles.moreAddressContainer}>
+        <View style={{flex: 9}}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{color: 'black', paddingBottom: 5}}>
+              {address.name}
             </Text>
-          ) : null}
+            {address.selected == true ? (
+              <Text style={{color: COLORS.custom, paddingStart: 10}}>
+                [Mặc định]
+              </Text>
+            ) : null}
+          </View>
+          <Text>{address.phone}</Text>
+          <Text>{address.detail}</Text>
+          <Text>
+            {address.village}', '{address.ward}','{address.district}','
+            {address.province}
+          </Text>
         </View>
-        <Text>{address.phone}</Text>
-        <Text>{address.detail}</Text>
-        <Text>
-          {address.village}', '{address.ward}','{address.district}','
-          {address.province}
-        </Text>
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          {address.idAddress == useSelector(selectedID) ? (
+            <Ionicons
+              name="location-sharp"
+              style={{fontSize: 20, color: COLORS.custom}}
+            />
+          ) : (
+            <Ionicons
+              name="location-outline"
+              style={{fontSize: 20, color: COLORS.custom}}
+            />
+          )}
+        </View>
       </View>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        {address.selected == true ? (
-          <Ionicons
-            name="location-sharp"
-            style={{fontSize: 20, color: COLORS.custom}}
-          />
-        ) : (
-          <Ionicons
-            name="location-outline"
-            style={{fontSize: 20, color: COLORS.custom}}
-          />
-        )}
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };

@@ -1,11 +1,14 @@
-import {StyleSheet, Text, View, TouchableOpacity, Switch} from 'react-native';
+import {Text, View, TouchableOpacity, Switch} from 'react-native';
 import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {selectedAddress} from '../redux/addressSlice';
 
-const AddressPayment = ({address}) => {
+const AddressPayment = () => {
+  let address = useSelector(selectedAddress);
   return (
     <View style={[styles.aroundContainer, {flex: 5}]}>
       <Header />

@@ -9,8 +9,11 @@ import Order from '../screens/order';
 import MoreAddresses from '../screens/moreAddresses';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import OnGoing from '../screens/onGoing';
-import OrderHistory from '../screens/orderHistory';
+import WaiToConFirm from '../screens/waitToConfirm';
 import COLORS from '../common/Color';
+import styles from '../styles/View.TopTab.Nav';
+import CancelledOrder from '../screens/cancelledOrder';
+import CompletedOder from '../screens/completedOder';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -31,25 +34,17 @@ const Navigation = () => {
 export const TopTabs = () => {
   return (
     <NavigationContainer independent={true}>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarLabelStyle: {fonSize: 12},
-          tabBarStyle: {backgroundColor: COLORS.backgroundWeak},
-          tabBarActiveTintColor: COLORS.custom,
-          tabBarIndicatorStyle: {
-            backgroundColor: COLORS.custom,
-          },
-          tabBarLabelStyle: {
-            fontSize: 13,
-          },
-        }}>
+      <View style={styles.tabBar}>
+        <Text style={styles.text}>Đơn mua</Text>
+      </View>
+      <Tab.Navigator screenOptions={styles.screenOptions}>
+        <Tab.Screen name="Chờ xác nhận" component={WaiToConFirm} />
         <Tab.Screen name="Đang giao" component={OnGoing} />
-        <Tab.Screen name="Lịch sử đặt hàng" component={OrderHistory} />
+        <Tab.Screen name="Hủy đơn" component={CancelledOrder} />
+        <Tab.Screen name="Hoàn thành" component={CompletedOder} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
 
 export default Navigation;
-
-const styles = StyleSheet.create({});

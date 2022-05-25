@@ -1,13 +1,13 @@
 import {View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import HeaderPayment from '../components/HeaderPayment';
 import AddressPayment from '../components/AddressPayment';
 import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
 import fireAuth from '@react-native-firebase/auth';
-
-let address = '';
+import {useDispatch, useSelector} from 'react-redux';
+import {setValue, selectedAddress, setSelected} from '../redux/addressSlice';
 
 const arrProduct = [
   {
@@ -34,29 +34,29 @@ const total = () => {
 };
 
 const Payment = () => {
-  const [rel, setRel] = useState(false);
+  const dispatch = useDispatch();
+  let address = useSelector(selectedAddress);
   useEffect(() => {
-    const loadAddress = async () => {
-      await firestore()
+    const loadAddress = () => {
+      firestore()
         .collection('Addresses')
         .where('userID', '==', fireAuth().currentUser.uid)
         .where('selected', '==', true)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {
-            address = documentSnapshot.data();
-            setRel(true);
-            console.log('address: ' + documentSnapshot.data());
+            dispatch(setValue(documentSnapshot.data()));
+            dispatch(setSelected(documentSnapshot.data().idAddress));
           });
         });
     };
     loadAddress();
   }, []);
-  console.log('reload: ' + rel);
+
   return (
     <View style={{flex: 1}}>
       <HeaderPayment />
-      <AddressPayment address={address} />
+      <AddressPayment />
       <PaymentDetail arrProduct={arrProduct} />
       <TotalPayment total={total()} arrProduct={arrProduct} />
     </View>
