@@ -1,29 +1,34 @@
 import {View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import HeaderPayment from '../components/HeaderPayment';
 import AddressPayment from '../components/AddressPayment';
 import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
 import fireAuth from '@react-native-firebase/auth';
+<<<<<<< HEAD
 
 
 let address = '';
+=======
+import {useDispatch} from 'react-redux';
+import {setValue, setSelected} from '../redux/addressSlice';
+>>>>>>> addPayment
 
 const arrProduct = [
   {
-    id: 1234,
-    name: 'tà tửa',
-    amount: '10',
+    id: '0T79W1nrU1chxFeEvozw',
+    name: 'Trà Xanh',
+    amount: '4',
     size: 'L',
-    price: '10000',
+    price: '39000',
   },
   {
-    id: 1235,
-    name: 'caffe',
+    id: '5dWKjhwQOqPL4vqDWnpY',
+    name: 'Sữa Tươi Long Nhãn Táo Đỏ',
     amount: '2',
     size: 'S',
-    price: '20000',
+    price: '30000',
   },
 ];
 const total = () => {
@@ -35,29 +40,28 @@ const total = () => {
 };
 
 const Payment = () => {
-  const [rel, setRel] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const loadAddress = async () => {
-      await firestore()
+    const loadAddress = () => {
+      firestore()
         .collection('Addresses')
         .where('userID', '==', fireAuth().currentUser.uid)
         .where('selected', '==', true)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {
-            address = documentSnapshot.data();
-            setRel(true);
-            console.log('address: ' + documentSnapshot.data());
+            dispatch(setValue(documentSnapshot.data()));
+            dispatch(setSelected(documentSnapshot.data().idAddress));
           });
         });
     };
     loadAddress();
   }, []);
-  console.log('reload: ' + rel);
+
   return (
     <View style={{flex: 1}}>
       <HeaderPayment />
-      <AddressPayment address={address} />
+      <AddressPayment />
       <PaymentDetail arrProduct={arrProduct} />
       <TotalPayment total={total()} arrProduct={arrProduct} />
     </View>

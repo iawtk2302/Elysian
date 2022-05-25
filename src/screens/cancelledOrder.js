@@ -8,7 +8,7 @@ import {selectAllOrder} from '../redux/orderDetailSlide';
 
 let listOrder = [];
 
-const OnGoing = () => {
+const CancelledOrder = () => {
   const [listOrderDetail, setListOrderDetail] = useState([]);
 
   // let allOrder = useSelector(selectAllOrder);
@@ -28,7 +28,7 @@ const OnGoing = () => {
         fireStore()
           .collection('OrderDetails')
           .where('OrderID', '==', item.OrderID)
-          .where('state', '==', 'shipping')
+          .where('state', '==', 'cancelled')
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
@@ -55,4 +55,4 @@ const OnGoing = () => {
   );
 };
 
-export default OnGoing;
+export default CancelledOrder;
