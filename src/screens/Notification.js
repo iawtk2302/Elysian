@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import ItemNotification from '../components/ItemNotification';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -49,7 +49,7 @@ const Notification = () => {
   }, []);
 
   return (
-    <View style={{marginTop: 15, flex: 1}}>
+    <ScrollView style={{marginTop: 15, flex: 1}}>
       {/* <View style={styles.container}>
         <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
           Notification
@@ -58,7 +58,7 @@ const Notification = () => {
       {notiData.map((item, index) => {
         return <ItemNotification key={index} item={item} />;
       })}
-    </View>
+    </ScrollView>
   );
 };
 

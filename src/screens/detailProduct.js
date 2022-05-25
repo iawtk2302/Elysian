@@ -33,7 +33,7 @@ const DetailProduct = () => {
         }
         const action=addProduct(value);
         dispatch(action);
-        navigation.navigate("Order")
+        navigation.goBack();
     }
     const onSelectionsChange = (selectedFruits) => {
         setselectedTopping(selectedFruits)

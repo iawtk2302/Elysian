@@ -14,14 +14,10 @@ import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register'
 import PhoneVertify from './src/screens/PhoneVertify';
-<<<<<<< HEAD
 import { Provider } from 'react-redux'
 import store from './src/redux/store';
-=======
 import { notificationListener, requestUserPermission } from './src/utils/pushnotification_helper';
-import firebase from '@react-native-firebase/app'
 import SplashScreen from 'react-native-splash-screen'
->>>>>>> Notification
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();

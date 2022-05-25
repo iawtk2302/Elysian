@@ -12,14 +12,10 @@ import {createSharedElementStackNavigator} from 'react-navigation-shared-element
 import OnGoing from '../screens/onGoing';
 import OrderHistory from '../screens/orderHistory';
 import COLORS from '../common/Color';
-<<<<<<< HEAD
 import firestore from '@react-native-firebase/firestore'
-const Stack = createNativeStackNavigator();
-=======
 import Banner from '../screens/Banner';
 import Notification from '../screens/Notification';
 const Stack = createSharedElementStackNavigator();
->>>>>>> Notification
 const Tab = createMaterialTopTabNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
 const Navigation = () => {

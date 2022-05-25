@@ -10,11 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-<<<<<<< HEAD
     "@notifee/react-native": "^5.2.2",
-=======
     "@react-native-async-storage/async-storage": "^1.17.5",
->>>>>>> Notification
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-firebase/app": "^14.9.4",
     "@react-native-firebase/auth": "^14.9.4",
