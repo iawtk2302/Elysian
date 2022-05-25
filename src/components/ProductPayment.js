@@ -2,6 +2,7 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
+import NumberFormat from 'react-number-format';
 
 const ProductPayment = ({item}) => {
   return (
@@ -24,7 +25,15 @@ const ProductPayment = ({item}) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.textColor}>{item.price}đ</Text>
+      <Text style={styles.textColor}>
+        <NumberFormat
+          value={parseInt(item.price)}
+          displayType="text"
+          thousandSeparator
+          suffix="đ"
+          renderText={value => <Text>{value}</Text>}
+        />
+      </Text>
     </View>
   );
 };

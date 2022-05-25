@@ -5,6 +5,7 @@ import {Divider} from 'react-native-paper';
 import COLORS from '../common/Color';
 import BtnActionOrder from './BtnActionOrder';
 import fireStore from '@react-native-firebase/firestore';
+import NumberFormat from 'react-number-format';
 
 const OrderDetail = ({item}) => {
   const [rel, setRel] = useState(false);
@@ -64,7 +65,14 @@ const Detail = ({data}) => {
           </Text>
         </Text>
         <Text>
-          Giá: <Text style={{color: 'black'}}>{data.price}đ</Text>
+          Giá:{' '}
+          <NumberFormat
+            value={parseInt(data.price)}
+            displayType="text"
+            thousandSeparator
+            suffix="đ"
+            renderText={value => <Text>{value}</Text>}
+          />
         </Text>
       </View>
     </View>
@@ -77,9 +85,13 @@ const PennyTotal = ({amount, price}) => {
       <Text>x{amount}</Text>
       <Text>
         Thành tiền:{' '}
-        <Text style={{color: COLORS.custom}}>
-          {parseInt(amount) * parseInt(price)}đ
-        </Text>
+        <NumberFormat
+          value={parseInt(amount) * parseInt(price)}
+          displayType="text"
+          thousandSeparator
+          suffix="đ"
+          renderText={value => <Text>{value}</Text>}
+        />
       </Text>
     </View>
   );

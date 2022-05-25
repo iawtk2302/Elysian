@@ -3,23 +3,17 @@ import React, {useEffect, useState} from 'react';
 import OrderDetail from '../components/OrderDetail';
 import fireStore from '@react-native-firebase/firestore';
 import fireAuth from '@react-native-firebase/auth';
+import {useSelector} from 'react-redux';
+import {selectAllOrder} from '../redux/orderDetailSlide';
 
-const data = [
-  {
-    name: 'Back Coffee without sugar',
-    amount: '2',
-    size: 'L',
-    price: '35000',
-    image:
-      'https://gongcha.com.vn/wp-content/uploads/2018/02/Tr%C3%A0-Xanh-2.png',
-    state: 'waiting',
-  },
-];
 let listOrder = [];
 
 const WaiToConFirm = () => {
   const [listOrderDetail, setListOrderDetail] = useState([]);
+
+  // let allOrder = useSelector(selectAllOrder);
   useEffect(() => {
+    const controller = new AbortController();
     const loadListOrder = async () => {
       await fireStore()
         .collection('Orders')
@@ -31,19 +25,23 @@ const WaiToConFirm = () => {
           });
         });
       for (let item of listOrder) {
-        await fireStore()
+        fireStore()
           .collection('OrderDetails')
           .where('OrderID', '==', item.OrderID)
+          .where('state', '==', 'waiting')
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
               setListOrderDetail(prev => [...prev, documentSnapshot.data()]);
-              console.log(JSON.stringify(listOrderDetail, null, 2));
             });
           });
       }
     };
     loadListOrder();
+    return () => {
+      controller.abort();
+      setListOrderDetail(null);
+    };
   }, []);
 
   return (

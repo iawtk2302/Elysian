@@ -3,6 +3,7 @@ import React from 'react';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import BtnCompletePayment from './BtnCompletePayment';
+import NumberFormat from 'react-number-format';
 
 const TotalPayment = ({total, arrProduct}) => {
   return (
@@ -29,7 +30,15 @@ const TotalPayment = ({total, arrProduct}) => {
           }}>
           <View>
             <Text style={{color: 'white'}}>Giao hàng - 2 sản phẩm</Text>
-            <Text style={{fontWeight: '600', color: 'white'}}>{total}</Text>
+            <Text style={{fontWeight: '600', color: 'white'}}>
+              <NumberFormat
+                value={parseInt(total)}
+                displayType="text"
+                thousandSeparator
+                suffix="đ"
+                renderText={value => <Text>{value}</Text>}
+              />
+            </Text>
           </View>
           <BtnCompletePayment total={total} arrProduct={arrProduct} />
         </View>

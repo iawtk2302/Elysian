@@ -6,8 +6,8 @@ import AddressPayment from '../components/AddressPayment';
 import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
 import fireAuth from '@react-native-firebase/auth';
-import {useDispatch, useSelector} from 'react-redux';
-import {setValue, selectedAddress, setSelected} from '../redux/addressSlice';
+import {useDispatch} from 'react-redux';
+import {setValue, setSelected} from '../redux/addressSlice';
 
 const arrProduct = [
   {
@@ -35,7 +35,6 @@ const total = () => {
 
 const Payment = () => {
   const dispatch = useDispatch();
-  let address = useSelector(selectedAddress);
   useEffect(() => {
     const loadAddress = () => {
       firestore()
