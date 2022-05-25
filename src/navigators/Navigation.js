@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React,{useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Bottomtab from './BottomTab';
@@ -11,11 +11,40 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import OnGoing from '../screens/onGoing';
 import OrderHistory from '../screens/orderHistory';
 import COLORS from '../common/Color';
-
+import firestore from '@react-native-firebase/firestore'
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
-
+import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
 const Navigation = () => {
+  async function onDisplayNotification() {
+    // Create a channel
+    const channelId = await notifee.createChannel({
+      id: 'default',
+      name: 'Default Channel',
+      importance:AndroidImportance.HIGH
+    });
+
+    // Display a notification
+    await notifee.displayNotification({
+      title: 'Notification Title',
+      body: 'Main body content of the notification',
+      android: {
+        channelId,
+        smallIcon: 'ic_launcher', // optional, defaults to 'ic_launcher'.
+      },
+    });
+  }
+  useEffect(() => {
+    firestore().collection('Products').where('type','==','Trà sữa').onSnapshot(snapShot=>{
+      let change=snapShot.docChanges();
+      change.forEach(change=>{
+        if(change.type=='modified'){
+          console.log(change.doc.data())
+          onDisplayNotification()
+        }
+      })
+    });
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>

@@ -7,6 +7,7 @@ import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
 import fireAuth from '@react-native-firebase/auth';
 
+
 let address = '';
 
 const arrProduct = [
