@@ -23,6 +23,8 @@ target 'Elysian' do
 
   pod 'react-native-pager-view', :path => '../node_modules/react-native-pager-view'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'ElysianTests' do
     inherit! :complete
     # Pods for testing

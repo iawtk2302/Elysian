@@ -3,7 +3,43 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import firestore from '@react-native-firebase/firestore';
 // const admin = require('firebase-admin');
 // var serviceAccount = require('./notification-314b0-firebase-adminsdk-3v1m1-35caee8623.json');
+import firestore from '@react-native-firebase/firestore';
 
+const AddNotification = async data => {
+  console.log(data.notification.body);
+  const temp = {
+    title: data.notification.title,
+    body: data.notification.body,
+    linkImage:
+      data.notification.android.imageUrl ||
+      'https://firebasestorage.googleapis.com/v0/b/elysian-cfa87.appspot.com/o/Sua-Tuoi-Long-Nhan.png?alt=media&token=2d98fb21-efc9-4219-abb1-9f7b48f5dce0',
+    date: firestore.Timestamp.now(),
+  };
+  await firestore()
+    .collection('Notifications')
+    .add(temp)
+    .then(docRef => {
+      console.log('Noti added!');
+      AddNotificationToUser(docRef.id);
+    });
+};
+const AddNotificationToUser = async id => {
+  let data = {};
+  await firestore()
+    .collection('Users')
+    .get()
+    .then(query => {
+      query.forEach(doc => {
+        data = {};
+        Object.assign(data, doc.data().Notifications);
+        data[id] = true;
+        doc.ref.update({
+          Notifications: data,
+        });
+        console.log(doc.data().Notifications);
+      });
+    });
+};
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
   const enabled =
@@ -11,20 +47,20 @@ export async function requestUserPermission() {
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
-    console.log('Authorization status:', authStatus);
+    // console.log('Authorization status:', authStatus);
     getFCMtoken();
   }
 }
 
 const getFCMtoken = async () => {
   let fcmToken = await AsyncStorage.getItem('fcmtoken');
-  console.log(fcmToken);
+  // console.log(fcmToken);
   if (!fcmToken) {
     try {
       const fcmToken = await messaging().getToken();
       if (fcmToken) {
         await AsyncStorage.setItem('fcmtoken', fcmToken);
-        console.log(fcmToken);
+        // console.log(fcmToken);
       }
     } catch (error) {}
   }
@@ -35,6 +71,7 @@ export const notificationListener = () => {
     console.log(
       'Notification caused app to open from background state:',
       remoteMessage.notification,
+      AddNotification(remoteMessage),
     );
   });
   messaging()
@@ -45,21 +82,25 @@ export const notificationListener = () => {
           'Notification caused app to open from quit state:',
           remoteMessage.notification,
         );
+        AddNotification(remoteMessage);
       }
     });
   messaging().onMessage(async remoteMessage => {
-    console.log('Notification forground ...', remoteMessage);
+    // console.log('Notification Foreground ...', remoteMessage);
+    AddNotification(remoteMessage);
+  });
+
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Message handled in the background!', remoteMessage);
+    AddNotification(remoteMessage);
   });
 };
-//f5H1gsVpTwm_8gLfbuaPqr:APA91bFylaMqoBAwxGcFWDRDO06WGVXjQR4RjOlTZNtQ0NhhianjpbVHOzozoFueSyHg912sBO5BsoGoZKkrOX9KHkZuAOM20n2Q784IBzFqhd7XW0t34-pBGiCy_FyoNgixxJuf5Bux
 
 export async function onUserPictureLiked(ownerId, userId, picture) {
-
   // admin.initializeApp({
   //   credential: admin.credential.cert(serviceAccount),
   //   //   databaseURL: "https://notification-314b0-default-rtdb.firebaseio.com"
   // });
-
   // const messages = {
   //   notification: {
   //     title: 'khanh',

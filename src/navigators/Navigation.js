@@ -8,12 +8,13 @@ import Payment from '../screens/payment';
 import Order from '../screens/order';
 import MoreAddresses from '../screens/moreAddresses';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import OnGoing from '../screens/onGoing';
 import OrderHistory from '../screens/orderHistory';
 import COLORS from '../common/Color';
-import ItemNotification from '../components/ItemNotification';
 import Banner from '../screens/Banner';
-const Stack = createNativeStackNavigator();
+import Notification from '../screens/Notification';
+const Stack = createSharedElementStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 const Navigation = () => {
@@ -25,7 +26,7 @@ const Navigation = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
-        <Stack.Screen name="ItemNotification" component={ItemNotification} />
+        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center'}}/>
         <Stack.Screen name="Banner" component={Banner} 
         options={{
           gestureEnabled: true,

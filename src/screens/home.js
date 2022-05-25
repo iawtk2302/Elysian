@@ -80,7 +80,7 @@ const Home = ({navigation}) => {
           <Icon
             name="bell"
             style={{fontSize: 20, position: 'absolute', right: 10}}
-            onPress={() => navigator.navigate('ItemNotification')}
+            onPress={() => navigator.navigate('Notification')}
           />
         </View>
       <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal: 15}}>

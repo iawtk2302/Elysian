@@ -15,6 +15,8 @@ import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register'
 import PhoneVertify from './src/screens/PhoneVertify';
 import { notificationListener, requestUserPermission } from './src/utils/pushnotification_helper';
+import firebase from '@react-native-firebase/app'
+import SplashScreen from 'react-native-splash-screen'
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -44,6 +46,7 @@ const App = () => {
     setHasPhone(false)
     requestUserPermission()
     notificationListener()
+    SplashScreen.hide();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
