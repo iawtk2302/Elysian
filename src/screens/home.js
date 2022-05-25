@@ -21,12 +21,14 @@ import {SharedElement} from 'react-navigation-shared-element';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import ItemBanner from '../components/itemBanner';
 import ItemProduct from '../components/itemProduct';
+import { useNavigation } from '@react-navigation/native'
 // import ItemProduct from '../components/itemProduct';
 // import ItemBanner from './itemBanner';
 // import ItemProduct from './itemProduct';
 
 const {height, width} = Dimensions.get('window');
 const Home = ({navigation}) => {
+  const navigator=useNavigation()
   // console.log('first');
   const [text, setText] = useState('gggg');
   const [rerender, SetRerender] = useState(false);
@@ -69,7 +71,6 @@ const Home = ({navigation}) => {
       nestedScrollEnabled={false}>
         <View style={styles.header}>
           <Image
-            onpr
             source={require('../assets/coffee-cup.png')}
             style={{marginHorizontal: 5, width: 30, height: 30}}
           />
@@ -79,6 +80,7 @@ const Home = ({navigation}) => {
           <Icon
             name="bell"
             style={{fontSize: 20, position: 'absolute', right: 10}}
+            onPress={() => navigator.navigate('Notification')}
           />
         </View>
       <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal: 15}}>
@@ -100,7 +102,7 @@ const Home = ({navigation}) => {
                 <TouchableWithoutFeedback
                   key={index}
                   onPress={() => {
-                    navigation.navigate('Banner', {item: item});
+                    navigator.navigate('Banner', {item: item});
                   }}>
                   <Image
                     // key={index}

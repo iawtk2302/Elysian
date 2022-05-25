@@ -8,11 +8,18 @@ import Payment from '../screens/payment';
 import Order from '../screens/order';
 import MoreAddresses from '../screens/moreAddresses';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import OnGoing from '../screens/onGoing';
 import OrderHistory from '../screens/orderHistory';
 import COLORS from '../common/Color';
+<<<<<<< HEAD
 import firestore from '@react-native-firebase/firestore'
 const Stack = createNativeStackNavigator();
+=======
+import Banner from '../screens/Banner';
+import Notification from '../screens/Notification';
+const Stack = createSharedElementStackNavigator();
+>>>>>>> Notification
 const Tab = createMaterialTopTabNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
 const Navigation = () => {
@@ -53,6 +60,15 @@ const Navigation = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
+        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center'}}/>
+        <Stack.Screen name="Banner" component={Banner} 
+        options={{
+          gestureEnabled: true,
+          transitionSpec: {
+            open: {animation: 'timing', config: {duration: 300}},
+            close: {animation: 'timing', config: {duration: 300}},
+          }
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
