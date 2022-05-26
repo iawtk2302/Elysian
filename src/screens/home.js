@@ -34,9 +34,13 @@ const Home = ({navigation}) => {
   const [rerender, SetRerender] = useState(false);
   const [databanner, setDatabanner] = useState([]);
   const [dataProducts, setDataProducts] = useState([]);
+  const [dataSize, setDataSize] = useState([]);
+  const [datatopping, setDataTopping] = useState([]);
   const getData = async () => {
     const listBanner = [];
     const listProduct = [];
+    const size=[]
+    const topping=[]
     await firestore()
       .collection('Banners')
       .get()
@@ -55,9 +59,26 @@ const Home = ({navigation}) => {
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           listProduct.push(documentSnapshot.data());
-          // console.log(documentSnapshot.data());
         });
         setDataProducts(listProduct);
+      });
+      await firestore()
+      .collection('Sizes')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          size.push(documentSnapshot.data());
+        });
+        setDataSize(size);
+      });
+      await firestore()
+      .collection('Toppings')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          topping.push(documentSnapshot.data());
+        });
+        setDataTopping(topping);
       });
   };
   useEffect(() => {
@@ -132,7 +153,7 @@ const Home = ({navigation}) => {
         </Text>
         <View>
           {dataProducts.map((item, index) => {
-            return <ItemProduct item={item} key={index} />;
+            return <ItemProduct item={item} key={index} topping={datatopping} size={dataSize}/>;
           })}
         </View>
         <Text

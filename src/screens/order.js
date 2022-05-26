@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   SectionList,
   Text,
+  TouchableOpacity
 } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import ItemProduct from '../components/itemProduct';
@@ -12,11 +13,17 @@ import firestore from '@react-native-firebase/firestore';
 import HeaderOrder from '../components/headerOrder';
 import ItemCategory from '../components/itemCategory';
 import COLORS from '../common/Color';
+import Icon from 'react-native-vector-icons/Ionicons'
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 const Order = () => {
   const [loading, setLoading] = useState(true);
   const [section, setSection] = useState([]);
   const [topping, setTopping] = useState([]);
   const [size, setSize] = useState([]);
+  const [count,setCount]=useState(0);
+  const navigation=useNavigation()
+  const orders=useSelector(state=>state.orders)
   const [dataCategory, setDataCategory] = useState([
     {
       title: 'Trà sữa',
@@ -83,6 +90,9 @@ const Order = () => {
         });
       });
     return temp;
+  };
+  const navPayment = () => {
+    navigation.push('Payment');
   };
   const getData = async () => {
     const dataTS = [];
@@ -226,10 +236,43 @@ const Order = () => {
           </Text>
         )}
       />
+      {
+        orders.length>0&&
+        <View style={styles.count}>
+            <Text style={{fontSize:12, color:'white'}}>{orders.length}</Text>
+        </View>
+      }
+      <TouchableOpacity style={styles.btnfl} activeOpacity={1} onPress={navPayment}>
+            <Icon name='cart-outline' color='white' size={24}/>     
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default Order;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  btnfl: {
+    backgroundColor: COLORS.custom,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  count: {
+    backgroundColor: '#BC945D',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    position: 'absolute',
+    bottom: 48,
+    right: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex:10
+  }
+});
