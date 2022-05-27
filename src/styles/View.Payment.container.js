@@ -51,4 +51,25 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
   },
+  optionContainer: {
+    width: '15%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  optionsContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    height: 200,
+    borderRadius: 10,
+  },
+  hiddenItem: {
+    flex: 1,
+    margin: 10,
+    marginTop: 5,
+    alignItems: 'flex-end',
+  },
+  optionsText: {color: 'white', fontWeight: '500'},
 });

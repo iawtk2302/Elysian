@@ -9,31 +9,7 @@ import fireAuth from '@react-native-firebase/auth';
 import {useDispatch} from 'react-redux';
 import {setValue, setSelected} from '../redux/addressSlice';
 
-const arrProduct = [
-  {
-    id: '0T79W1nrU1chxFeEvozw',
-    name: 'Trà Xanh',
-    amount: '4',
-    size: 'L',
-    price: '39000',
-  },
-  {
-    id: '5dWKjhwQOqPL4vqDWnpY',
-    name: 'Sữa Tươi Long Nhãn Táo Đỏ',
-    amount: '2',
-    size: 'S',
-    price: '30000',
-  },
-];
-const total = () => {
-  let totalPrice = 0;
-  for (let item of arrProduct) {
-    totalPrice += parseInt(item.amount) * parseInt(item.price);
-  }
-  return totalPrice;
-};
-
-const Payment = () => {
+const Payment = ({navigation}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const loadAddress = () => {
@@ -54,10 +30,10 @@ const Payment = () => {
 
   return (
     <View style={{flex: 1}}>
-      <HeaderPayment />
+      <HeaderPayment navigation={navigation} />
       <AddressPayment />
-      <PaymentDetail arrProduct={arrProduct} />
-      <TotalPayment total={total()} arrProduct={arrProduct} />
+      <PaymentDetail />
+      <TotalPayment />
     </View>
   );
 };

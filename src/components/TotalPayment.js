@@ -4,8 +4,22 @@ import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import BtnCompletePayment from './BtnCompletePayment';
 import NumberFormat from 'react-number-format';
+import {useSelector} from 'react-redux';
 
-const TotalPayment = ({total, arrProduct}) => {
+const TotalPayment = () => {
+  const arrProduct = useSelector(state => state.orders);
+  const total = () => {
+    let totalPrice = 0;
+    for (let item of arrProduct) {
+      totalPrice += parseInt(item.total);
+    }
+    return totalPrice;
+  };
+  const countALlProduct = () => {
+    let count = 0;
+    for (let product of arrProduct) count += product.count;
+    return count;
+  };
   return (
     <View style={[styles.aroundContainer, {flex: 2}]}>
       <View style={{flex: 1}}>
@@ -29,10 +43,12 @@ const TotalPayment = ({total, arrProduct}) => {
             justifyContent: 'space-around',
           }}>
           <View>
-            <Text style={{color: 'white'}}>Giao hàng - 2 sản phẩm</Text>
+            <Text style={{color: 'white'}}>
+              Giao hàng 🌟 {countALlProduct()} sản phẩm
+            </Text>
             <Text style={{fontWeight: '600', color: 'white'}}>
               <NumberFormat
-                value={parseInt(total)}
+                value={parseInt(total())}
                 displayType="text"
                 thousandSeparator
                 suffix="đ"
