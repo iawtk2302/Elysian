@@ -1,11 +1,9 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../src/styles/View.Payment.container';
-import {useDispatch} from 'react-redux';
 
 export default function HeaderPayment({navigation}) {
-  const dispatch = useDispatch();
   const clearOrder = () => {
     navigation.goBack();
   };

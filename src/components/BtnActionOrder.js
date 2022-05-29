@@ -2,8 +2,9 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import COLORS from '../common/Color';
 import styles from '../styles/View.OrderDetail';
+import BtnCancel from './BtnCancel';
 
-const BtnActionOrder = ({state}) => {
+const BtnActionOrder = ({state, orderID}) => {
   return (
     <View style={[styles.layout, {marginTop: 10}]}>
       <Text
@@ -15,22 +16,13 @@ const BtnActionOrder = ({state}) => {
         {changeState({state})}
       </Text>
       {state === 'waiting' ? (
-        <BtnCancel />
+        <BtnCancel orderID={orderID} />
       ) : state === 'shipping' ? (
         <BtnContact />
       ) : (
         <BtnReOrder />
       )}
     </View>
-  );
-};
-
-const BtnCancel = () => {
-  return (
-    <TouchableOpacity
-      style={{backgroundColor: COLORS.custom, borderRadius: 10}}>
-      <Text style={styles.textAction}>Hủy</Text>
-    </TouchableOpacity>
   );
 };
 

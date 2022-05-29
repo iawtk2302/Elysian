@@ -33,7 +33,7 @@ const Payment = ({navigation}) => {
       <HeaderPayment navigation={navigation} />
       <AddressPayment />
       <PaymentDetail />
-      <TotalPayment />
+      <TotalPayment navigation={navigation} />
     </View>
   );
 };

@@ -1,20 +1,16 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import BtnCompletePayment from './BtnCompletePayment';
 import NumberFormat from 'react-number-format';
 import {useSelector} from 'react-redux';
+import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 
-const TotalPayment = () => {
+const TotalPayment = ({navigation}) => {
   const arrProduct = useSelector(state => state.orders);
-  const total = () => {
-    let totalPrice = 0;
-    for (let item of arrProduct) {
-      totalPrice += parseInt(item.total);
-    }
-    return totalPrice;
-  };
+  const total = calculatorTotalPrice();
+
   const countALlProduct = () => {
     let count = 0;
     for (let product of arrProduct) count += product.count;
@@ -48,7 +44,7 @@ const TotalPayment = () => {
             </Text>
             <Text style={{fontWeight: '600', color: 'white'}}>
               <NumberFormat
-                value={parseInt(total())}
+                value={parseInt(total)}
                 displayType="text"
                 thousandSeparator
                 suffix="đ"
@@ -56,7 +52,7 @@ const TotalPayment = () => {
               />
             </Text>
           </View>
-          <BtnCompletePayment total={total} arrProduct={arrProduct} />
+          <BtnCompletePayment navigation={navigation} />
         </View>
       </View>
     </View>

@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import React, {useState} from 'react';
+import {Text, View, TouchableOpacity} from 'react-native';
+import React from 'react';
 import ProductPayment from './ProductPayment';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
@@ -13,8 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
-import {Divider} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const PaymentDetail = () => {
   const arrProduct = useSelector(state => state.orders);

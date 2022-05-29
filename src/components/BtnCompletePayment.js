@@ -1,38 +1,58 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 import fireAuth from '@react-native-firebase/auth';
 import COLORS from '../common/Color';
 import styles from '../styles/View.Payment.container';
 import {useSelector} from 'react-redux';
 import {selectedAddress} from '../redux/addressSlice';
+import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 
-const BtnCompletePayment = ({total, arrProduct}) => {
+const BtnCompletePayment = ({navigation}) => {
+  const arrProduct = useSelector(state => state.orders);
+  const total = calculatorTotalPrice();
   let orderID = '';
+  let time = null;
   let address = useSelector(selectedAddress);
   const addOrderToFireBase = async () => {
+    navigation.goBack();
     await firestore()
       .collection('Orders')
       .add({
-        createTime: Date.now().toLocaleString(),
         totalCost: total.toString(),
         userID: fireAuth().currentUser.uid,
-        OrderID: (orderID = Date.now()),
+        orderID: 'temp',
         idAddress: address.idAddress,
         state: 'waiting',
+        createdAt: (time = firestore.FieldValue.serverTimestamp()),
       })
-      .then(() => {
+      .then(snap => {
+        orderID = snap.id;
+        updateOrderID();
         addOrderDetailToFirebase();
       });
+    await firestore().collection('OrderHistories').add({
+      orderID: orderID,
+      createTime: time,
+      checkedTime: '',
+      shippingTime: '',
+      cancelledTime: '',
+      completeTime: '',
+    });
+  };
+  const updateOrderID = async () => {
+    await firestore().collection('Orders').doc(orderID).update({
+      orderID: orderID,
+    });
   };
 
   const addOrderDetailToFirebase = () => {
     for (let item of arrProduct) {
       firestore().collection('OrderDetails').add({
-        amount: item.amount,
-        productID: item.id,
-        size: item.size,
-        OrderID: orderID,
+        amount: item.count,
+        productID: item.product.productID,
+        size: item.size.name,
+        orderID: orderID,
         state: 'waiting',
       });
     }

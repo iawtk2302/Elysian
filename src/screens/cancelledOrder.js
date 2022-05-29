@@ -1,57 +1,58 @@
-import {View, ScrollView} from 'react-native';
+import {ScrollView, RefreshControl, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import OrderDetail from '../components/OrderDetail';
+import ItemInOder from '../components/ItemInOder';
 import fireStore from '@react-native-firebase/firestore';
-import fireAuth from '@react-native-firebase/auth';
-import {useSelector} from 'react-redux';
-import {selectAllOrder} from '../redux/orderDetailSlide';
-
-let listOrder = [];
+import COLORS from '../common/Color';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  selectCancelledOrders,
+  addCancelledOrder,
+  resetCancelledOrder,
+} from '../redux/orderDetailSlide';
 
 const CancelledOrder = () => {
-  const [listOrderDetail, setListOrderDetail] = useState([]);
-
-  // let allOrder = useSelector(selectAllOrder);
-  useEffect(() => {
-    const controller = new AbortController();
-    const loadListOrder = async () => {
-      await fireStore()
-        .collection('Orders')
-        .where('userID', '==', fireAuth().currentUser.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            listOrder = [...listOrder, documentSnapshot.data()];
-          });
+  const dispatch = useDispatch();
+  const Orders = useSelector(selectCancelledOrders);
+  const loadOrder = async () => {
+    await fireStore()
+      .collection('Orders')
+      .where('state', '==', 'cancelled')
+      .onSnapshot(snap => {
+        dispatch(resetCancelledOrder());
+        snap.forEach(documentSnapshot => {
+          dispatch(addCancelledOrder(documentSnapshot.data()));
         });
-      for (let item of listOrder) {
-        fireStore()
-          .collection('OrderDetails')
-          .where('OrderID', '==', item.OrderID)
-          .where('state', '==', 'cancelled')
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-              setListOrderDetail(prev => [...prev, documentSnapshot.data()]);
-            });
-          });
-      }
-    };
-    loadListOrder();
-    return () => {
-      controller.abort();
-      setListOrderDetail(null);
-    };
+      });
+  };
+
+  const [refreshing, setRefreshing] = useState(false);
+  useEffect(() => {
+    loadOrder();
   }, []);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(resetCancelledOrder());
+    loadOrder();
+    setRefreshing(false);
+  };
   return (
-    <ScrollView>
-      {listOrderDetail.map((item, index) => (
-        <View key={index}>
-          <OrderDetail item={item} />
-        </View>
-      ))}
-    </ScrollView>
+    <View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            progressBackgroundColor={COLORS.custom}
+          />
+        }>
+        {Orders.map((item, index) => (
+          <View key={index}>
+            <ItemInOder item={item} />
+          </View>
+        ))}
+      </ScrollView>
+    </View>
   );
 };
 
