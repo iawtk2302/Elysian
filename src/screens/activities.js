@@ -1,30 +1,18 @@
-import {StyleSheet} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {TopTabs} from '../navigators/Navigation';
-import {useSelector, useDispatch} from 'react-redux';
-import {setValues} from '../redux/orderDetailSlide';
-import fireStore from '@react-native-firebase/firestore';
-import fireAuth from '@react-native-firebase/auth';
+import React from 'react';
+import TopTabOrder from '../navigators/TopTabOrder';
+import {View, Text} from 'react-native';
+import styles from '../styles/View.TopTab.Nav';
+import ModalOrderDetails from '../components/ModalOrderDetails';
 
 const Activities = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const loadAllOrder = async () => {
-      await fireStore()
-        .collection('Orders')
-        .where('userID', '==', fireAuth().currentUser.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            dispatch(setValues(documentSnapshot.data()));
-          });
-        });
-    };
-    loadAllOrder();
-  }, []);
-  return <TopTabs />;
+  return (
+    <View style={{flex: 1}}>
+      <View style={styles.tabBar}>
+        <Text style={styles.text}>Đơn mua</Text>
+        <ModalOrderDetails />
+      </View>
+      <TopTabOrder />
+    </View>
+  );
 };
-
 export default Activities;
-
-const styles = StyleSheet.create({});

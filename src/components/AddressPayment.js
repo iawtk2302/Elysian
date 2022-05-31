@@ -10,7 +10,7 @@ import {selectedAddress} from '../redux/addressSlice';
 const AddressPayment = () => {
   let address = useSelector(selectedAddress);
   return (
-    <View style={[styles.aroundContainer, {flex: 5}]}>
+    <View style={[styles.aroundContainer, {flex: 4}]}>
       <Header />
       <BodyAddress address={address} />
       <BodyUser address={address} />

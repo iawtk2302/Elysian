@@ -1,8 +1,10 @@
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
 import NumberFormat from 'react-number-format';
+import {Divider} from 'react-native-paper';
+import COLORS from '../common/Color';
 
 const ProductPayment = ({item}) => {
   return (
@@ -10,24 +12,31 @@ const ProductPayment = ({item}) => {
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 20,
+        backgroundColor: 'white',
+        padding: 15,
+        borderWidth: 0.7,
+        borderRadius: 10,
+        borderColor: COLORS.custom,
       }}>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity>
-          <Ionicons name="pencil-outline" style={{fontSize: 20}} />
+          <Image
+            source={{uri: item.product.linkImage}}
+            style={{height: 35, width: 35}}
+          />
         </TouchableOpacity>
         <TouchableOpacity style={{paddingStart: 20}}>
           <Text style={styles.textColor}>
-            x{item.amount} {item.name}
+            x{item.count} {item.product.name}
           </Text>
           <Text>
-            Kích cỡ: <Text style={styles.textColor}> {item.size}</Text>
+            Kích cỡ: <Text style={styles.textColor}> {item.size.name}</Text>
           </Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.textColor}>
+      <Text style={[styles.textColor, {fontWeight: '500'}]}>
         <NumberFormat
-          value={parseInt(item.price)}
+          value={parseInt(item.total)}
           displayType="text"
           thousandSeparator
           suffix="đ"
