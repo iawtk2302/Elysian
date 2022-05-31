@@ -11,9 +11,11 @@ import Banner from '../screens/Banner';
 import Notification from '../screens/Notification';
 const Stack = createSharedElementStackNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
+import ExploreScreen from '../screens/ExploreScreen';
 import FavoriteProduct from '../screens/favoriteProduct';
 import InfoUser from '../screens/infoUser';
 import TopTabOrder from './TopTabOrder';
+import Voucher from '../screens/voucher';
 
 const Navigation = () => {
   async function onDisplayNotification() {
@@ -64,7 +66,7 @@ const Navigation = () => {
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
         <Stack.Screen name="Favorite" component={FavoriteProduct} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sản phẩm yêu thích'}}/>
         <Stack.Screen name="InfoUser" component={InfoUser} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Cập nhật thông tin'}}/>
-        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center'}}/>
+        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Thông báo', tabBarVisible: false} }/>
         <Stack.Screen name="Banner" component={Banner} 
         options={{
           gestureEnabled: true,
@@ -73,6 +75,9 @@ const Navigation = () => {
             close: {animation: 'timing', config: {duration: 300}},
           }
         }}/>
+        <Stack.Screen name='Map' component={ExploreScreen}/>
+        <Stack.Screen name='Voucher' component={Voucher}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

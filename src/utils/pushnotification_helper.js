@@ -6,22 +6,42 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 
 const AddNotification = async data => {
-  console.log(data.notification.body);
-  const temp = {
-    title: data.notification.title,
-    body: data.notification.body,
-    linkImage:
-      data.notification.android.imageUrl ||
-      'https://firebasestorage.googleapis.com/v0/b/elysian-cfa87.appspot.com/o/Sua-Tuoi-Long-Nhan.png?alt=media&token=2d98fb21-efc9-4219-abb1-9f7b48f5dce0',
-    date: firestore.Timestamp.now(),
-  };
-  await firestore()
+  try {
+    let temp
+    if(data.data.NotificationID !== undefined){
+      temp = {
+        title: data.notification.title,
+        body: data.notification.body,
+        linkImage:
+          data.notification.android.imageUrl ||
+          'https://firebasestorage.googleapis.com/v0/b/elysian-cfa87.appspot.com/o/Elysian.png?alt=media&token=aa75058b-9d6d-4fba-892d-88ef8cd512d9',
+        date: firestore.Timestamp.now(),
+        BannerID: data.data.NotificationID,
+      };
+    }
+    else{
+      temp = {
+        title: data.notification.title,
+        body: data.notification.body,
+        linkImage:
+          data.notification.android.imageUrl ||
+          'https://firebasestorage.googleapis.com/v0/b/elysian-cfa87.appspot.com/o/Elysian.png?alt=media&token=aa75058b-9d6d-4fba-892d-88ef8cd512d9',
+        date: firestore.Timestamp.now(),
+        // BannerID: data.data.NotificationID,
+      };
+    }
+    console.log(temp)
+    await firestore()
     .collection('Notifications')
     .add(temp)
     .then(docRef => {
       console.log('Noti added!');
       AddNotificationToUser(docRef.id);
     });
+  } catch (error) {
+    console.log(error)
+  }
+  
 };
 const AddNotificationToUser = async id => {
   let data = {};
@@ -36,7 +56,7 @@ const AddNotificationToUser = async id => {
         doc.ref.update({
           Notifications: data,
         });
-        console.log(doc.data().Notifications);
+        // console.log(doc.data().Notifications);
       });
     });
 };
@@ -60,7 +80,7 @@ const getFCMtoken = async () => {
       const fcmToken = await messaging().getToken();
       if (fcmToken) {
         await AsyncStorage.setItem('fcmtoken', fcmToken);
-        // console.log(fcmToken);
+        console.log(fcmToken);
       }
     } catch (error) {}
   }
@@ -86,7 +106,7 @@ export const notificationListener = () => {
       }
     });
   messaging().onMessage(async remoteMessage => {
-    // console.log('Notification Foreground ...', remoteMessage);
+    console.log('Notification Foreground ...', remoteMessage);
     AddNotification(remoteMessage);
   });
 

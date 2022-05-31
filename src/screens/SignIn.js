@@ -21,49 +21,44 @@ const SignIn = ({navigation}) => {
       '242687886098-tqvu3kpcru4uo0lhdg47otfetdrb6slj.apps.googleusercontent.com',
   });
   const [confirm, setConfirm] = useState(null);
-  const [code, setCode] = useState('123456');
   const [phone, setPhone] = useState('');
 
   async function signInWithPhoneNumber(phoneNumber) {
     try {
-      // console.log(phoneNumber);
+      if (phoneNumber.charAt(0) === '0') {
+        let a = phoneNumber.substring(1);
+        phoneNumber = '+84'.concat(a);
+        console.log(phoneNumber);
+      }
       const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
       await setConfirm(confirmation);
-      // console.log(confirm);
     } catch (error) {
       console.log(error);
       ToastAndroid.show('Recheck your phone number', 4);
     }
-    //0372948690
-    // navigation.setOptions({
-    //   confirm: confirm,
-    // });
-    // navigation.navigate('PhoneVirtify');
   }
   if (!confirm)
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Image
               source={require('../assets/background.jpg')}
-              style={{width: 400, height: 250}}
+              style={styles.imgBackground}
             />
           </View>
           <View style={styles.footer}>
             <Text style={{alignSelf: 'center'}}>Chào mừng đến với Elysian</Text>
             <Text style={styles.name}>ELYSIAN</Text>
             <Input
-              keyboardType="phone-pad"
+              keyboardType="numeric"
               placeholder="Nhập số điện thoai"
               onChangeText={text => setPhone(text)}
             />
             <TouchableOpacity
               style={styles.btnLogin}
               onPress={() => signInWithPhoneNumber(phone)}>
-              <Text style={{alignSelf: 'center', fontSize: 17, color: 'black'}}>
-                Đăng nhập
-              </Text>
+              <Text style={styles.txtSignin}>Đăng nhập</Text>
             </TouchableOpacity>
 
             <Text style={styles.OtherSignIn}>- Or sign in with -</Text>
@@ -104,7 +99,7 @@ const SignIn = ({navigation}) => {
         </View>
       </TouchableWithoutFeedback>
     );
-  return <Vertify confirm={confirm} phoneNumber={phone}/>;
+  return <Vertify confirm={confirm} phoneNumber={phone} />;
 };
 
 export default SignIn;
@@ -117,6 +112,10 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     backgroundColor: 'red',
+  },
+  imgBackground: {
+    width: 400,
+    height: 250,
   },
   footer: {
     flex: 2,
@@ -164,5 +163,10 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 16,
     marginLeft: 35,
+  },
+  txtSignin: {
+    alignSelf: 'center',
+    fontSize: 17,
+    color: 'black',
   },
 });

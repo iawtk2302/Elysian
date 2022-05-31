@@ -6,17 +6,16 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
-//2yAO0BdR9IdQF9BpKzZv
-//Ulrzc5JqlXRJjeRospxo
-//leaNds7kG0K5UUqPD6GU
-//sxGJkq5yuo615N98UCnY
 import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {SharedElement} from 'react-navigation-shared-element';
+import {useNavigation} from '@react-navigation/native';
 const ItemNotification = ({item}) => {
   const [time, setTime] = useState('10/2');
   const [isNew, setNew] = useState(item.isNew);
+  const navigator = useNavigation();
   const convertTime = time => {
     const newTime = new Date(time * 1000);
     setTime(newTime.getDate() + '/' + newTime.getMonth());
@@ -38,17 +37,19 @@ const ItemNotification = ({item}) => {
       .doc(auth().currentUser.uid)
       .onSnapshot(document => {
         Object.assign(data, document.data().Notifications);
-        for (const [key, value] of Object.entries(
-          document.data().Notifications,
-        )) {
-          if (item.id === key)
-            if (value === true) {
-              setNew(true);
-            }
-        }
+        try {
+          for (const [key, value] of Object.entries(
+            document.data().Notifications,
+          )) {
+            if (item.id === key)
+              if (value === true) {
+                setNew(true);
+              }
+          }
+        } catch (error) {}
       });
   };
-  const ItemClick = async () => {
+  const SetIsNew = async () => {
     let data = {};
     await firestore()
       .collection('Users')
@@ -72,78 +73,79 @@ const ItemNotification = ({item}) => {
         setNew(false);
       });
   };
+  const Click = async () => {
+    try {
+      const banner = item.BannerID.trim();
+      await firestore()
+        .collection('Banners')
+        .doc(banner)
+        .get()
+        .then(doc => {
+          navigator.navigate('Banner', {item: doc.data()});
+          // console.log(doc.data())
+        });
+    } catch (error) {
+      console.log(error);
+      navigator.navigate('Order')
+    }
+    SetIsNew();
+  };
+  const remove = async () => {
+    await firestore()
+      .collection('Users')
+      .onSnapshot(query => {
+        query.forEach(doc => {
+          doc.ref.update({
+            Notifications: firestore.FieldValue.delete(),
+          });
+        });
+      });
+  };
+
   useEffect(() => {
     UpdateNew();
-    convertTime(10000);
-    // console.log('first')
-    // console.log(isNew)
+    convertTime(item.date.seconds);
   }, []);
+
   return (
     <TouchableOpacity
       style={[styles.container]}
       activeOpacity={0.7}
       onPress={() => {
-        ItemClick();
+        // ItemClick();
         // console.log(item)
+        Click();
+        // remove()
       }}>
       <View style={{flex: 1}}>
-        <Image
-          style={styles.imageLeft}
-          source={{
-            uri:
-              item.linkImage !== '' && item.linkImage !== undefined
-                ? item.linkImage
-                : 'https://firebasestorage.googleapis.com/v0/b/notification-314b0.appspot.com/o/image1%20-%20Copy.png?alt=media&token=adb16fcd-0104-41df-90d1-f795bc6be25f',
-          }}
-        />
+        <SharedElement id={`${item.linkImage}`}>
+          <Image
+            style={styles.imageLeft}
+            source={{
+              uri:
+                item.linkImage !== '' && item.linkImage !== undefined
+                  ? item.linkImage
+                  : 'https://firebasestorage.googleapis.com/v0/b/notification-314b0.appspot.com/o/image1%20-%20Copy.png?alt=media&token=adb16fcd-0104-41df-90d1-f795bc6be25f',
+            }}
+          />
+        </SharedElement>
       </View>
-      <View
-        style={{
-          flexDirection: 'column',
-          flex: 3,
-          paddingRight: 20,
-          paddingLeft: 10,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginBottom: 3,
-          }}>
-          <Text style={{color: 'black', fontSize: 16, fontWeight: 'bold'}}>
-            {item.title}
-          </Text>
+      <View style={styles.body}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{item.title}</Text>
         </View>
-        <Text>{item.body}</Text>
+        <Text style={{fontSize: 13}}>{item.body}</Text>
       </View>
-      <View
-        style={{
-          alignSelf: 'flex-start',
-        }}>
-        <View style={{paddingRight: 15, paddingTop: 15}}>
+      <View style={styles.containerRight}>
+        <View style={styles.time}>
           <Text>{time}</Text>
         </View>
         {isNew && (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignSelf: 'flex-end',
-              marginTop: -25,
-            }}>
-            <Icon name="circle" color={'#4FC4F5'} />
+          <View style={styles.new}>
+            <Icon name="circle" color={'#4FC4F5'} size={8} />
           </View>
         )}
       </View>
-      {/* {
-        <TouchableOpacity style={styles.btnFollow} activeOpacity={0.6}>
-          <Text
-            style={{
-              color: 'white',
-            }}>
-              {time}
-          </Text>
-        </TouchableOpacity>
-      } */}
     </TouchableOpacity>
   );
 };
@@ -152,37 +154,45 @@ export default ItemNotification;
 
 const styles = StyleSheet.create({
   container: {
-    height: 100,
-    // borderWidth: 1,
+    height: 90,
+    borderBottomWidth: 0.2,
     backgroundColor: 'white',
-    borderColor: 'black',
-    borderRadius: 15,
+    borderColor: '#ccc',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.46,
-    shadowRadius: 11,
-    elevation: 17,
-    marginBottom: 10,
+    marginBottom: 0.4,
+    paddingHorizontal: 15,
   },
   imageLeft: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     marginRight: 20,
   },
-  btnFollow: {
-    backgroundColor: '#4FC4F5',
-    width: 60,
-    height: 30,
+  body: {
+    flexDirection: 'column',
+    flex: 3,
+    paddingLeft: 10,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    marginBottom: 3,
+  },
+  title: {
+    color: 'black',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  containerRight: {
+    alignSelf: 'flex-start',
+  },
+  time: {
+    paddingRight: 15,
+    paddingTop: 15,
+  },
+  new: {
     flex: 1,
-    marginLeft: 10,
-    borderRadius: 6,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'flex-end',
+    marginTop: -25,
   },
 });
