@@ -7,10 +7,13 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {ActivityIndicator} from 'react-native';
 import {Button} from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 const Notification = () => {
+  const navigation = useNavigation()
   const [notiData, setNotiData] = useState([]);
   const [re, setRe] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState([])
   const getData = async () => {
     let temp = [];
     let tempData = [];
@@ -68,8 +71,21 @@ const Notification = () => {
     });
     return temp
   };
+  const getLocation = async() => {
+    const temp = []
+    await firestore()
+    .collection('Locations')
+    .get()
+    .then(query => {
+      query.forEach(doc => {
+        temp.push(doc.data())
+      })
+      setLocation(temp)
+    })
+  }
   useEffect(() => {
     getData();
+    getLocation()
   }, []);
 
   if (loading) {
@@ -80,6 +96,9 @@ const Notification = () => {
       {notiData.map((item, index) => {
         return <ItemNotification key={index} item={item} />;
       })}
+      <Button onPress={() => {navigation.navigate('Map', {markers: location})}}>
+        <Text>bac</Text>
+      </Button>
     </ScrollView>
   );
 };

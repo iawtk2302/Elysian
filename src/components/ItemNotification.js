@@ -49,7 +49,7 @@ const ItemNotification = ({item}) => {
         } catch (error) {}
       });
   };
-  const ItemClick = async () => {
+  const SetIsNew = async () => {
     let data = {};
     await firestore()
       .collection('Users')
@@ -74,16 +74,21 @@ const ItemNotification = ({item}) => {
       });
   };
   const Click = async () => {
-    const banner = item.BannerID.trim();
-    await firestore()
-      .collection('Banners')
-      .doc(banner)
-      .get()
-      .then(doc => {
-        navigator.navigate('Banner', {item: doc.data()});
-        // console.log(doc.data())
-      });
-    ItemClick();
+    try {
+      const banner = item.BannerID.trim();
+      await firestore()
+        .collection('Banners')
+        .doc(banner)
+        .get()
+        .then(doc => {
+          navigator.navigate('Banner', {item: doc.data()});
+          // console.log(doc.data())
+        });
+    } catch (error) {
+      console.log(error);
+      navigator.navigate('Order')
+    }
+    SetIsNew();
   };
   const remove = async () => {
     await firestore()

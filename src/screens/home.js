@@ -24,8 +24,8 @@ import {createSharedElementStackNavigator} from 'react-navigation-shared-element
 import ItemBanner from '../components/itemBanner';
 import ItemProduct from '../components/itemProduct';
 import {useNavigation} from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux';
+import { Button } from 'react-native-paper';
 const {height, width} = Dimensions.get('window');
 
 const Home = ({navigation}) => {
@@ -115,6 +115,9 @@ const Home = ({navigation}) => {
         <Text style={styles.txtHeader}>
           Xin chào, {auth().currentUser.displayName}
         </Text>
+        <Button style={{marginLeft: 45}}>
+          <Text>vourchers</Text>
+        </Button>
         <View style={styles.notificationContainer}>
           <Icon
             name="bell"
@@ -178,21 +181,6 @@ const Home = ({navigation}) => {
               <ItemBanner item={item} navigation={navigation} key={index} />
             );
           })}
-        </View>
-        <View
-          style={{
-            flex: 2,
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            marginHorizontal: -5,
-          }}>
-          {
-            databanner.map((item, index) => {
-              return (
-                <ItemBanner item={item} navigation={navigation} key={index} />
-              );
-            })
-          }
         </View>
       </ScrollView>
     </View>

@@ -65,7 +65,7 @@ const Navigation = () => {
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
         <Stack.Screen name="Favorite" component={FavoriteProduct} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sản phẩm yêu thích'}}/>
         <Stack.Screen name="InfoUser" component={InfoUser} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Cập nhật thông tin'}}/>
-        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center'}}/>
+        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Thông báo', tabBarVisible: false} }/>
         <Stack.Screen name="Banner" component={Banner} 
         options={{
           gestureEnabled: true,
