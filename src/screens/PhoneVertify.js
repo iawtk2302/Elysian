@@ -22,7 +22,7 @@ const PhoneVertify = ({setHasPhone}) => {
         <Icon name='times-circle' size={30} onPress={signOut}/>
       </View>
       <View style={styles.header}>
-        <Text style={styles.txtHeader}>Xác nhận mã OTP</Text>
+        <Text style={styles.txtHeader}>Xác nhận số điện thoại</Text>
         <Text style={styles.txtNoti}>
           Vui lòng xác nhận số điện thoại của bạn để nhận được nhiều ưu đãi từ
           cửa hàng của chúng tôi

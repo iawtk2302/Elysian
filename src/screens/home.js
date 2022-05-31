@@ -21,17 +21,15 @@ import {SharedElement} from 'react-navigation-shared-element';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import ItemBanner from '../components/itemBanner';
 import ItemProduct from '../components/itemProduct';
-import { useNavigation } from '@react-navigation/native'
-// import ItemProduct from '../components/itemProduct';
-// import ItemBanner from './itemBanner';
-// import ItemProduct from './itemProduct';
+import {useNavigation} from '@react-navigation/native';
 
 const {height, width} = Dimensions.get('window');
 const Home = ({navigation}) => {
-  const navigator=useNavigation()
+  const navigator = useNavigation();
+  const [notificationNum, setNotiNum] = useState('0');
   // console.log('first');
-  const [text, setText] = useState('gggg');
-  const [rerender, SetRerender] = useState(false);
+  // const [text, setText] = useState('gggg');
+  // const [rerender, SetRerender] = useState(false);
   const [databanner, setDatabanner] = useState([]);
   const [dataProducts, setDataProducts] = useState([]);
   const getData = async () => {
@@ -60,34 +58,52 @@ const Home = ({navigation}) => {
         setDataProducts(listProduct);
       });
   };
+  const getCountNewNotification = async () => {
+    await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .onSnapshot(doc => {
+        try {
+          const data = Object.values(doc.data().Notifications);
+          const count = data.filter(value => value === true).length;
+          // console.log(count)
+          setNotiNum(count);
+        } catch (error) {
+          setNotiNum(0);
+        }
+      });
+  };
   useEffect(() => {
-    // LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
     getData();
+    getCountNewNotification();
   }, []);
 
   return (
-    <View
-      style={{flex: 1, borderRadius: 100}}
-      nestedScrollEnabled={false}>
-        <View style={styles.header}>
-          <Image
-            source={require('../assets/coffee-cup.png')}
-            style={{marginHorizontal: 5, width: 30, height: 30}}
-          />
-          <Text style={{fontWeight: 'bold', fontSize: 15, paddingLeft: 5}}>
-            Xin chào, {auth().currentUser.displayName}
-          </Text>
+    <View style={styles.container} nestedScrollEnabled={false}>
+      <View style={styles.header}>
+        <Image
+          source={require('../assets/coffee-cup.png')}
+          style={styles.imageLogo}
+        />
+        <Text style={styles.txtHeader}>
+          Xin chào, {auth().currentUser.displayName}
+        </Text>
+        <View style={styles.notificationContainer}>
           <Icon
             name="bell"
-            style={{fontSize: 20, position: 'absolute', right: 10}}
+            size={28}
             onPress={() => navigator.navigate('Notification')}
           />
+          <View style={styles.NotiNum}>
+            <Text style={styles.txtNotiNum}>{notificationNum}</Text>
+          </View>
         </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal: 15}}>
-        <Text style={{fontSize: 19, fontWeight: 'bold', color: 'black'}}>
-          Bộ sưu tập
-        </Text>
-        <View style={{flex: 1, paddingVertical: 20}}>
+      </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{paddingHorizontal: 15}}>
+        <Text style={styles.txtBST}>Bộ sưu tập</Text>
+        <View style={styles.slider}>
           <Swiper
             activeDotColor="white"
             dotStyle={{marginTop: 40}}
@@ -121,58 +137,24 @@ const Home = ({navigation}) => {
             })}
           </Swiper>
         </View>
-        <Text
-          style={{
-            fontSize: 19,
-            fontWeight: 'bold',
-            marginBottom: 10,
-            color: 'black',
-          }}>
-          Gợi ý riêng cho {auth().currentUser.displayName.toUpperCase()}
-        </Text>
+        <Text style={styles.txtSuggest}>Gợi ý riêng cho bạn</Text>
         <View>
           {dataProducts.map((item, index) => {
             return <ItemProduct item={item} key={index} />;
           })}
         </View>
-        <Text
-          style={{
-            fontSize: 19,
-            fontWeight: 'bold',
-            marginBottom: 10,
-            marginTop: 40,
-            color: 'black',
-          }}>
-          Khám phá thêm
-        </Text>
+        <Text style={styles.txtDiscover}>Khám phá thêm</Text>
         <View
-          style={{
-            flex: 2,
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            marginHorizontal: -5,
-          }}>
-          {
-            databanner.map((item, index) => {
-              return (
-                <ItemBanner item={item} navigation={navigation} key={index} />
-              );
-            })
-            // <FlatList
-            //   scrollEnabled={true}
-            //   horizontal={false}
-            //   numColumns={2}
-            //   data={databanner}
-            //   renderItem={item => (
-            //     <ItemBanner item={item} navigation={navigation} />
-            //   )}
-            //   keyExtractor={(item, index) => index}
-            // />
-          }
+          style={styles.Banner}>
+          {databanner.map((item, index) => {
+            return (
+              <ItemBanner item={item} navigation={navigation} key={index} />
+            );
+          })}
         </View>
-        <View>
+        {/* <View>
           <Text>ác</Text>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
@@ -181,10 +163,71 @@ const Home = ({navigation}) => {
 export default Home;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderRadius: 100,
+  },
   header: {
     height: 60,
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
+  txtHeader: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    paddingLeft: 5,
+  },
+  imageLogo: {
+    marginHorizontal: 5,
+    width: 30,
+    height: 30,
+  },
+  notificationContainer: {
+    position: 'absolute',
+    right: 15,
+  },
+  NotiNum: {
+    backgroundColor: 'red',
+    height: 15,
+    width: 15,
+    borderRadius: 7.5,
+    position: 'absolute',
+    left: 14,
+    top: 0,
+  },
+  txtNotiNum: {
+    fontSize: 10,
+    alignSelf: 'center',
+    color: 'white',
+    fontWeight: '500',
+  },
+  txtBST: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  slider: {
+    flex: 1,
+    paddingVertical: 20,
+  },
+  txtSuggest: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'black',
+  },
+  txtDiscover: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 40,
+    color: 'black',
+  },
+  Banner: {
+    // flex: 2,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginHorizontal: -5,
+  }
 });

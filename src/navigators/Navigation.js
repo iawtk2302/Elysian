@@ -20,6 +20,7 @@ import CancelledOrder from '../screens/cancelledOrder';
 import CompletedOder from '../screens/completedOder';
 const Tab = createMaterialTopTabNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
+import ExploreScreen from '../screens/ExploreScreen';
 const Navigation = () => {
   async function onDisplayNotification() {
     // Create a channel
@@ -67,6 +68,7 @@ const Navigation = () => {
             close: {animation: 'timing', config: {duration: 300}},
           }
         }}/>
+        <Stack.Screen name='Map' component={ExploreScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
