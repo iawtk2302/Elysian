@@ -11,14 +11,11 @@ import Banner from '../screens/Banner';
 import Notification from '../screens/Notification';
 const Stack = createSharedElementStackNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
-<<<<<<< HEAD
 import ExploreScreen from '../screens/ExploreScreen';
-=======
 import FavoriteProduct from '../screens/favoriteProduct';
 import InfoUser from '../screens/infoUser';
 import TopTabOrder from './TopTabOrder';
 
->>>>>>> fcb710c4bd992ea0464fdf4baee75c45776f4204
 const Navigation = () => {
   async function onDisplayNotification() {
     // Create a channel
