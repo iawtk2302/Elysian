@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   SectionList,
   Text,
+  TouchableOpacity
 } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import ItemProduct from '../components/itemProduct';
@@ -12,11 +13,16 @@ import firestore from '@react-native-firebase/firestore';
 import HeaderOrder from '../components/headerOrder';
 import ItemCategory from '../components/itemCategory';
 import COLORS from '../common/Color';
+import Icon from 'react-native-vector-icons/Ionicons'
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 const Order = () => {
   const [loading, setLoading] = useState(true);
   const [section, setSection] = useState([]);
   const [topping, setTopping] = useState([]);
   const [size, setSize] = useState([]);
+  const navigation=useNavigation()
+  const orders=useSelector(state=>state.orders.list)
   const [dataCategory, setDataCategory] = useState([
     {
       title: 'Trà sữa',
@@ -83,6 +89,10 @@ const Order = () => {
         });
       });
     return temp;
+  };
+  const navPayment = () => {
+    if(orders.length>0)
+    navigation.push('Payment');
   };
   const getData = async () => {
     const dataTS = [];
@@ -190,12 +200,13 @@ const Order = () => {
     }
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor:'white' }}>
       <HeaderOrder />
       <FlatList
-        style={{ height: 50, backgroundColor: 'white', paddingLeft: 8 }}
+        style={{ height: 50, backgroundColor: 'white', paddingLeft: 8, marginRight:8 }}
         horizontal={true}
         data={dataCategory}
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <ItemCategory
             item={item}
@@ -207,6 +218,7 @@ const Order = () => {
         keyExtractor={(item, index) => item + index}
       />
       <SectionList
+      showsVerticalScrollIndicator={false}
         ref={sectionRef}
         sections={section}
         keyExtractor={(item, index) => item + index}
@@ -226,10 +238,46 @@ const Order = () => {
           </Text>
         )}
       />
+      {
+        orders.length>0&&
+        <View style={styles.count}>
+            <Text style={{fontSize:12, color:'white'}}>{orders.length}</Text>
+        </View>
+      }
+      {
+        orders.length>0&&
+        <TouchableOpacity style={styles.btnfl} activeOpacity={1} onPress={navPayment}>
+            <Icon name='cart-outline' color='white' size={24}/>     
+        </TouchableOpacity>
+      }
     </View>
   );
 };
 
 export default Order;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  btnfl: {
+    backgroundColor: COLORS.custom,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  count: {
+    backgroundColor: '#BC945D',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    position: 'absolute',
+    bottom: 48,
+    right: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex:10
+  }
+});

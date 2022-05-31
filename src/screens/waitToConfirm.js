@@ -1,58 +1,64 @@
-import {View, ScrollView} from 'react-native';
+import {ScrollView, RefreshControl, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import OrderDetail from '../components/OrderDetail';
+import ItemInOder from '../components/ItemInOder';
 import fireStore from '@react-native-firebase/firestore';
-import fireAuth from '@react-native-firebase/auth';
-import {useSelector} from 'react-redux';
-import {selectAllOrder} from '../redux/orderDetailSlide';
+import COLORS from '../common/Color';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  selectWaitingOrders,
+  addWaitingOrder,
+  resetWaitingOrder,
+} from '../redux/orderDetailSlide';
 
-let listOrder = [];
+const WaitToConfirm = () => {
+  const dispatch = useDispatch();
+  const Orders = useSelector(selectWaitingOrders);
+  const loadOrder = async () => {
+    await fireStore()
+      .collection('Orders')
+      .where('state', '==', 'waiting')
+      .onSnapshot(
+        snap => {
+          dispatch(resetWaitingOrder());
+          snap.forEach(documentSnapshot => {
+            dispatch(addWaitingOrder(documentSnapshot.data()));
+          });
+        },
+        er => {
+          console.log(er);
+        },
+      );
+  };
 
-const WaiToConFirm = () => {
-  const [listOrderDetail, setListOrderDetail] = useState([]);
-
-  // let allOrder = useSelector(selectAllOrder);
+  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
-    const controller = new AbortController();
-    const loadListOrder = async () => {
-      await fireStore()
-        .collection('Orders')
-        .where('userID', '==', fireAuth().currentUser.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            listOrder = [...listOrder, documentSnapshot.data()];
-          });
-        });
-      for (let item of listOrder) {
-        fireStore()
-          .collection('OrderDetails')
-          .where('OrderID', '==', item.OrderID)
-          .where('state', '==', 'waiting')
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-              setListOrderDetail(prev => [...prev, documentSnapshot.data()]);
-            });
-          });
-      }
-    };
-    loadListOrder();
-    return () => {
-      controller.abort();
-      setListOrderDetail(null);
-    };
+    loadOrder();
   }, []);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(resetWaitingOrder());
+    loadOrder();
+    setRefreshing(false);
+  };
   return (
-    <ScrollView>
-      {listOrderDetail.map((item, index) => (
-        <View key={index}>
-          <OrderDetail item={item} />
-        </View>
-      ))}
-    </ScrollView>
+    <View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            progressBackgroundColor={COLORS.custom}
+          />
+        }>
+        {Orders.map((item, index) => (
+          <View key={index}>
+            <ItemInOder item={item} />
+          </View>
+        ))}
+      </ScrollView>
+    </View>
   );
 };
 
-export default WaiToConFirm;
+export default WaitToConfirm;

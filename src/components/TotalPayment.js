@@ -1,11 +1,21 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import BtnCompletePayment from './BtnCompletePayment';
 import NumberFormat from 'react-number-format';
+import {useSelector} from 'react-redux';
+import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 
-const TotalPayment = ({total, arrProduct}) => {
+const TotalPayment = ({navigation}) => {
+  const arrProduct = useSelector(state => state.orders.list);
+  const total = calculatorTotalPrice();
+
+  const countALlProduct = () => {
+    let count = 0;
+    for (let product of arrProduct) count += product.count;
+    return count;
+  };
   return (
     <View style={[styles.aroundContainer, {flex: 2}]}>
       <View style={{flex: 1}}>
@@ -29,7 +39,9 @@ const TotalPayment = ({total, arrProduct}) => {
             justifyContent: 'space-around',
           }}>
           <View>
-            <Text style={{color: 'white'}}>Giao hàng - 2 sản phẩm</Text>
+            <Text style={{color: 'white'}}>
+              Giao hàng 🌟 {countALlProduct()} sản phẩm
+            </Text>
             <Text style={{fontWeight: '600', color: 'white'}}>
               <NumberFormat
                 value={parseInt(total)}
@@ -40,7 +52,7 @@ const TotalPayment = ({total, arrProduct}) => {
               />
             </Text>
           </View>
-          <BtnCompletePayment total={total} arrProduct={arrProduct} />
+          <BtnCompletePayment navigation={navigation} />
         </View>
       </View>
     </View>

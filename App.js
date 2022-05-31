@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -12,17 +12,20 @@ import {
 import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
-import Register from './src/screens/Register'
+import Register from './src/screens/Register';
 import PhoneVertify from './src/screens/PhoneVertify';
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux';
 import store from './src/redux/store';
-import { notificationListener, requestUserPermission } from './src/utils/pushnotification_helper';
-import SplashScreen from 'react-native-splash-screen'
+import {
+  notificationListener,
+  requestUserPermission,
+} from './src/utils/pushnotification_helper';
+import SplashScreen from 'react-native-splash-screen';
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [profileUpdated, setProfileUpdated] = useState(false);
-  const [hasPhone, setHasPhone] = useState(false)
+  const [hasPhone, setHasPhone] = useState(false);
   function onAuthStateChanged(user) {
     setUser(user);
     // console.log(user);
@@ -33,20 +36,19 @@ const App = () => {
         setProfileUpdated(true);
       }
       if (auth().currentUser.phoneNumber != null) {
-        setHasPhone(true)
+        setHasPhone(true);
       }
     }
     // console.log(user)
     // console.log(auth().currentUser.email.toString())
 
     // console.log(profileUpdated)
-
   }
 
   useEffect(() => {
-    setHasPhone(false)
-    requestUserPermission()
-    notificationListener()
+    setHasPhone(false);
+    requestUserPermission();
+    notificationListener();
     SplashScreen.hide();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
@@ -56,34 +58,32 @@ const App = () => {
 
   if (!user) {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <SiginInNavigate />
       </View>
     );
   }
   if (!hasPhone)
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <PhoneVertify setHasPhone={setHasPhone} />
       </View>
-    )
+    );
   if (!profileUpdated)
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <Register setProfileUpdated={setProfileUpdated} />
       </View>
     );
   return (
     <Provider store={store}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{flex: 1}}>
         <Navigation />
       </SafeAreaView>
     </Provider>
   );
 };
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 export default App;

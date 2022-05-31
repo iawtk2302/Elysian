@@ -1,8 +1,8 @@
-import { StyleSheet, Text } from 'react-native'
-import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import {StyleSheet, Text} from 'react-native';
+import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
 import COLORS from '../common/Color';
 import Home from '../screens/home';
 import Order from '../screens/order';
@@ -11,23 +11,24 @@ import User from '../screens/user';
 const Tab = createMaterialBottomTabNavigator();
 const Bottomtab = () => {
   return (
-      <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, size }) => {
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, size}) => {
           let iconName;
           let color1;
-          if (route.name === 'Home') {
+          if (route.name === 'Trang chủ') {
             iconName = focused ? 'home' : 'home-outline'
             color1 = focused ? COLORS.custom : COLORS.gray
           }
-          else if (route.name === 'Order') {
+          else if (route.name === 'Đơn hàng') {
             iconName = focused ? 'fast-food' : 'fast-food-outline'
             color1 = focused ? COLORS.custom : COLORS.gray
           }
-          else if (route.name === 'Activities') {
+          else if (route.name === 'Hoạt động') {
             iconName = focused ? 'reader' : 'reader-outline'
             color1 = focused ? COLORS.custom : COLORS.gray
           }
-          else if (route.name === 'User') {
+          else if (route.name === 'Tài khoản') {
             iconName = focused ? 'person' : 'person-outline'
             color1 = focused ? COLORS.custom : COLORS.gray
           }
@@ -35,7 +36,7 @@ const Bottomtab = () => {
         },
         headerShown: false,
         tabBarStyle: {
-          height: 60
+          height: 60,
         },
         // tabBarLabel:({focused})=>{
         //   let color1;
@@ -55,14 +56,14 @@ const Bottomtab = () => {
         // }
       })} barStyle={{ backgroundColor: 'white' }} activeColor={COLORS.custom}
         inactiveColor={COLORS.gray}>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Order" component={Order}/>
-        <Tab.Screen name="Activities" component={Activities} />
-        <Tab.Screen name="User" component={User} />
+        <Tab.Screen name="Trang chủ" component={Home} />
+        <Tab.Screen name="Đơn hàng" component={Order}/>
+        <Tab.Screen name="Hoạt động" component={Activities} />
+        <Tab.Screen name="Tài khoản" component={User} />
       </Tab.Navigator>
   )
 }
 
-export default Bottomtab
+export default Bottomtab;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

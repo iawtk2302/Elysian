@@ -1,45 +1,24 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styles from '../styles/View.OrderDetail';
 import {Divider} from 'react-native-paper';
-import COLORS from '../common/Color';
-import BtnActionOrder from './BtnActionOrder';
-import fireStore from '@react-native-firebase/firestore';
-import NumberFormat from 'react-number-format';
+import FormatNumber from '../utils/FormatNumber';
 
 const OrderDetail = ({item}) => {
-  const [rel, setRel] = useState(false);
-  useEffect(() => {
-    const loadProductDetail = async () => {
-      fireStore()
-        .collection('Products')
-        .doc(item.productID)
-        .get()
-        .then(documentSnapshot => {
-          item.price = documentSnapshot.data().price;
-          item.image = documentSnapshot.data().linkImage;
-          item.name = documentSnapshot.data().name;
-          setRel(true);
-        });
-    };
-
-    loadProductDetail();
-  }, []);
   return (
-    <View style={styles.container}>
-      <View padding={10}>
+    <View>
+      <View style={{marginTop: 15}}>
         <TouchableOpacity>
-          <View flexDirection="row">
+          <View flexDirection="row" marginTop={10}>
             <Image
-              source={{uri: item.image}}
+              source={{uri: item.products.linkImage}}
               style={{width: 70, height: 70, backgroundColor: 'white'}}
             />
             <Detail data={item} />
           </View>
         </TouchableOpacity>
         <Divider margin={10} />
-        <PennyTotal amount={item.amount} price={item.price} />
-        <BtnActionOrder state={item.state} />
+        <PennyTotal amount={item.amount} price={item.products.price} />
       </View>
     </View>
   );
@@ -52,7 +31,7 @@ const Detail = ({data}) => {
         justifyContent: 'space-between',
         flex: 1,
       }}>
-      <Text style={{color: 'black', fontSize: 16}}>{data.name}</Text>
+      <Text style={{color: 'black', fontSize: 16}}>{data.products.name}</Text>
       <Text>
         Kích cỡ:{' '}
         <Text style={{color: 'black', fontWeight: 'bold'}}>{data.size}</Text>
@@ -65,14 +44,7 @@ const Detail = ({data}) => {
           </Text>
         </Text>
         <Text>
-          Giá:{' '}
-          <NumberFormat
-            value={parseInt(data.price)}
-            displayType="text"
-            thousandSeparator
-            suffix="đ"
-            renderText={value => <Text>{value}</Text>}
-          />
+          Giá: <FormatNumber number={data.products.price} />
         </Text>
       </View>
     </View>
@@ -84,14 +56,7 @@ const PennyTotal = ({amount, price}) => {
     <View style={styles.layout}>
       <Text>x{amount}</Text>
       <Text>
-        Thành tiền:{' '}
-        <NumberFormat
-          value={parseInt(amount) * parseInt(price)}
-          displayType="text"
-          thousandSeparator
-          suffix="đ"
-          renderText={value => <Text>{value}</Text>}
-        />
+        Thành tiền: <FormatNumber number={parseInt(amount) * parseInt(price)} />
       </Text>
     </View>
   );
