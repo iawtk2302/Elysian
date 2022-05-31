@@ -9,7 +9,7 @@ import {
   addCompletedOrder,
   resetCompletedOrder,
 } from '../redux/orderDetailSlide';
-
+import fireauth from '@react-native-firebase/auth'
 const OnGoing = () => {
   const dispatch = useDispatch();
   const Orders = useSelector(selectCompletedOrders);
@@ -17,6 +17,7 @@ const OnGoing = () => {
     await fireStore()
       .collection('Orders')
       .where('state', '==', 'completed')
+      .where('userID','==',fireauth().currentUser.uid)
       .onSnapshot(snap => {
         dispatch(resetCompletedOrder());
         snap.forEach(documentSnapshot => {

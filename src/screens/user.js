@@ -49,14 +49,6 @@ const User = () => {
               <Text>{user.email}</Text>
             </View>
       </View>
-      <View style={{flexDirection:'row', justifyContent:'space-between', marginVertical:10}}>
-        <TouchableOpacity style={{width:170, height:80, borderRadius:10,backgroundColor:'#F6F1E7'}} activeOpacity={0.6} onPress={()=>{navigation.push('InfoUser',user)}}>
-          <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-            <Icon name='create-outline' color={COLORS.custom} size={28} style={{marginBottom:4}}/>
-            <Text style={{fontSize:14, color:COLORS.custom, fontWeight:'500'}}>Thông tin cá nhân</Text>
-          </View>
-          </TouchableOpacity>
-        </View>
         <View
           style={{
             flexDirection: 'row',

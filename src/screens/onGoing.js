@@ -4,6 +4,7 @@ import ItemInOder from '../components/ItemInOder';
 import fireStore from '@react-native-firebase/firestore';
 import COLORS from '../common/Color';
 import {useDispatch, useSelector} from 'react-redux';
+import fireauth from '@react-native-firebase/auth'
 import {
   selectShippingOrders,
   addShippingOrder,
@@ -17,7 +18,7 @@ const OnGoing = () => {
     await fireStore()
       .collection('Orders')
       .where('state', '==', 'shipping')
-
+      .where('userID','==',fireauth().currentUser.uid)
       .onSnapshot(snap => {
         dispatch(resetShippingOrder());
         snap.forEach(documentSnapshot => {

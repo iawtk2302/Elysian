@@ -9,7 +9,7 @@ import {
   addCancelledOrder,
   resetCancelledOrder,
 } from '../redux/orderDetailSlide';
-
+import fireauth from '@react-native-firebase/auth'
 const CancelledOrder = () => {
   const dispatch = useDispatch();
   const Orders = useSelector(selectCancelledOrders);
@@ -17,6 +17,7 @@ const CancelledOrder = () => {
     await fireStore()
       .collection('Orders')
       .where('state', '==', 'cancelled')
+      .where('userID','==',fireauth().currentUser.uid)
       .onSnapshot(snap => {
         dispatch(resetCancelledOrder());
         snap.forEach(documentSnapshot => {
