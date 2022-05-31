@@ -17,8 +17,7 @@ const Register = ({setProfileUpdated}) => {
     {label: ' Nam', value: 'nam'},
     {label: ' Nữ', value: 'nữ'},
   ]);
-  const [inputs, setInputs] = useState([
-  ]);
+  const [inputs, setInputs] = useState([]);
   const [errors, setErrors] = useState({});
   const [displayName, setDisplayname] = useState('');
   const UpdateProfile = async () => {

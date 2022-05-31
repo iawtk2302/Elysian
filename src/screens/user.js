@@ -33,7 +33,7 @@ const User = () => {
       <Avatar
               size={64}
               rounded
-              source={{ uri: 'https://cdn.pixabay.com/photo/2014/09/17/20/03/profile-449912__340.jpg' }}
+              source={{ uri: user.avatar == '' ? 'http://danhgia.snv.kontum.gov.vn/Images/no-avatar.png' : user.avatar }}
             />
             <View style={{marginLeft:10}}>
               <Text style={{fontSize:20, color:'black', fontWeight:'500'}}>{user.name}</Text>

@@ -36,7 +36,7 @@ const orderSlice = createSlice({
             index=i
           }
         })
-        state.splice(index,1)
+        state.list.splice(index,1)
       },
       removeAllProduct:(state) => {
         state.list.splice(0,state.length)
