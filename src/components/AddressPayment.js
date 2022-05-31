@@ -4,8 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {selectedAddress} from '../redux/addressSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectedAddress, setChecked} from '../redux/addressSlice';
 
 const AddressPayment = () => {
   let address = useSelector(selectedAddress);
@@ -33,8 +33,10 @@ const Header = () => {
 };
 
 const Bot = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const dispatch = useDispatch();
+  const isEnabled = useSelector(state => state.address.checked);
+  const toggleSwitch = () => dispatch(setChecked());
+
   return (
     <View style={styles.addressContain}>
       <Text>Lưu thông tin giao hàng cho lần sau</Text>

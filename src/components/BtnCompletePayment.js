@@ -4,17 +4,26 @@ import firestore from '@react-native-firebase/firestore';
 import fireAuth from '@react-native-firebase/auth';
 import COLORS from '../common/Color';
 import styles from '../styles/View.Payment.container';
-import {useSelector} from 'react-redux';
-import {selectedAddress} from '../redux/addressSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {selectChecked, selectedAddress} from '../redux/addressSlice';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
+import {removeAllProduct} from '../redux/orderSlice';
+import {useNavigation} from '@react-navigation/native';
 
-const BtnCompletePayment = ({navigation}) => {
+const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
   const total = calculatorTotalPrice();
+  const checked = useSelector(selectChecked);
+  const addressChoose = useSelector(selectedAddress);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   let orderID = '';
   let time = null;
   let address = useSelector(selectedAddress);
   const addOrderToFireBase = async () => {
+    dispatch(removeAllProduct());
+
     navigation.goBack();
     await firestore()
       .collection('Orders')
@@ -24,7 +33,7 @@ const BtnCompletePayment = ({navigation}) => {
         orderID: 'temp',
         idAddress: address.idAddress,
         state: 'waiting',
-        createdAt: (time = firestore.FieldValue.serverTimestamp()),
+        createdAt: (time = firestore.Timestamp.now()),
       })
       .then(snap => {
         orderID = snap.id;
@@ -39,10 +48,35 @@ const BtnCompletePayment = ({navigation}) => {
       cancelledTime: '',
       completeTime: '',
     });
+
+    if (checked === true) {
+      await firestore()
+        .collection('Addresses')
+        .get()
+        .then(snap =>
+          snap.forEach(doc => {
+            doc.id === addressChoose.idAddress
+              ? chooseAddress(doc.id)
+              : unChooseAddress(doc.id);
+          }),
+        );
+    }
   };
   const updateOrderID = async () => {
     await firestore().collection('Orders').doc(orderID).update({
       orderID: orderID,
+    });
+  };
+
+  const unChooseAddress = AddressID => {
+    firestore().collection('Addresses').doc(AddressID).update({
+      selected: false,
+    });
+  };
+
+  const chooseAddress = AddressID => {
+    firestore().collection('Addresses').doc(AddressID).update({
+      selected: true,
     });
   };
 

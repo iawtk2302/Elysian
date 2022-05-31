@@ -14,7 +14,6 @@ const ProductPayment = ({item}) => {
         justifyContent: 'space-between',
         backgroundColor: 'white',
         padding: 15,
-        borderWidth: 0.7,
         borderRadius: 10,
         borderColor: COLORS.custom,
       }}>

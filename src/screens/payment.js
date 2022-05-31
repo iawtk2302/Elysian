@@ -30,10 +30,10 @@ const Payment = ({navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <HeaderPayment navigation={navigation} />
+      <HeaderPayment />
       <AddressPayment />
       <PaymentDetail />
-      <TotalPayment navigation={navigation} />
+      <TotalPayment />
     </View>
   );
 };

@@ -10,7 +10,6 @@ import {Divider} from 'react-native-paper';
 import convertTimeToFB from '../utils/convertTimeToFB';
 
 export default ItemInOder = ({item}) => {
-  console.log(JSON.stringify(item, null, 2));
   const dispatch = useDispatch();
   let arrDetailOrder = [];
 

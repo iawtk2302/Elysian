@@ -11,16 +11,6 @@ export default BtnCancel = ({orderID}) => {
     await fireStore().collection('Orders').doc(orderID).update({
       state: 'cancelled',
     });
-    await fireStore()
-      .collection('Orders')
-      .where('orderID', '==', orderID)
-      .get()
-      .then(snap => {
-        snap.forEach(doc => {
-          console.log(doc.id);
-        });
-      });
-    // dispatch(deleteWaitingOrder(orderID));
   };
   return (
     <TouchableOpacity

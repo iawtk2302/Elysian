@@ -7,7 +7,7 @@ import NumberFormat from 'react-number-format';
 import {useSelector} from 'react-redux';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 
-const TotalPayment = ({navigation}) => {
+const TotalPayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
   const total = calculatorTotalPrice();
 
@@ -37,6 +37,8 @@ const TotalPayment = ({navigation}) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
           }}>
           <View>
             <Text style={{color: 'white'}}>
@@ -52,7 +54,7 @@ const TotalPayment = ({navigation}) => {
               />
             </Text>
           </View>
-          <BtnCompletePayment navigation={navigation} />
+          <BtnCompletePayment />
         </View>
       </View>
     </View>
