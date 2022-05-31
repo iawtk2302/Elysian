@@ -115,7 +115,7 @@ const Home = ({navigation}) => {
         <Text style={styles.txtHeader}>
           Xin chào, {auth().currentUser.displayName}
         </Text>
-        <Button style={{marginLeft: 45}}>
+        <Button style={{marginLeft: 45}} onPress={() => {navigator.push('Voucher')}}>
           <Text>vourchers</Text>
         </Button>
         <View style={styles.notificationContainer}>

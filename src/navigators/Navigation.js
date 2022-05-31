@@ -15,6 +15,7 @@ import ExploreScreen from '../screens/ExploreScreen';
 import FavoriteProduct from '../screens/favoriteProduct';
 import InfoUser from '../screens/infoUser';
 import TopTabOrder from './TopTabOrder';
+import Voucher from '../screens/voucher';
 
 const Navigation = () => {
   async function onDisplayNotification() {
@@ -75,6 +76,8 @@ const Navigation = () => {
           }
         }}/>
         <Stack.Screen name='Map' component={ExploreScreen}/>
+        <Stack.Screen name='Voucher' component={Voucher}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );
