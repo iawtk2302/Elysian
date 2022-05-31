@@ -4,17 +4,13 @@ import ProductPayment from './ProductPayment';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import {useNavigation} from '@react-navigation/native';
-<<<<<<< HEAD
-import { useSelector } from 'react-redux';
-=======
 import {SwipeListView} from 'react-native-swipe-list-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import {useSelector} from 'react-redux';
->>>>>>> addPayment
 
 const PaymentDetail = () => {
-  const arrProduct = useSelector(state => state.orders);
+  const arrProduct = useSelector(state => state.orders.list);
 
   return (
     <View style={[styles.aroundContainer, {flex: 4}]}>
@@ -67,11 +63,6 @@ const Header = () => {
   const navProduct = () => {
     Navigation.push('Order');
   };
-<<<<<<< HEAD
-  const order=useSelector(state=>state.orders.list)
-  console.log(order)
-=======
->>>>>>> addPayment
   return (
     <View
       style={{

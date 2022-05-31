@@ -8,7 +8,7 @@ import {useSelector} from 'react-redux';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 
 const TotalPayment = ({navigation}) => {
-  const arrProduct = useSelector(state => state.orders);
+  const arrProduct = useSelector(state => state.orders.list);
   const total = calculatorTotalPrice();
 
   const countALlProduct = () => {

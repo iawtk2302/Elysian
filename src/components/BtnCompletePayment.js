@@ -9,7 +9,7 @@ import {selectedAddress} from '../redux/addressSlice';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 
 const BtnCompletePayment = ({navigation}) => {
-  const arrProduct = useSelector(state => state.orders);
+  const arrProduct = useSelector(state => state.orders.list);
   const total = calculatorTotalPrice();
   let orderID = '';
   let time = null;

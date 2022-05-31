@@ -10,19 +10,11 @@ import firestore from '@react-native-firebase/firestore';
 import Banner from '../screens/Banner';
 import Notification from '../screens/Notification';
 const Stack = createSharedElementStackNavigator();
-<<<<<<< HEAD
-import styles from '../styles/View.TopTab.Nav';
-import CancelledOrder from '../screens/cancelledOrder';
-import CompletedOder from '../screens/completedOder';
-const Tab = createMaterialTopTabNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
 import FavoriteProduct from '../screens/favoriteProduct';
 import InfoUser from '../screens/infoUser';
-=======
-import notifee, {AndroidImportance, AndroidStyle} from '@notifee/react-native';
 import TopTabOrder from './TopTabOrder';
 
->>>>>>> addPayment
 const Navigation = () => {
   async function onDisplayNotification() {
     // Create a channel
@@ -70,7 +62,6 @@ const Navigation = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
-<<<<<<< HEAD
         <Stack.Screen name="Favorite" component={FavoriteProduct} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sản phẩm yêu thích'}}/>
         <Stack.Screen name="InfoUser" component={InfoUser} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Cập nhật thông tin'}}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center'}}/>
@@ -82,24 +73,6 @@ const Navigation = () => {
             close: {animation: 'timing', config: {duration: 300}},
           }
         }}/>
-=======
-        <Stack.Screen
-          name="Notification"
-          component={Notification}
-          options={{headerShown: true, headerTitleAlign: 'center'}}
-        />
-        <Stack.Screen
-          name="Banner"
-          component={Banner}
-          options={{
-            gestureEnabled: true,
-            transitionSpec: {
-              open: {animation: 'timing', config: {duration: 300}},
-              close: {animation: 'timing', config: {duration: 300}},
-            },
-          }}
-        />
->>>>>>> addPayment
       </Stack.Navigator>
     </NavigationContainer>
   );
