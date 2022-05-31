@@ -11,24 +11,32 @@ import {
   SafeAreaView,
   LogBox,
 } from 'react-native';
+import COLORS from '../common/Color';
 import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import Swiper from 'react-native-swiper';
 import auth from '@react-native-firebase/auth';
 // import {keyExtractor} from 'react-native/Libraries/Lists/VirtualizeUtils';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon1 from 'react-native-vector-icons/Ionicons';
 import {SharedElement} from 'react-navigation-shared-element';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import ItemBanner from '../components/itemBanner';
 import ItemProduct from '../components/itemProduct';
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux';
 // import ItemProduct from '../components/itemProduct';
 // import ItemBanner from './itemBanner';
 // import ItemProduct from './itemProduct';
 
 const {height, width} = Dimensions.get('window');
 const Home = ({navigation}) => {
+  const orders=useSelector(state=>state.orders.list)
   const navigator=useNavigation()
+  const navPayment = () => {
+    if(orders.length>0)
+    navigation.push('Payment');
+  };
   // console.log('first');
   const [text, setText] = useState('gggg');
   const [rerender, SetRerender] = useState(false);
@@ -179,22 +187,25 @@ const Home = ({navigation}) => {
                 <ItemBanner item={item} navigation={navigation} key={index} />
               );
             })
-            // <FlatList
-            //   scrollEnabled={true}
-            //   horizontal={false}
-            //   numColumns={2}
-            //   data={databanner}
-            //   renderItem={item => (
-            //     <ItemBanner item={item} navigation={navigation} />
-            //   )}
-            //   keyExtractor={(item, index) => index}
-            // />
           }
         </View>
         <View>
-          <Text>ác</Text>
         </View>
       </ScrollView>
+      {
+        orders.length>0&&
+        <View style={styles.count}>
+            <Text style={{fontSize:12, color:'white'}}>{orders.length}</Text>
+        </View>
+        
+      }
+      {
+        orders.length>0&&
+        <TouchableOpacity style={styles.btnfl} activeOpacity={1} onPress={navPayment}>
+            <Icon1 name='cart-outline' color='white' size={24}/>     
+      </TouchableOpacity>
+        
+      } 
     </View>
   );
 };
@@ -208,4 +219,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white'
   },
+  btnfl: {
+    backgroundColor: COLORS.custom,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  count: {
+    backgroundColor: '#BC945D',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    position: 'absolute',
+    bottom: 48,
+    right: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex:10
+  }
 });

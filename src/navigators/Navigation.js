@@ -20,6 +20,8 @@ import CancelledOrder from '../screens/cancelledOrder';
 import CompletedOder from '../screens/completedOder';
 const Tab = createMaterialTopTabNavigator();
 import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
+import FavoriteProduct from '../screens/favoriteProduct';
+import InfoUser from '../screens/infoUser';
 const Navigation = () => {
   async function onDisplayNotification() {
     // Create a channel
@@ -31,11 +33,16 @@ const Navigation = () => {
 
     // Display a notification
     await notifee.displayNotification({
-      title: 'Notification Title',
-      body: 'Main body content of the notification',
+      title: 'Notification',
+      body: 'Xin chào',
       android: {
         channelId,
-        smallIcon: 'ic_launcher', // optional, defaults to 'ic_launcher'.
+        smallIcon:'ic_launcher', // optional, defaults to 'ic_launcher'.
+        largeIcon:'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png',
+        style:{
+          type:AndroidStyle.BIGPICTURE,
+          picture:'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png'
+        }
       },
     });
   }
@@ -58,6 +65,8 @@ const Navigation = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
+        <Stack.Screen name="Favorite" component={FavoriteProduct} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sản phẩm yêu thích'}}/>
+        <Stack.Screen name="InfoUser" component={InfoUser} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Cập nhật thông tin'}}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center'}}/>
         <Stack.Screen name="Banner" component={Banner} 
         options={{

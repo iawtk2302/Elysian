@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, LogBox } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import NumberFormat from 'react-number-format'
@@ -18,7 +18,9 @@ const DetailProduct = () => {
   const [size, setSize] = useState(router.params.size[0]);
   const [price, setPrice] = useState(router.params.item.price);
   const [count, setCount] = useState(1);
+  const [id,setId]=useState()
   const [selectedTopping, setselectedTopping] = useState([])
+  LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
   const total = (parseInt(size.price) + parseInt(price) + selectedTopping.reduce((total, currentValue) => total + parseInt(currentValue.value.price), 0)) * count
   const topping = router.params.topping.map((e) => {
     return {
@@ -27,20 +29,25 @@ const DetailProduct = () => {
     }
   })
   const dispatch = useDispatch();
-  const check = async () => {
-    await firestore()
-      .collection('Favorite')
-      .where('userID', '==', uid)
-      .where('productID', '==', router.params.item.productID)
-      .get()
-      .then((snap) => {
-        if(snap.size>0){
-          setFavorite(true)
-        }
-      });
+  const check = async () => { 
+      await firestore()
+        .collection('Favorite')
+        .where('userID', '==', uid)
+        .where('productID', '==', router.params.item.productID)
+        .get()
+        .then((snap) => {
+          if (snap.size > 0) {
+            setFavorite(true)
+            snap.forEach(e=>{
+              setId(e.id)
+            })
+          }
+        });
+ 
   }
   const clickfavotite = async () => {
-    await firestore()
+    if (!favorite){
+      await firestore()
       .collection('Favorite')
       .add({
         userID: uid,
@@ -50,6 +57,16 @@ const DetailProduct = () => {
       .then(() => {
         setFavorite(true)
       });
+    }
+    else{
+      await firestore()
+        .collection('Favorite')
+        .doc(id)
+        .delete()
+        .then(() => {
+        setFavorite(false)
+        });
+      }
   }
   const handleSummit = () => {
     const value = {
@@ -90,8 +107,7 @@ const DetailProduct = () => {
   }
   useEffect(() => {
     check()
-    console.log(router.params.item)
-  }, [])
+  }, [favorite])
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>

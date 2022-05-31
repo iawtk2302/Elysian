@@ -10,6 +10,7 @@ import ProductPayment from './ProductPayment';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import {useNavigation} from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const PaymentDetail = ({arrProduct}) => {
   const Navigation = useNavigation();
@@ -17,7 +18,8 @@ const PaymentDetail = ({arrProduct}) => {
   const navProduct = () => {
     Navigation.push('Order');
   };
-
+  const order=useSelector(state=>state.orders.list)
+  console.log(order)
   return (
     <View style={[styles.aroundContainer, {flex: 4}]}>
       <View

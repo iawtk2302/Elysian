@@ -21,9 +21,8 @@ const Order = () => {
   const [section, setSection] = useState([]);
   const [topping, setTopping] = useState([]);
   const [size, setSize] = useState([]);
-  const [count,setCount]=useState(0);
   const navigation=useNavigation()
-  const orders=useSelector(state=>state.orders)
+  const orders=useSelector(state=>state.orders.list)
   const [dataCategory, setDataCategory] = useState([
     {
       title: 'Trà sữa',
@@ -92,6 +91,7 @@ const Order = () => {
     return temp;
   };
   const navPayment = () => {
+    if(orders.length>0)
     navigation.push('Payment');
   };
   const getData = async () => {
@@ -200,12 +200,13 @@ const Order = () => {
     }
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor:'white' }}>
       <HeaderOrder />
       <FlatList
-        style={{ height: 50, backgroundColor: 'white', paddingLeft: 8 }}
+        style={{ height: 50, backgroundColor: 'white', paddingLeft: 8, marginRight:8 }}
         horizontal={true}
         data={dataCategory}
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <ItemCategory
             item={item}
@@ -217,6 +218,7 @@ const Order = () => {
         keyExtractor={(item, index) => item + index}
       />
       <SectionList
+      showsVerticalScrollIndicator={false}
         ref={sectionRef}
         sections={section}
         keyExtractor={(item, index) => item + index}
@@ -242,9 +244,12 @@ const Order = () => {
             <Text style={{fontSize:12, color:'white'}}>{orders.length}</Text>
         </View>
       }
-      <TouchableOpacity style={styles.btnfl} activeOpacity={1} onPress={navPayment}>
+      {
+        orders.length>0&&
+        <TouchableOpacity style={styles.btnfl} activeOpacity={1} onPress={navPayment}>
             <Icon name='cart-outline' color='white' size={24}/>     
-      </TouchableOpacity>
+        </TouchableOpacity>
+      }
     </View>
   );
 };
