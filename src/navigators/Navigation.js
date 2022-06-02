@@ -16,6 +16,10 @@ import FavoriteProduct from '../screens/favoriteProduct';
 import InfoUser from '../screens/infoUser';
 import TopTabOrder from './TopTabOrder';
 import Voucher from '../screens/voucher';
+import AddAddress from '../screens/addAddress';
+import Address from '../screens/address';
+import DetailAddress from '../screens/detailAddress';
+import Support from '../screens/support';
 
 const Navigation = () => {
   async function onDisplayNotification() {
@@ -64,6 +68,10 @@ const Navigation = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
+        <Stack.Screen name="AddAddress" component={AddAddress} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Địa chỉ mới'}}/>
+        <Stack.Screen name="Address" component={Address} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Địa chỉ'}}/>
+        <Stack.Screen name="Support" component={Support} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Hỗ trợ'}}/>
+        <Stack.Screen name="DetailAddress" component={DetailAddress} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sửa địa chỉ'}}/>
         <Stack.Screen name="Favorite" component={FavoriteProduct} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sản phẩm yêu thích'}}/>
         <Stack.Screen name="InfoUser" component={InfoUser} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Cập nhật thông tin'}}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Thông báo', tabBarVisible: false} }/>

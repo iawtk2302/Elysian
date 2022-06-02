@@ -14,6 +14,9 @@ const InfoUser = () => {
     const [email, setEmail] = useState()
     const [image, setImage] = useState()
     const [modalVisible, setModalVisible] = useState(false);
+    const [checkName,setCheckName]=useState(true)
+    const [checkEmail,setCheckEmail]=useState(true)
+    const [isChange,setIsChange]=useState(false)
     const openCamera = () => {
         ImagePicker.openCamera({
             cropping: true,
@@ -26,13 +29,14 @@ const InfoUser = () => {
     }
     const openGalery = () => {
         ImagePicker.openPicker({
-            mediaType: "photo",
+            mediaType:'photo',
             cropping: true,
             cropperCircleOverlay: true
-        }).then((image) => {
+        }).then(image => {
+            console.log(image.path)
             setImage(image.path)
+            setModalVisible(false)
         }).catch((e) => { }
-
         );
     }
     const update = async () => {
@@ -51,7 +55,7 @@ const InfoUser = () => {
                 avatar:await storage().ref(fireauth().currentUser.uid).getDownloadURL()
             })
             .then(() => {
-                console.log('User updated!');
+                setIsChange(false)
             });
     }
     const formatDate = (data) => {
@@ -71,7 +75,7 @@ const InfoUser = () => {
   const setInfo=async()=>{
     const data=await getInfoUser()
     setUser(data)
-    setImage(data.avatar)
+    setImage(data?.avatar)
     setName(data.name)
     setEmail(data.email)
     setLoading(false)
@@ -79,6 +83,47 @@ const InfoUser = () => {
   useEffect(()=>{
     setInfo()
   },[])
+  useEffect(()=>{
+    if(!loading){
+        if((name!=user.name||email!=user.email||user.avatar!=image)&&checkName&&checkEmail)
+    {
+        setIsChange(true)
+    }
+    else{
+        setIsChange(false)
+    }
+    }
+  },[name,email,image])
+  const removeAscent=(str)=> {
+    if (str === null || str === undefined) return str;
+    str = str.toLowerCase();
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    return str;
+}
+const validateName = (name) => {
+    let regex = /^[a-zA-Z ]{2,}$/g
+    if (regex.test(removeAscent(name))) {
+        setCheckName(true)
+    }
+    else {
+        setCheckName(false)
+    }
+}
+const validateEmail = (email) => {
+    let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g
+    if (regex.test(email)) {
+        setCheckEmail(true)
+    }
+    else {
+        setCheckEmail(false)
+    }
+}
   if (loading) {
     return <ActivityIndicator />;
   }
@@ -87,21 +132,32 @@ const InfoUser = () => {
             <Avatar
                 size={120}
                 rounded
-                source={{ uri: image == '' ? 'http://danhgia.snv.kontum.gov.vn/Images/no-avatar.png' : image }}
+                source={{ uri: image == undefined ? 'http://danhgia.snv.kontum.gov.vn/Images/no-avatar.png' : image }}
                 containerStyle={{ backgroundColor: 'grey', alignSelf: 'center', marginTop: 20, marginBottom: 10 }}
             >
                 <Avatar.Accessory size={24} onPress={() => { setModalVisible(true) }} />
             </Avatar>
-            <TextInput value={name} placeholder='Nhập họ tên' onChangeText={setName} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 18, borderColor: 'gray', marginVertical: 10, paddingLeft: 15 }} />
-            <TextInput value={email} placeholder='Nhập email' onChangeText={setEmail} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 18, borderColor: 'gray', marginVertical: 10, paddingLeft: 15 }} />
-            <View style={{ height: 50, borderRadius: 10, marginHorizontal: 16, fontSize: 18, backgroundColor: 'gray', marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 15, paddingRight: 6 }}>
-                <Text style={{ fontSize: 16, color: 'black' }}>{formatDate(user.dateOfBirth.seconds)}</Text>
-                <Icon name='calendar-outline' size={24} />
+            <TextInput value={name} placeholder='Nhập họ tên' onChangeText={(text)=>{setName(text), validateName(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
+            <View style={{height:25}}>
+                {
+                    !checkName&&<Text style={{marginLeft:25,color: '#D9415D'}}>Họ và tên không hợp lệ !</Text>
+                }
             </View>
-            <View style={{ height: 50, borderRadius: 10, marginHorizontal: 16, fontSize: 18, backgroundColor: 'gray', marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 15, paddingRight: 6 }}>
+            <TextInput value={email} placeholder='Nhập email' onChangeText={(text)=>{setEmail(text), validateEmail(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
+            <View style={{height:25}}>
+                {
+                    !checkEmail&&<Text style={{marginLeft:25,color: '#D9415D'}}>Email không hợp lệ !</Text>
+                }
+            </View>
+            <View style={{ height: 50, borderRadius: 10, marginHorizontal: 16, fontSize: 18, backgroundColor: '#C4C4C4', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 15, paddingRight: 6 }}>
+                <Text style={{ fontSize: 16, color: 'black' }}>{formatDate(user.dateofbirth.seconds)}</Text>
+                <Icon name='calendar-outline' size={24} color='black'/>
+            </View>
+            <View style={{ height: 50, borderRadius: 10, marginHorizontal: 16, fontSize: 18, backgroundColor: '#C4C4C4', marginTop:20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 15, paddingRight: 6 }}>
                 <Text style={{ fontSize: 16, color: 'black' }}>{user.gender}</Text>
+                <Icon name='transgender-outline' size={24} color='black'/>
             </View>
-            <TouchableOpacity style={{ marginTop: 150, height: 50, backgroundColor: COLORS.custom, borderRadius: 10, marginHorizontal: 16, alignItems: 'center', justifyContent: 'center', marginVertical: 6 }} onPress={() => { update() }}>
+            <TouchableOpacity style={{ marginTop: 150, height: 50, backgroundColor: isChange?COLORS.custom:'#C4C4C4', borderRadius: 10, marginHorizontal: 16, alignItems: 'center', justifyContent: 'center', marginVertical: 6 }} onPress={update} disabled={!isChange}>
                 <Text style={{ color: 'white' }}>Cập nhật thông tin</Text>
             </TouchableOpacity>
             <Modal
