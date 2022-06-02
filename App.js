@@ -17,7 +17,7 @@ import Register from './src/screens/Register';
 import PhoneVertify from './src/screens/PhoneVertify';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
-import { ActivityIndicator } from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {
   notificationListener,
@@ -31,38 +31,36 @@ const App = () => {
   const [profileUpdated, setProfileUpdated] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const [loading, setLoading] = useState(true);
-  const checkpProfileUpdeted = async () => {
+  const checkpProfileUpdated = async () => {
     await firestore()
       .collection('Users')
       .doc(auth().currentUser.uid)
       .get()
       .then(doc => {
         if (doc.data()?.dateofbirth !== undefined) {
-          setLoading(false)
-          setProfileUpdated(true)
-        }
-        else{
-          setLoading(false)
-          setProfileUpdated(false)
+          setLoading(false);
+          setProfileUpdated(true);
+        } else {
+          if (auth().currentUser.providerData[0].providerId === 'phone') {
+            setLoading(false);
+            setProfileUpdated(true);
+          } else {
+            setLoading(false);
+            setProfileUpdated(false);
+          }
         }
       });
   };
   function onAuthStateChanged(user) {
     setUser(user);
-
     if (initializing) setInitializing(false);
-    // console.log(hasBirth)
     if (auth().currentUser !== null) {
       if (auth().currentUser.displayName !== null) {
-        // setProfileUpdated(true);
-        checkpProfileUpdeted()
+        checkpProfileUpdated();
       }
-      // else{
-      //   setProfileUpdated(false)
-      // }
-      // if(checkpProfileUpdeted()){
-      //   console.log('false')
-      // }
+      else{
+        setLoading(false)
+      }
       if (auth().currentUser.phoneNumber != null) {
         setHasPhone(true);
       }
@@ -97,12 +95,12 @@ const App = () => {
         <PhoneVertify setHasPhone={setHasPhone} />
       </View>
     );
-  if(loading){
+  if (loading) {
     return (
-      <View style={{flex:1, justifyContent:'center',alignItems:'center'}}>
-        <ActivityIndicator color={COLORS.custom}/>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator color={COLORS.custom} />
       </View>
-    )
+    );
   }
   if (!profileUpdated)
     return (
@@ -110,14 +108,14 @@ const App = () => {
         <Register setProfileUpdated={setProfileUpdated} />
       </View>
     );
-  
-    return (
-      <Provider store={store}>
-        <SafeAreaView style={{flex: 1}}>
-          <Navigation />
-        </SafeAreaView>
-      </Provider>
-    );
+
+  return (
+    <Provider store={store}>
+      <SafeAreaView style={{flex: 1}}>
+        <Navigation />
+      </SafeAreaView>
+    </Provider>
+  );
 };
 
 const styles = StyleSheet.create({});
