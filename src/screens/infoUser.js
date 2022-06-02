@@ -137,11 +137,11 @@ const validateEmail = (email) => {
             >
                 <Avatar.Accessory size={24} onPress={() => { setModalVisible(true) }} />
             </Avatar>
-            <TextInput value={name} placeholder='Nhập họ tên' onChangeText={(text)=>{setName(text), validateName(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
-            <View style={{height:25}}>
-                {
-                    !checkName&&<Text style={{marginLeft:25,color: '#D9415D'}}>Họ và tên không hợp lệ !</Text>
-                }
+            <TextInput value={name} placeholder='Nhập họ tên' onChangeText={setName} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 18, borderColor: 'gray', marginVertical: 10, paddingLeft: 15 }} />
+            <TextInput value={email} placeholder='Nhập email' onChangeText={setEmail} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 18, borderColor: 'gray', marginVertical: 10, paddingLeft: 15 }} />
+            <View style={{ height: 50, borderRadius: 10, marginHorizontal: 16, fontSize: 18, backgroundColor: 'gray', marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 15, paddingRight: 6 }}>
+                <Text style={{ fontSize: 16, color: 'black' }}>{formatDate(router.params.dateofbirth.seconds)}</Text>
+                <Icon name='calendar-outline' size={24} onPress={() => { setModalVisible(true) }} />
             </View>
             <TextInput value={email} placeholder='Nhập email' onChangeText={(text)=>{setEmail(text), validateEmail(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
             <View style={{height:25}}>

@@ -74,7 +74,7 @@ const Navigation = () => {
         <Stack.Screen name="DetailAddress" component={DetailAddress} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sửa địa chỉ'}}/>
         <Stack.Screen name="Favorite" component={FavoriteProduct} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sản phẩm yêu thích'}}/>
         <Stack.Screen name="InfoUser" component={InfoUser} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Cập nhật thông tin'}}/>
-        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Thông báo', tabBarVisible: false} }/>
+        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Thông báo'} }/>
         <Stack.Screen name="Banner" component={Banner} 
         options={{
           gestureEnabled: true,
@@ -84,7 +84,7 @@ const Navigation = () => {
           }
         }}/>
         <Stack.Screen name='Map' component={ExploreScreen}/>
-        <Stack.Screen name='Voucher' component={Voucher}/>
+        <Stack.Screen name='Voucher' component={Voucher} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Khuyến mãi'} }/>
 
       </Stack.Navigator>
     </NavigationContainer>

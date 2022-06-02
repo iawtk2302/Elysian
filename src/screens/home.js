@@ -19,22 +19,22 @@ import auth from '@react-native-firebase/auth';
 // import {keyExtractor} from 'react-native/Libraries/Lists/VirtualizeUtils';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Ionicons';
+import Materialdesignicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SharedElement} from 'react-navigation-shared-element';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import ItemBanner from '../components/itemBanner';
 import ItemProduct from '../components/itemProduct';
 import {useNavigation} from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { Button } from 'react-native-paper';
+import {useSelector} from 'react-redux';
+import {Button} from 'react-native-paper';
 const {height, width} = Dimensions.get('window');
 
 const Home = ({navigation}) => {
   const [notificationNum, setNotiNum] = useState('0');
-  const orders=useSelector(state=>state.orders.list)
-  const navigator=useNavigation()
+  const orders = useSelector(state => state.orders.list);
+  const navigator = useNavigation();
   const navPayment = () => {
-    if(orders.length>0)
-    navigation.push('Payment');
+    if (orders.length > 0) navigation.push('Payment');
   };
   const [databanner, setDatabanner] = useState([]);
   const [dataProducts, setDataProducts] = useState([]);
@@ -43,8 +43,8 @@ const Home = ({navigation}) => {
   const getData = async () => {
     const listBanner = [];
     const listProduct = [];
-    const size=[]
-    const topping=[]
+    const size = [];
+    const topping = [];
     await firestore()
       .collection('Banners')
       .get()
@@ -66,7 +66,7 @@ const Home = ({navigation}) => {
         });
         setDataProducts(listProduct);
       });
-      await firestore()
+    await firestore()
       .collection('Sizes')
       .get()
       .then(querySnapshot => {
@@ -75,7 +75,7 @@ const Home = ({navigation}) => {
         });
         setDataSize(size);
       });
-      await firestore()
+    await firestore()
       .collection('Toppings')
       .get()
       .then(querySnapshot => {
@@ -107,17 +107,38 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container} nestedScrollEnabled={false}>
+      {/* Header start*/}
       <View style={styles.header}>
         <Image
-          source={require('../assets/coffee-cup.png')}
+          source={require('../assets/elysian.jpg')}
           style={styles.imageLogo}
         />
         <Text style={styles.txtHeader}>
           Xin chào, {auth().currentUser.displayName}
         </Text>
-        <Button style={{marginLeft: 45}} onPress={() => {navigator.push('Voucher')}}>
-          <Text>vourchers</Text>
-        </Button>
+        <TouchableOpacity
+        onPress={() => {navigation.push('Voucher')}}
+          activeOpacity={0.6}
+          style={{
+            position: 'absolute',
+            right: 50,
+            height: 38,
+            width: 57,
+            justifyContent: 'center',
+            backgroundColor: 'white',
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderRadius: 17,
+          }}>
+          <Materialdesignicons
+            name="ticket-percent-outline"
+            size={25}
+            color={COLORS.custom}
+          />
+          <Text style={{marginLeft: 4, fontWeight: '500', color: 'black'}}>
+            5
+          </Text>
+        </TouchableOpacity>
         <View style={styles.notificationContainer}>
           <Icon
             name="bell"
@@ -129,10 +150,12 @@ const Home = ({navigation}) => {
           </View>
         </View>
       </View>
+      {/* Header-end */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{paddingHorizontal: 15}}>
         <Text style={styles.txtBST}>Bộ sưu tập</Text>
+        {/* Slider start */}
         <View style={styles.slider}>
           <Swiper
             activeDotColor="white"
@@ -167,21 +190,32 @@ const Home = ({navigation}) => {
             })}
           </Swiper>
         </View>
+        {/* Slider end */}
         <Text style={styles.txtSuggest}>Gợi ý riêng cho bạn</Text>
+        {/* Suggest Product start */}
         <View>
           {dataProducts.map((item, index) => {
-            return <ItemProduct item={item} key={index} topping={datatopping} size={dataSize}/>;
+            return (
+              <ItemProduct
+                item={item}
+                key={index}
+                topping={datatopping}
+                size={dataSize}
+              />
+            );
           })}
         </View>
+        {/* Suggest Product end */}
         <Text style={styles.txtDiscover}>Khám phá thêm</Text>
-        <View
-          style={styles.Banner}>
+        {/* Banner start */}
+        <View style={styles.Banner}>
           {databanner.map((item, index) => {
             return (
               <ItemBanner item={item} navigation={navigation} key={index} />
             );
           })}
         </View>
+        {/* Banner end */}
       </ScrollView>
     </View>
   );
@@ -199,18 +233,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: 'white',
+    borderBottomWidth: 0.2,
+    borderColor: '#ccc',
   },
   txtHeader: {
     fontWeight: 'bold',
     fontSize: 15,
     paddingLeft: 5,
+    color: 'black'
   },
   imageLogo: {
     marginHorizontal: 5,
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
+    marginBottom: 5,
   },
   notificationContainer: {
+    justifyContent: 'center',
+    borderRadius: 20,
     position: 'absolute',
     right: 15,
   },
@@ -266,7 +306,7 @@ const styles = StyleSheet.create({
     bottom: 15,
     right: 15,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   count: {
     backgroundColor: '#BC945D',
@@ -278,7 +318,6 @@ const styles = StyleSheet.create({
     right: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex:10
-  }
+    zIndex: 10,
+  },
 });
-

@@ -11,7 +11,6 @@ import { useNavigation } from '@react-navigation/native';
 const Notification = () => {
   const navigation = useNavigation()
   const [notiData, setNotiData] = useState([]);
-  const [re, setRe] = useState(false);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState([])
   const getData = async () => {
