@@ -46,25 +46,22 @@ export default ItemInOder = ({item}) => {
   };
 
   return (
-    <View>
+    <View
+      style={{
+        margin: 15,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        borderRadius: 15,
+        padding: 15,
+      }}>
       <TouchableOpacity onPress={OpenModal}>
-        <View
-          style={{
-            margin: 15,
-            backgroundColor: 'white',
-            borderRadius: 10,
-            borderRadius: 15,
-          }}>
-          <View style={{padding: 15}}>
-            <Text>
-              Tổng cộng: <FormatNumber number={item.totalCost} />
-            </Text>
-            <Text>Ngày tạo: {convertTimeToFB(item.createdAt)}</Text>
-            <Divider style={{marginTop: 15}} />
-            <BtnActionOrder state={item.state} orderID={item.orderID} />
-          </View>
-        </View>
+        <Text>
+          Tổng cộng: <FormatNumber number={item.totalCost} />
+        </Text>
+        <Text>Ngày tạo: {convertTimeToFB(item.createdAt)}</Text>
       </TouchableOpacity>
+      <Divider style={{marginTop: 15}} />
+      <BtnActionOrder state={item.state} orderID={item.orderID} />
     </View>
   );
 };

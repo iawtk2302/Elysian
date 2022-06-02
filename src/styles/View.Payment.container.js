@@ -5,11 +5,11 @@ export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 15,
   },
   aroundContainer: {
     backgroundColor: 'white',
     marginTop: 15,
+    padding: 20,
   },
   bold: {fontWeight: '500', color: 'black'},
   iconSize: {
@@ -36,8 +36,6 @@ export default StyleSheet.create({
   },
   addressContain: {
     flex: 1,
-    marginStart: 20,
-    marginEnd: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
@@ -57,19 +55,40 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    marginRight: 10,
+    marginStart: 10,
   },
   optionsContainer: {
     flexDirection: 'row',
     flex: 1,
-    height: 200,
     borderRadius: 10,
   },
   hiddenItem: {
     flex: 1,
-    margin: 10,
     marginTop: 5,
     alignItems: 'flex-end',
   },
   optionsText: {color: 'white', fontWeight: '500'},
+  bottomPayment: {
+    backgroundColor: COLORS.custom,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  totalItemContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingTop: 15,
+    marginBottom: 15,
+  },
+  productPayment: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'white',
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 10,
+    borderColor: COLORS.custom,
+  },
 });

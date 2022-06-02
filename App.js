@@ -1,14 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
@@ -21,6 +12,7 @@ import {
   requestUserPermission,
 } from './src/utils/pushnotification_helper';
 import SplashScreen from 'react-native-splash-screen';
+import FlashMessage from 'react-native-flash-message';
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -80,6 +72,7 @@ const App = () => {
       <SafeAreaView style={{flex: 1}}>
         <Navigation />
       </SafeAreaView>
+      <FlashMessage position="top" />
     </Provider>
   );
 };

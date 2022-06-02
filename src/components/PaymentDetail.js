@@ -9,17 +9,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeProduct} from '../redux/orderSlice';
+import {showMessage} from 'react-native-flash-message';
 
 const PaymentDetail = () => {
   const arrProduct = useSelector(state => state.orders.list);
   return (
-    <View style={[styles.aroundContainer, {flex: 4}]}>
+    <View style={[styles.aroundContainer]}>
       <Header />
       <SwipeListView
         useFlatList={true}
         data={arrProduct}
         renderItem={(rowData, rowMap) => (
-          <View style={{margin: 10, marginTop: 5}}>
+          <View style={{marginTop: 5}}>
             <ProductPayment item={rowData.item} />
           </View>
         )}
@@ -45,6 +46,7 @@ const Options = ({data, rowMap}) => {
     }
   };
   const deleteItem = (data, rowMap) => {
+    console.log(JSON.stringify(data, null, 2));
     closeRow(rowMap, data.item.key);
     dispatch(removeProduct(data.item));
 
@@ -52,13 +54,17 @@ const Options = ({data, rowMap}) => {
     if (arrProduct.length == 1) {
       navigation.goBack();
     }
+    showMessage({
+      message: `Đã xóa ${data.item.count} ${data.item.product.name}`,
+      type: 'warning',
+    });
   };
   return (
     <View style={styles.optionsContainer}>
       <TouchableOpacity
         onPress={() => deleteItem(data, rowMap)}
         style={[styles.optionContainer, {backgroundColor: COLORS.custom}]}>
-        <View style={{padding: 10}}>
+        <View>
           <Ionicons name="trash" size={20} style={{color: 'white'}} />
           <Text style={styles.optionsText}>Xóa</Text>
         </View>
@@ -66,7 +72,7 @@ const Options = ({data, rowMap}) => {
 
       <TouchableOpacity
         style={[styles.optionContainer, {backgroundColor: 'black'}]}>
-        <View style={{padding: 10}}>
+        <View>
           <FontAwesome name="pencil-alt" size={20} style={{color: 'white'}} />
           <Text style={styles.optionsText}>Sửa</Text>
         </View>
@@ -79,15 +85,10 @@ const Header = () => {
   const Navigation = useNavigation();
 
   const navProduct = () => {
-    Navigation.push('Order');
+    Navigation.navigate('Order');
   };
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 15,
-      }}>
+    <View style={styles.container}>
       <Text>Sản phẩm đã chọn</Text>
       <TouchableOpacity onPress={navProduct}>
         <View style={styles.btnContainer}>

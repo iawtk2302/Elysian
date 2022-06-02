@@ -5,26 +5,33 @@ import fireAuth from '@react-native-firebase/auth';
 import COLORS from '../common/Color';
 import styles from '../styles/View.Payment.container';
 import {useSelector, useDispatch} from 'react-redux';
-import {selectChecked, selectedAddress} from '../redux/addressSlice';
+import {
+  selectChecked,
+  selectedAddress,
+  openOrCloseModel,
+  selectCompleted,
+  setCompleted,
+} from '../redux/addressSlice';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 import {removeAllProduct} from '../redux/orderSlice';
 import {useNavigation} from '@react-navigation/native';
+import LoadingPayment from './LoadingPayment';
+import {showMessage} from 'react-native-flash-message';
 
 const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
-  const total = calculatorTotalPrice();
   const checked = useSelector(selectChecked);
   const addressChoose = useSelector(selectedAddress);
-  const dispatch = useDispatch();
+  const completed = useSelector(selectCompleted);
+  const total = calculatorTotalPrice();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   let orderID = '';
   let time = null;
   let address = useSelector(selectedAddress);
-  const addOrderToFireBase = async () => {
-    dispatch(removeAllProduct());
 
-    navigation.goBack();
+  const addOrderToFireBase = async () => {
     await firestore()
       .collection('Orders')
       .add({
@@ -48,7 +55,6 @@ const BtnCompletePayment = () => {
       cancelledTime: '',
       completeTime: '',
     });
-
     if (checked === true) {
       await firestore()
         .collection('Addresses')
@@ -61,6 +67,14 @@ const BtnCompletePayment = () => {
           }),
         );
     }
+    dispatch(setCompleted());
+    dispatch(removeAllProduct());
+    navigation.goBack();
+    showMessage({
+      message: 'Đặt hàng thành công',
+      description: 'Đơn hàng sẽ được giao đến ngay',
+      type: 'success',
+    });
   };
   const updateOrderID = async () => {
     await firestore().collection('Orders').doc(orderID).update({
@@ -91,12 +105,22 @@ const BtnCompletePayment = () => {
       });
     }
   };
+
+  if (completed == true) {
+    addOrderToFireBase();
+  }
+
+  const openModal = () => {
+    dispatch(openOrCloseModel());
+  };
   return (
-    <TouchableOpacity onPress={addOrderToFireBase}>
-      <View style={styles.btnCompletePayment}>
-        <Text style={{color: COLORS.custom}}>Đặt hàng</Text>
-      </View>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPress={openModal}>
+        <View style={styles.btnCompletePayment}>
+          <Text style={{color: COLORS.custom}}>Đặt hàng</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 

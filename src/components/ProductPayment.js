@@ -1,30 +1,19 @@
 import {Text, View, TouchableOpacity, Image} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
 import NumberFormat from 'react-number-format';
-import {Divider} from 'react-native-paper';
-import COLORS from '../common/Color';
 
 const ProductPayment = ({item}) => {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: 'white',
-        padding: 15,
-        borderRadius: 10,
-        borderColor: COLORS.custom,
-      }}>
+    <View style={styles.productPayment}>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity>
           <Image
             source={{uri: item.product.linkImage}}
-            style={{height: 35, width: 35}}
+            style={{height: 40, width: 40}}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={{paddingStart: 20}}>
+        <TouchableOpacity style={{paddingStart: 15}}>
           <Text style={styles.textColor}>
             x{item.count} {item.product.name}
           </Text>

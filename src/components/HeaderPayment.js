@@ -17,7 +17,7 @@ export default function HeaderPayment() {
 
   return (
     <View style={{backgroundColor: 'white'}}>
-      <View style={styles.container}>
+      <View style={[styles.container, {padding: 15}]}>
         <TouchableOpacity onPress={clearOrder}>
           <Text>Xóa</Text>
         </TouchableOpacity>
