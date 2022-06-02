@@ -9,7 +9,7 @@ const ItemVoucher = ({item}) => {
     const end = new Date(time * 1000);
     const now = new Date();
     const temp = Math.floor(
-      (now.getTime() - end.getTime()) * (2.77777778 * 0.0000001),
+      (end.getTime() - now.getTime()) * (2.77777778 * 0.0000001),
     );
     if (temp <= 24) {
       setTime('Hết hạn trong ' + temp + ' giờ');
@@ -35,7 +35,7 @@ const ItemVoucher = ({item}) => {
           borderStyle: 'dotted',
         }}>
         <Image
-          source={require('../assets/background.jpg')}
+          source={{uri: item.image}}
           style={{height: 90, width: 90, alignSelf: 'center'}}
         />
       </View>
