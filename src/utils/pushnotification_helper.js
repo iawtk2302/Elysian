@@ -30,7 +30,7 @@ const AddNotification = async data => {
         // BannerID: data.data.NotificationID,
       };
     }
-    console.log(temp)
+    // console.log(temp)
     await firestore()
     .collection('Notifications')
     .add(temp)
@@ -74,13 +74,13 @@ export async function requestUserPermission() {
 
 const getFCMtoken = async () => {
   let fcmToken = await AsyncStorage.getItem('fcmtoken');
-  console.log(fcmToken);
+  // console.log(fcmToken);
   if (!fcmToken) {
     try {
       const fcmToken = await messaging().getToken();
       if (fcmToken) {
         await AsyncStorage.setItem('fcmtoken', fcmToken);
-        console.log(fcmToken);
+        // console.log(fcmToken);
       }
     } catch (error) {}
   }

@@ -5,8 +5,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import DatePicker from 'react-native-date-picker';
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import { signOut } from '../utils/Auth';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {signOut} from '../utils/Auth';
 
 const Register = ({setProfileUpdated}) => {
   const [date, setDate] = useState(new Date());
@@ -37,10 +37,11 @@ const Register = ({setProfileUpdated}) => {
     let isFull = true;
     // console.log(auth().currentUser.uid);
     Keyboard.dismiss();
-    if (!inputs.email) {
-      isFull = false;
-      handleErrors('Vui lòng nhập email', 'email');
-    }
+    if(!auth().currentUser?.email)
+      if (!inputs.email) {
+        isFull = false;
+        handleErrors('Vui lòng nhập email', 'email');
+      }
     if (!inputs.name) {
       isFull = false;
       handleErrors('Vui lòng nhập tên', 'name');
@@ -52,14 +53,15 @@ const Register = ({setProfileUpdated}) => {
     if (!inputs.gender) {
       setGenderFill(false);
     }
-    if (new Date().getFullYear() - date.getFullYear() < 18) {
-      isFull = false;
-      console.log(new Date().getFullYear());
-      console.log(date.getFullYear());
-    }
+    // if (new Date().getFullYear() - date.getFullYear() < 18) {
+    //   isFull = false;
+    //   console.log(new Date().getFullYear());
+    //   console.log(date.getFullYear());
+    // }
     // console.log(value)
 
     if (isFull) {
+      console.log('first')
       // setInputs(prevState => ({...prevState, ['dateofbirth']: date}))
       UpdateProfile();
     }
@@ -83,7 +85,13 @@ const Register = ({setProfileUpdated}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'flex-end', marginRight: -20, marginBottom: 50, marginTop: 10}}>
+      <View
+        style={{
+          alignItems: 'flex-end',
+          marginRight: -20,
+          marginBottom: 50,
+          marginTop: 10,
+        }}>
         <Icon name="times-circle" size={30} onPress={signOut} />
       </View>
       <Input
@@ -94,13 +102,15 @@ const Register = ({setProfileUpdated}) => {
         error={errors.name}
       />
       {/* <Input placeholder="Nhập họ của bạn" onChangeText={(text) => handleOnChange(text, '')}/> */}
-      <Input
-        placeholder="Nhập email của bạn"
-        onChangeText={text => {
-          handleOnChange(text, 'email');
-        }}
-        error={errors.email}
-      />
+      {!auth().currentUser.email && (
+        <Input
+          placeholder="Nhập email của bạn"
+          onChangeText={text => {
+            handleOnChange(text, 'email');
+          }}
+          error={errors.email}
+        />
+      )}
       <Input
         value={date.toLocaleDateString()}
         placeholder="Chọn ngày sinh"
@@ -146,7 +156,7 @@ const Register = ({setProfileUpdated}) => {
           setDate(date);
           setInputs(prevState => ({
             ...prevState,
-            ['dateofbirth']: date.toLocaleDateString(),
+            ['dateofbirth']: date,
           }));
           // console.log(inputs.dateofbirth)
           // console.log(date)

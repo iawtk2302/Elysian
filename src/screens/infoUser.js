@@ -30,7 +30,7 @@ const InfoUser = () => {
             <TextInput value={name} placeholder='Nhập họ tên' onChangeText={setName} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 18, borderColor: 'gray', marginVertical: 10, paddingLeft: 15 }} />
             <TextInput value={email} placeholder='Nhập email' onChangeText={setEmail} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 18, borderColor: 'gray', marginVertical: 10, paddingLeft: 15 }} />
             <View style={{ height: 50, borderRadius: 10, marginHorizontal: 16, fontSize: 18, backgroundColor: 'gray', marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 15, paddingRight: 6 }}>
-                <Text style={{ fontSize: 16, color: 'black' }}>{formatDate(router.params.dateOfBirth.seconds)}</Text>
+                <Text style={{ fontSize: 16, color: 'black' }}>{formatDate(router.params.dateofbirth.seconds)}</Text>
                 <Icon name='calendar-outline' size={24} onPress={() => { setModalVisible(true) }} />
             </View>
             <Modal
