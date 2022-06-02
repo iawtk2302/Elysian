@@ -1,10 +1,20 @@
-import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  Modal,
+  TouchableOpacity,
+  ScrollView
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 const {width, height} = Dimensions.get('window');
 const ItemVoucher = ({item}) => {
   const [time, setTime] = useState();
   const [isExpired, setIsExpired] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const getTime = time => {
     const end = new Date(time * 1000);
     const now = new Date();
@@ -22,7 +32,11 @@ const ItemVoucher = ({item}) => {
     getTime(item.end.seconds);
   }, []);
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        setModalVisible(true);
+      }}>
       <View
         style={{
           width: 120,
@@ -76,7 +90,6 @@ const ItemVoucher = ({item}) => {
             marginBottom: -7,
           }}></View>
       </View>
-
       <View
         style={{
           width: width - 150,
@@ -106,7 +119,114 @@ const ItemVoucher = ({item}) => {
           </View>
         )}
       </View>
-    </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#F5F5F5',
+            marginTop: 20,
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+          }}>
+          <IonIcon
+            name="close-outline"
+            size={24}
+            color="black"
+            style={styles.closebtn}
+            onPress={() => {
+              setModalVisible(false);
+            }}
+          />
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{
+              backgroundColor: 'white',
+              borderRadius: 20,
+              flex: 1,
+              marginTop: 45,
+              marginHorizontal: 35,
+            }}>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{fontWeight: '500', marginTop: 20}}>Elysian</Text>
+              <Text
+                style={{
+                  fontWeight: '500',
+                  fontSize: 18,
+                  color: 'black',
+                  marginTop: 10,
+                }}>
+                {item.title}
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 2,
+                backgroundColor: '#F5F5F5',
+                marginHorizontal: 10,
+                marginVertical: 20,
+              }}
+            />
+            <Image
+              source={{uri: item.image}}
+              style={{
+                height: 200,
+                width: 200,
+                alignSelf: 'center',
+                marginTop: 30,
+              }}
+            />
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'black',
+                borderRadius: 20,
+                height: 40,
+                justifyContent: 'center',
+                width: 170,
+                alignSelf: 'center',
+                marginTop: 20,
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: '500',
+                  fontSize: 16,
+                  alignSelf: 'center',
+                }}>
+                Sử dụng ngay
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{
+                height: 2,
+                backgroundColor: '#F5F5F5',
+                marginHorizontal: 10,
+                marginVertical: 20,
+              }}
+            />
+            <Text style={{alignSelf: 'center', fontSize: 16}}>
+              Ngày hết hạn:{' '}
+              {new Date(item.end.seconds * 1000).toLocaleDateString()}
+            </Text>
+            <View
+              style={{
+                height: 2,
+                backgroundColor: '#F5F5F5',
+                marginHorizontal: 10,
+                marginVertical: 20,
+              }}
+            />
+            <Text style={{alignSelf:'center',paddingHorizontal:25, fontSize:15}}>{item.content.replace(/\\n/g, '\n')}</Text>
+            <View style={{height:50}}/>
+          </ScrollView>
+        </View>
+      </Modal>
+    </TouchableOpacity>
   );
 };
 
@@ -118,5 +238,10 @@ const styles = StyleSheet.create({
     height: 140,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  closebtn: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
 });
