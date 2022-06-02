@@ -117,11 +117,13 @@ const Home = ({navigation}) => {
           Xin chào, {auth().currentUser.displayName}
         </Text>
         <TouchableOpacity
-        onPress={() => {navigation.push('Voucher')}}
+          onPress={() => {
+            navigation.push('Voucher');
+          }}
           activeOpacity={0.6}
           style={{
             position: 'absolute',
-            right: 50,
+            right: 65,
             height: 38,
             width: 57,
             justifyContent: 'center',
@@ -129,6 +131,14 @@ const Home = ({navigation}) => {
             flexDirection: 'row',
             alignItems: 'center',
             borderRadius: 17,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: 4.65,
+            elevation: 8,
           }}>
           <Materialdesignicons
             name="ticket-percent-outline"
@@ -139,16 +149,16 @@ const Home = ({navigation}) => {
             5
           </Text>
         </TouchableOpacity>
-        <View style={styles.notificationContainer}>
-          <Icon
-            name="bell"
+        <TouchableOpacity style={styles.notificationContainer}>
+          <Icon1
+            name="notifications-outline"
             size={28}
             onPress={() => navigator.navigate('Notification')}
           />
           <View style={styles.NotiNum}>
             <Text style={styles.txtNotiNum}>{notificationNum}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
       {/* Header-end */}
       <ScrollView
@@ -240,7 +250,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
     paddingLeft: 5,
-    color: 'black'
+    color: 'black',
   },
   imageLogo: {
     marginHorizontal: 5,
@@ -249,10 +259,23 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   notificationContainer: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     borderRadius: 20,
     position: 'absolute',
     right: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
   },
   NotiNum: {
     backgroundColor: 'red',
@@ -260,7 +283,7 @@ const styles = StyleSheet.create({
     width: 15,
     borderRadius: 7.5,
     position: 'absolute',
-    left: 14,
+    left: 20,
     top: 0,
   },
   txtNotiNum: {
