@@ -90,8 +90,6 @@ const Navigation = () => {
         <Stack.Screen name='Voucher' component={Voucher} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Khuyến mãi'} }/>
 
         <Stack.Screen name="Cancel" component={CancelledOrder} />
-        <Stack.Screen name="Map" component={ExploreScreen} />
-        <Stack.Screen name="Voucher" component={Voucher} />
       </Stack.Navigator>
     </NavigationContainer>
   );

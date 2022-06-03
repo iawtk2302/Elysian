@@ -84,7 +84,7 @@ const Header = () => {
   const Navigation = useNavigation();
 
   const navProduct = () => {
-    Navigation.navigate('Order');
+    Navigation.goBack();
   };
   return (
     <View style={styles.container}>

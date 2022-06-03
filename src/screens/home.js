@@ -33,9 +33,9 @@ const Home = ({navigation}) => {
   const [notificationNum, setNotiNum] = useState('0');
   const orders = useSelector(state => state.orders.list);
   const navigator = useNavigation();
-  const navPayment = () => {
-    if (orders.length > 0) navigation.push('Payment');
-  };
+  // const navPayment = () => {
+  //   if (orders.length > 0) navigation.push('Payment');
+  // };
   const [databanner, setDatabanner] = useState([]);
   const [dataProducts, setDataProducts] = useState([]);
   const [dataSize, setDataSize] = useState([]);

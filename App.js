@@ -69,7 +69,7 @@ const App = () => {
     notificationListener();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
-  }, [loading]);
+  }, []);
 
   if (initializing) return null;
 

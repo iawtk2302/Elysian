@@ -6,15 +6,22 @@ import {
   Dimensions,
   Modal,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { useDispatch } from 'react-redux';
+import { chooseVoucher } from '../redux/voucherSlice';
+import { calculatorTotal } from '../utils/calculatorTotalPrice';
+import { useNavigation } from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
-const ItemVoucher = ({item}) => {
+const ItemVoucher = ({item, type}) => {
   const [time, setTime] = useState();
   const [isExpired, setIsExpired] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation=useNavigation()
+  const dispatch=useDispatch()
   const getTime = time => {
     const end = new Date(time * 1000);
     const now = new Date();
@@ -28,6 +35,29 @@ const ItemVoucher = ({item}) => {
       setTime('Hết hạn ' + end.toLocaleDateString());
     }
   };
+  console.log(type)
+  const total=calculatorTotal()
+  const add=()=>{
+    console.log(total)
+    if(item.type=='total'){
+      if(total>=parseInt(item.condition)){
+        const action=chooseVoucher(item)
+        dispatch(action)
+        
+        Alert.alert('Thông báo','Sử dụng voucher thành công!',[
+          { text: "OK", onPress: () =>  {
+              setModalVisible(false)
+          }}
+        ])
+      }
+      else{
+        Alert.alert('Thông báo','Bạn chưa đủ điều kiện để sử dụng!')
+      }
+    }
+    else{
+     
+    }
+  }
   useEffect(() => {
     getTime(item.end.seconds);
   }, []);
@@ -190,7 +220,8 @@ const ItemVoucher = ({item}) => {
                 width: 170,
                 alignSelf: 'center',
                 marginTop: 20,
-              }}>
+              }}
+              onPress={add}>
               <Text
                 style={{
                   color: 'white',
