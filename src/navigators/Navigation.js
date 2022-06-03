@@ -10,7 +10,7 @@ import firestore from '@react-native-firebase/firestore';
 import Banner from '../screens/Banner';
 import Notification from '../screens/Notification';
 const Stack = createSharedElementStackNavigator();
-import notifee, { AndroidImportance, AndroidStyle } from '@notifee/react-native';
+import notifee, {AndroidImportance, AndroidStyle} from '@notifee/react-native';
 import ExploreScreen from '../screens/ExploreScreen';
 import FavoriteProduct from '../screens/favoriteProduct';
 import InfoUser from '../screens/infoUser';
@@ -20,6 +20,7 @@ import AddAddress from '../screens/addAddress';
 import Address from '../screens/address';
 import DetailAddress from '../screens/detailAddress';
 import Support from '../screens/support';
+import CancelledOrder from '../screens/cancelledOrder';
 
 const Navigation = () => {
   async function onDisplayNotification() {
@@ -36,12 +37,14 @@ const Navigation = () => {
       body: 'Xin chào',
       android: {
         channelId,
-        smallIcon:'ic_launcher', // optional, defaults to 'ic_launcher'.
-        largeIcon:'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png',
-        style:{
-          type:AndroidStyle.BIGPICTURE,
-          picture:'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png'
-        }
+        smallIcon: 'ic_launcher', // optional, defaults to 'ic_launcher'.
+        largeIcon:
+          'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png',
+        style: {
+          type: AndroidStyle.BIGPICTURE,
+          picture:
+            'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png',
+        },
       },
     });
   }
@@ -86,6 +89,9 @@ const Navigation = () => {
         <Stack.Screen name='Map' component={ExploreScreen}/>
         <Stack.Screen name='Voucher' component={Voucher} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Khuyến mãi'} }/>
 
+        <Stack.Screen name="Cancel" component={CancelledOrder} />
+        <Stack.Screen name="Map" component={ExploreScreen} />
+        <Stack.Screen name="Voucher" component={Voucher} />
       </Stack.Navigator>
     </NavigationContainer>
   );

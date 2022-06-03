@@ -1,7 +1,6 @@
 import {Text, View} from 'react-native';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
-import COLORS from '../common/Color';
 import BtnCompletePayment from './BtnCompletePayment';
 import NumberFormat from 'react-number-format';
 import {useSelector} from 'react-redux';
@@ -17,46 +16,26 @@ const TotalPayment = () => {
     return count;
   };
   return (
-    <View style={[styles.aroundContainer, {flex: 2}]}>
-      <View style={{flex: 1}}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginStart: 20,
-          }}>
-          <Text style={{fontWeight: '600', fontSize: 18, color: 'black'}}>
-            Tổng cộng
-          </Text>
-        </View>
-        <View
-          style={{
-            backgroundColor: COLORS.custom,
-            flex: 3,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-          }}>
-          <View>
-            <Text style={{color: 'white'}}>
-              Giao hàng 🌟 {countALlProduct()} sản phẩm
-            </Text>
-            <Text style={{fontWeight: '600', color: 'white'}}>
-              <NumberFormat
-                value={parseInt(total)}
-                displayType="text"
-                thousandSeparator
-                suffix="đ"
-                renderText={value => <Text>{value}</Text>}
-              />
-            </Text>
-          </View>
-          <BtnCompletePayment />
-        </View>
-      </View>
+    <View style={[styles.bottomPayment, {flex: 1}]}>
+      <TotalPrice total={total} amount={countALlProduct()} />
+      <BtnCompletePayment />
+    </View>
+  );
+};
+
+const TotalPrice = ({total, amount}) => {
+  return (
+    <View>
+      <Text style={{color: 'white'}}>Giao hàng 🌟 {amount} sản phẩm</Text>
+      <Text style={{fontWeight: '600', color: 'white'}}>
+        <NumberFormat
+          value={parseInt(total)}
+          displayType="text"
+          thousandSeparator
+          suffix="đ"
+          renderText={value => <Text>{value}</Text>}
+        />
+      </Text>
     </View>
   );
 };

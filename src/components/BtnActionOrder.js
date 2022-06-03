@@ -3,6 +3,7 @@ import React from 'react';
 import COLORS from '../common/Color';
 import styles from '../styles/View.OrderDetail';
 import BtnCancel from './BtnCancel';
+import {useNavigation} from '@react-navigation/native';
 
 const BtnActionOrder = ({state, orderID}) => {
   return (
@@ -27,8 +28,14 @@ const BtnActionOrder = ({state, orderID}) => {
 };
 
 const BtnReOrder = () => {
+  const {navigation} = useNavigation();
+  const nav = () => {
+    navigation.push('Payment');
+  };
+
   return (
     <TouchableOpacity
+      onPress={nav}
       style={{backgroundColor: COLORS.custom, borderRadius: 10}}>
       <Text style={styles.textAction}>Đặt hàng</Text>
     </TouchableOpacity>

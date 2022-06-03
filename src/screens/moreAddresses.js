@@ -24,7 +24,7 @@ export default function MoreAddresses({navigation}) {
 const Top = ({navigation}) => {
   return (
     <View style={{backgroundColor: 'white'}}>
-      <View style={styles.container}>
+      <View style={[styles.container, {padding: 15}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" style={styles.iconSize} />
         </TouchableOpacity>
@@ -65,16 +65,14 @@ const Body = ({navigation}) => {
 const Bot = () => {
   return (
     <View style={{backgroundColor: 'white', marginTop: 20}}>
-      <View
+      <TouchableOpacity
         style={[
           styles.container,
-          {alignItems: 'center', justifyContent: 'center'},
+          {alignItems: 'center', justifyContent: 'center', padding: 15},
         ]}>
-        <TouchableOpacity style={{flexDirection: 'row'}}>
-          <Ionicons name="add" size={20} />
-          <Text style={{marginStart: 5}}>Thêm địa chỉ mới</Text>
-        </TouchableOpacity>
-      </View>
+        <Ionicons name="add" size={20} />
+        <Text style={{marginStart: 5, color: 'black'}}>Thêm địa chỉ mới</Text>
+      </TouchableOpacity>
     </View>
   );
 };

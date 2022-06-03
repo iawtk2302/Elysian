@@ -1,4 +1,4 @@
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, Alert} from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../src/styles/View.Payment.container';
@@ -11,13 +11,24 @@ export default function HeaderPayment() {
   const navigation = useNavigation();
 
   const clearOrder = () => {
-    dispatch(removeAllProduct());
-    navigation.goBack();
+    Alert.alert('Xóa giỏ hàng', 'Giỏ hàng sẽ bị xóa', [
+      {
+        text: 'Hủy',
+        style: 'cancel',
+      },
+      {
+        text: 'Đồng ý',
+        onPress: () => {
+          dispatch(removeAllProduct());
+          navigation.goBack();
+        },
+      },
+    ]);
   };
 
   return (
     <View style={{backgroundColor: 'white'}}>
-      <View style={styles.container}>
+      <View style={[styles.container, {padding: 15}]}>
         <TouchableOpacity onPress={clearOrder}>
           <Text>Xóa</Text>
         </TouchableOpacity>

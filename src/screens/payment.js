@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import HeaderPayment from '../components/HeaderPayment';
@@ -6,11 +6,15 @@ import AddressPayment from '../components/AddressPayment';
 import PaymentDetail from '../components/PaymentDetail';
 import TotalPayment from '../components/TotalPayment';
 import fireAuth from '@react-native-firebase/auth';
-import {useDispatch} from 'react-redux';
-import {setValue, setSelected} from '../redux/addressSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {setValue, setSelected, selectCompleted} from '../redux/addressSlice';
+import AlertCompleted from '../components/AlertCompleted';
+import CalculatePayment from '../components/CalculatePayment';
+import Loading from '../components/Loading';
 
-const Payment = ({navigation}) => {
+const Payment = () => {
   const dispatch = useDispatch();
+  const completed = useSelector(selectCompleted);
   useEffect(() => {
     const loadAddress = () => {
       firestore()
@@ -29,12 +33,26 @@ const Payment = ({navigation}) => {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
-      <HeaderPayment />
-      <AddressPayment />
-      <PaymentDetail />
-      <TotalPayment />
-    </View>
+    <>
+      <View style={{flex: 1}}>
+        <HeaderPayment />
+        <View style={{flex: 7}}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <AddressPayment />
+            <PaymentDetail />
+            <CalculatePayment />
+          </ScrollView>
+        </View>
+        <TotalPayment />
+        <AlertCompleted />
+      </View>
+      {completed && (
+        <Loading
+          uri={require('../assets/107573-llove-you.json')}
+          title="Đang xử lý..."
+        />
+      )}
+    </>
   );
 };
 

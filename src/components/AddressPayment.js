@@ -1,5 +1,5 @@
 import {Text, View, TouchableOpacity, Switch} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
@@ -10,7 +10,7 @@ import {selectedAddress, setChecked} from '../redux/addressSlice';
 const AddressPayment = () => {
   let address = useSelector(selectedAddress);
   return (
-    <View style={[styles.aroundContainer, {flex: 4}]}>
+    <View style={[styles.aroundContainer]}>
       <Header />
       <BodyAddress address={address} />
       <BodyUser address={address} />
@@ -38,7 +38,7 @@ const Bot = () => {
   const toggleSwitch = () => dispatch(setChecked());
 
   return (
-    <View style={styles.addressContain}>
+    <View style={[styles.addressContain]}>
       <Text>Lưu thông tin giao hàng cho lần sau</Text>
       <Switch
         trackColor={{false: COLORS.gray, true: COLORS.backgroundWeak}}
@@ -60,8 +60,6 @@ const BodyAddress = ({address}) => {
     <TouchableOpacity
       onPress={NavMoreAddresses}
       style={{
-        paddingStart: 20,
-        paddingEnd: 20,
         flexDirection: 'row',
         flex: 1,
       }}>
@@ -92,8 +90,13 @@ const BodyAddress = ({address}) => {
 
 const BodyUser = ({address}) => {
   return (
-    <View style={{flexDirection: 'row', flex: 2, alignItems: 'center'}}>
-      <View style={{padding: 20, flex: 1}}>
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}>
+      <View style={{flex: 1}}>
         <Text style={{fontSize: 18, color: 'black'}}>{address.name}</Text>
         <Text>{address.phone}</Text>
       </View>
@@ -105,7 +108,7 @@ const BodyUser = ({address}) => {
           alignSelf: 'center',
         }}
       />
-      <View style={{padding: 20, flex: 1}}>
+      <View style={{padding: 20, paddingEnd: 0}}>
         <Text>
           15-30 phút {'\n'}
           <Text style={{fontSize: 18, color: 'black'}}>Càng sớm càng tốt</Text>
