@@ -11,6 +11,7 @@ const orderDetailSlide = createSlice({
     shippingOrders: [],
     cancelledOrders: [],
     completedOrders: [],
+    waitForDelete: false,
   },
   reducers: {
     setValues(state, action) {
@@ -60,6 +61,12 @@ const orderDetailSlide = createSlice({
     resetCompletedOrder(state) {
       state.completedOrders = [];
     },
+    setTrueWaitForDelete(state) {
+      state.waitForDelete = true;
+    },
+    setFalseWaitForDelete(state) {
+      state.waitForDelete = false;
+    },
   },
 });
 export const {
@@ -76,6 +83,8 @@ export const {
   resetCancelledOrder,
   addCompletedOrder,
   resetCompletedOrder,
+  setTrueWaitForDelete,
+  setFalseWaitForDelete,
 } = orderDetailSlide.actions;
 export const selectAllOrder = state => state.allOrder.values;
 export const selectModal = state => state.allOrder.modal;
@@ -85,5 +94,6 @@ export const selectWaitingOrders = state => state.allOrder.waitingOrders;
 export const selectShippingOrders = state => state.allOrder.shippingOrders;
 export const selectCancelledOrders = state => state.allOrder.cancelledOrders;
 export const selectCompletedOrders = state => state.allOrder.completedOrders;
+export const selectWaitingForDelete = state => state.allOrder.waitForDelete;
 
 export default orderDetailSlide.reducer;

@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setValue, setSelected, selectCompleted} from '../redux/addressSlice';
 import AlertCompleted from '../components/AlertCompleted';
 import CalculatePayment from '../components/CalculatePayment';
-import LoadingPayment from '../components/LoadingPayment';
+import Loading from '../components/Loading';
 
 const Payment = () => {
   const dispatch = useDispatch();
@@ -46,7 +46,12 @@ const Payment = () => {
         <TotalPayment />
         <AlertCompleted />
       </View>
-      {completed && <LoadingPayment />}
+      {completed && (
+        <Loading
+          uri={require('../assets/107573-llove-you.json')}
+          title="Đang xử lý..."
+        />
+      )}
     </>
   );
 };

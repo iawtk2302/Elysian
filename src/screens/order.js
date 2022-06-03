@@ -5,24 +5,25 @@ import {
   ActivityIndicator,
   SectionList,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import ItemProduct from '../components/itemProduct';
 import firestore from '@react-native-firebase/firestore';
 import HeaderOrder from '../components/headerOrder';
 import ItemCategory from '../components/itemCategory';
 import COLORS from '../common/Color';
-import Icon from 'react-native-vector-icons/Ionicons'
-import { useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import Loading from '../components/Loading';
 const Order = () => {
   const [loading, setLoading] = useState(true);
   const [section, setSection] = useState([]);
   const [topping, setTopping] = useState([]);
   const [size, setSize] = useState([]);
-  const navigation=useNavigation()
-  const orders=useSelector(state=>state.orders.list)
+  const navigation = useNavigation();
+  const orders = useSelector(state => state.orders.list);
   const [dataCategory, setDataCategory] = useState([
     {
       title: 'Trà sữa',
@@ -91,8 +92,7 @@ const Order = () => {
     return temp;
   };
   const navPayment = () => {
-    if(orders.length>0)
-    navigation.push('Payment');
+    if (orders.length > 0) navigation.push('Payment');
   };
   const getData = async () => {
     const dataTS = [];
@@ -173,15 +173,15 @@ const Order = () => {
     setLoading(false);
   };
   useEffect(() => {
-    addSection()
+    addSection();
   }, []);
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator color={COLORS.custom} />
-      </View>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+  //       <ActivityIndicator color={COLORS.custom} />
+  //     </View>
+  //   );
+  // }
   const scroll = index => {
     if (index == 0) {
       sectionRef.current.scrollToLocation({
@@ -200,57 +200,71 @@ const Order = () => {
     }
   };
   return (
-    <View style={{ flex: 1, backgroundColor:'white' }}>
-      <HeaderOrder />
-      <FlatList
-        style={{ height: 50, backgroundColor: 'white', paddingLeft: 8, marginRight:8 }}
-        horizontal={true}
-        data={dataCategory}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <ItemCategory
-            item={item}
-            dataCategory={dataCategory}
-            setDataCategory={setDataCategory}
-            scroll={scroll}
-          />
+    <>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <HeaderOrder />
+        <FlatList
+          style={{
+            height: 50,
+            backgroundColor: 'white',
+            paddingLeft: 8,
+            marginRight: 8,
+          }}
+          horizontal={true}
+          data={dataCategory}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item}) => (
+            <ItemCategory
+              item={item}
+              dataCategory={dataCategory}
+              setDataCategory={setDataCategory}
+              scroll={scroll}
+            />
+          )}
+          keyExtractor={(item, index) => item + index}
+        />
+        <SectionList
+          showsVerticalScrollIndicator={false}
+          ref={sectionRef}
+          sections={section}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({item}) => (
+            <ItemProduct item={item} topping={topping} size={size} />
+          )}
+          renderSectionHeader={({section: {title}}) => (
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: 'black',
+                marginLeft: 16,
+                marginVertical: 10,
+              }}>
+              {title}
+            </Text>
+          )}
+        />
+        {orders.length > 0 && (
+          <View style={styles.count}>
+            <Text style={{fontSize: 12, color: 'white'}}>{orders.length}</Text>
+          </View>
         )}
-        keyExtractor={(item, index) => item + index}
-      />
-      <SectionList
-      showsVerticalScrollIndicator={false}
-        ref={sectionRef}
-        sections={section}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => (
-          <ItemProduct item={item} topping={topping} size={size} />
+        {orders.length > 0 && (
+          <TouchableOpacity
+            style={styles.btnfl}
+            activeOpacity={1}
+            onPress={navPayment}>
+            <Icon name="cart-outline" color="white" size={24} />
+          </TouchableOpacity>
         )}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: 'bold',
-              color: 'black',
-              marginLeft: 16,
-              marginVertical: 10,
-            }}>
-            {title}
-          </Text>
-        )}
-      />
-      {
-        orders.length>0&&
-        <View style={styles.count}>
-            <Text style={{fontSize:12, color:'white'}}>{orders.length}</Text>
-        </View>
-      }
-      {
-        orders.length>0&&
-        <TouchableOpacity style={styles.btnfl} activeOpacity={1} onPress={navPayment}>
-            <Icon name='cart-outline' color='white' size={24}/>     
-        </TouchableOpacity>
-      }
-    </View>
+      </View>
+      {loading && (
+        <Loading
+          uri={require('../assets/94829-loading.json')}
+          title="Đang tải dữ liệu..."
+        />
+      )}
+    </>
   );
 };
 
@@ -266,7 +280,7 @@ const styles = StyleSheet.create({
     bottom: 15,
     right: 15,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   count: {
     backgroundColor: '#BC945D',
@@ -278,6 +292,6 @@ const styles = StyleSheet.create({
     right: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex:10
-  }
+    zIndex: 10,
+  },
 });

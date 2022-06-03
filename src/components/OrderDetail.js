@@ -6,20 +6,18 @@ import FormatNumber from '../utils/FormatNumber';
 
 const OrderDetail = ({item}) => {
   return (
-    <View>
-      <View style={{marginTop: 15}}>
-        <TouchableOpacity>
-          <View flexDirection="row" marginTop={10}>
-            <Image
-              source={{uri: item.products.linkImage}}
-              style={{width: 70, height: 70, backgroundColor: 'white'}}
-            />
-            <Detail data={item} />
-          </View>
-        </TouchableOpacity>
-        <Divider margin={10} />
-        <PennyTotal amount={item.amount} price={item.products.price} />
-      </View>
+    <View style={{marginTop: 15}}>
+      <TouchableOpacity>
+        <View flexDirection="row" marginTop={10}>
+          <Image
+            source={{uri: item.products.linkImage}}
+            style={{width: 70, height: 70, backgroundColor: 'white'}}
+          />
+          <Detail data={item} />
+        </View>
+      </TouchableOpacity>
+      <Divider margin={10} />
+      <PennyTotal amount={item.amount} price={item.products.price} />
     </View>
   );
 };

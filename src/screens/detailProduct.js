@@ -99,7 +99,7 @@ const DetailProduct = () => {
     dispatch(action);
     navigation.goBack();
     showMessage({
-      message: 'Thêm vào giỏ hàng thành công',
+      message: `Thêm ${value.product.name} vào giỏ hàng thành công`,
       description: 'Nhấn để đi đến giỏ hàng',
       type: 'success',
       onPress: () => {

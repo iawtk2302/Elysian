@@ -15,7 +15,6 @@ import {
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 import {removeAllProduct} from '../redux/orderSlice';
 import {useNavigation} from '@react-navigation/native';
-import LoadingPayment from './LoadingPayment';
 import {showMessage} from 'react-native-flash-message';
 
 const BtnCompletePayment = () => {

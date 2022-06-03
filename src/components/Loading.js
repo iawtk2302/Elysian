@@ -2,17 +2,13 @@ import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import LottieView from 'lottie-react-native';
 
-const LoadingPayment = () => {
+const Loading = ({uri, title}) => {
   return (
     <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <LottieView
-        source={require('../assets/107573-llove-you.json')}
-        autoPlay
-        loop
-      />
-      <View style={{position: 'absolute', bottom: 150}}>
+      <LottieView source={uri} autoPlay loop />
+      <View style={{position: 'absolute', bottom: 120}}>
         <Text style={{fontSize: 16, color: 'white', fontWeight: '600'}}>
-          Đang thanh toán....
+          {title}
         </Text>
       </View>
     </View>
@@ -28,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoadingPayment;
+export default Loading;

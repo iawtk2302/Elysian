@@ -46,7 +46,6 @@ const Options = ({data, rowMap}) => {
     }
   };
   const deleteItem = (data, rowMap) => {
-    console.log(JSON.stringify(data, null, 2));
     closeRow(rowMap, data.item.key);
     dispatch(removeProduct(data.item));
 
