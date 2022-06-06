@@ -11,7 +11,7 @@ const orderSlice = createSlice({
       state.list.forEach((e, i) => {
         if (
           JSON.stringify(e.product) ===
-            JSON.stringify(action.payload.product) &&
+          JSON.stringify(action.payload.product) &&
           JSON.stringify(e.size) === JSON.stringify(action.payload.size) &&
           JSON.stringify(e.topping) === JSON.stringify(action.payload.topping)
         ) {

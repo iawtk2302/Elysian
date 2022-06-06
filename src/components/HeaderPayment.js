@@ -5,6 +5,7 @@ import styles from '../../src/styles/View.Payment.container';
 import {useDispatch} from 'react-redux';
 import {removeAllProduct} from '../redux/orderSlice';
 import {useNavigation} from '@react-navigation/native';
+import { removeVoucher } from '../redux/voucherSlice';
 
 export default function HeaderPayment() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function HeaderPayment() {
         text: 'Đồng ý',
         onPress: () => {
           dispatch(removeAllProduct());
+          dispatch(removeVoucher());
           navigation.goBack();
         },
       },

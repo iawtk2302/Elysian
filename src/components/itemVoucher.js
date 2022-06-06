@@ -13,8 +13,8 @@ import React, {useState, useEffect} from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { chooseVoucher } from '../redux/voucherSlice';
-import { calculatorTotal } from '../utils/calculatorTotalPrice';
 import { useNavigation } from '@react-navigation/native';
+import { calculatorTotal, TotalAmount } from '../utils/solveVoucher';
 const {width, height} = Dimensions.get('window');
 const ItemVoucher = ({item, type}) => {
   const [time, setTime] = useState();
@@ -35,15 +35,14 @@ const ItemVoucher = ({item, type}) => {
       setTime('Hết hạn ' + end.toLocaleDateString());
     }
   };
-  console.log(type)
   const total=calculatorTotal()
+  const amount=TotalAmount()
   const add=()=>{
     console.log(total)
     if(item.type=='total'){
       if(total>=parseInt(item.condition)){
         const action=chooseVoucher(item)
         dispatch(action)
-        
         Alert.alert('Thông báo','Sử dụng voucher thành công!',[
           { text: "OK", onPress: () =>  {
               setModalVisible(false)
@@ -55,7 +54,18 @@ const ItemVoucher = ({item, type}) => {
       }
     }
     else{
-     
+      if(amount>=item.count){
+        const action=chooseVoucher(item)
+        dispatch(action)
+        Alert.alert('Thông báo','Sử dụng voucher thành công!',[
+          { text: "OK", onPress: () =>  {
+              setModalVisible(false)
+          }}
+        ])
+      }
+      else{
+        Alert.alert('Thông báo','Bạn chưa đủ điều kiện để sử dụng!')
+      }
     }
   }
   useEffect(() => {

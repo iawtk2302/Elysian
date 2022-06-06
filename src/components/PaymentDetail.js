@@ -10,6 +10,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeProduct} from '../redux/orderSlice';
 import {showMessage} from 'react-native-flash-message';
+import { removeVoucher } from '../redux/voucherSlice';
 
 const PaymentDetail = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -49,8 +50,8 @@ const Options = ({data, rowMap}) => {
     closeRow(rowMap, data.item.key);
     dispatch(removeProduct(data.item));
 
-    console.log(arrProduct.length);
     if (arrProduct.length == 1) {
+      dispatch(removeVoucher())
       navigation.goBack();
     }
     showMessage({
@@ -82,7 +83,6 @@ const Options = ({data, rowMap}) => {
 
 const Header = () => {
   const Navigation = useNavigation();
-
   const navProduct = () => {
     Navigation.goBack();
   };

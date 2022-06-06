@@ -12,7 +12,7 @@ const HeaderOrder = () => {
   return (
     <View style={styles.container}>
       <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-        Order
+        Đặt hàng
       </Text>
       <Icon name="heart-outline" size={26} color="white" onPress={navPayment} />
     </View>

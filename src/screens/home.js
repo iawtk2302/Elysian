@@ -236,7 +236,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 100,
+    backgroundColor:'white'
   },
   header: {
     height: 60,

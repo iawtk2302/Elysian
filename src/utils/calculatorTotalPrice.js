@@ -20,14 +20,15 @@ export default function calculatorTotalPrice() {
       else
       totalPrice-=voucher.discount
     }
+    else{
+      if(parseFloat(voucher.percent)*totalPrice>=voucher.max){
+        totalPrice-=voucher.max
+      }
+      else{
+        totalPrice-=Math.floor((totalPrice/1000)*voucher.percent)*1000
+      }
+    }
   }
-  return totalPrice;
+  return totalPrice
 }
-export const calculatorTotal=()=> {
-  const arrProduct = useSelector(state => state.orders.list);
-  let totalPrice = 0;
-  for (let item of arrProduct) {
-    totalPrice += parseInt(item.total);
-  }
-  return totalPrice;
-}
+

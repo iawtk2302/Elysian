@@ -18,6 +18,7 @@ const User = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [user, setUser] = useState();
+  const [location, setLocation] = useState([])
   const onResult = (QuerySnapshot) => {
     setUser(QuerySnapshot.data())
     setLoading(false)
@@ -25,8 +26,21 @@ const User = () => {
   const onError = (error) => {
     console.error(error);
   }
+  const getLocation = async() => {
+    const temp = []
+    await firestore()
+    .collection('Locations')
+    .get()
+    .then(query => {
+      query.forEach(doc => {
+        temp.push(doc.data())
+      })
+      setLocation(temp)
+    })
+  }
   useEffect(() => {
     firestore().collection('Users').doc(fireauth().currentUser.uid).onSnapshot(onResult, onError);
+    getLocation()
     return () => { }
   }, [])
   if (loading) {
@@ -55,7 +69,7 @@ const User = () => {
           }}>
           <TouchableOpacity
             style={{
-              width: '47%',
+              width: '30%',
               height: 80,
               borderRadius: 10,
               backgroundColor: '#F6F1E7',
@@ -74,13 +88,13 @@ const User = () => {
               />
               <Text
                 style={{ fontSize: 14, color: COLORS.custom, fontWeight: '500' }}>
-                Thông tin cá nhân
+                Thông tin
               </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              width: '47%',
+              width: '30%',
               height: 80,
               borderRadius: 10,
               backgroundColor: '#F6F1E7',
@@ -97,7 +111,30 @@ const User = () => {
               />
               <Text
                 style={{ fontSize: 14, color: COLORS.custom, fontWeight: '500' }}>
-                Địa chỉ đã lưu
+                Địa chỉ
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: '30%',
+              height: 80,
+              borderRadius: 10,
+              backgroundColor: '#F6F1E7',
+            }}
+            activeOpacity={0.6}
+            onPress={() => { navigation.navigate('Map', {markers: location})}}>
+            <View
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <Icon
+                name="map-outline"
+                color={COLORS.custom}
+                size={28}
+                style={{ marginBottom: 4 }}
+              />
+              <Text
+                style={{ fontSize: 14, color: COLORS.custom, fontWeight: '500' }}>
+                Cửa hàng
               </Text>
             </View>
           </TouchableOpacity>

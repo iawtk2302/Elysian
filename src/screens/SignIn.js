@@ -9,7 +9,8 @@ import {
   Keyboard,
   ToastAndroid,
 } from 'react-native';
-import React, {useState} from 'react';
+import COLORS from '../common/Color'
+import React, {useState, useEffect} from 'react';
 import Input from '../components/input';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {googleLogin, signIn, onFacebookButtonPress} from '../utils/Auth';
@@ -22,7 +23,7 @@ const SignIn = ({navigation}) => {
   });
   const [confirm, setConfirm] = useState(null);
   const [phone, setPhone] = useState('');
-
+  const [isPress,setIsPress]=useState(false)
   async function signInWithPhoneNumber(phoneNumber) {
     try {
       if (phoneNumber.charAt(0) === '0') {
@@ -37,6 +38,12 @@ const SignIn = ({navigation}) => {
       ToastAndroid.show('Recheck your phone number', 4);
     }
   }
+  useEffect(()=>{
+    if(phone=='')
+    setIsPress(false)
+    else
+    setIsPress(true)
+  },[phone])
   if (!confirm)
     return (
       <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
@@ -56,12 +63,13 @@ const SignIn = ({navigation}) => {
               onChangeText={text => setPhone(text)}
             />
             <TouchableOpacity
-              style={styles.btnLogin}
+              style={isPress?styles.btnLogin:styles.btnLogin1}
+              disabled={!isPress}
               onPress={() => signInWithPhoneNumber(phone)}>
               <Text style={styles.txtSignin}>Đăng nhập</Text>
             </TouchableOpacity>
 
-            <Text style={styles.OtherSignIn}>- Or sign in with -</Text>
+            <Text style={styles.OtherSignIn}>- Hoặc -</Text>
 
             {/* Button Sign in with google */}
             <TouchableOpacity
@@ -76,7 +84,7 @@ const SignIn = ({navigation}) => {
               />
               <View style={styles.txtgg}>
                 <Text style={{color: '#000', fontSize: 16}}>
-                  Sign in with google
+                  Tiếp tục bằng google
                 </Text>
               </View>
             </TouchableOpacity>
@@ -91,7 +99,7 @@ const SignIn = ({navigation}) => {
               />
               <View style={styles.txtgg}>
                 <Text style={{color: '#000', fontSize: 16}}>
-                  Sign in with facebook
+                  Tiếp tục bằng facebook
                 </Text>
               </View>
             </TouchableOpacity>
@@ -128,13 +136,19 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 30,
-    color: 'red',
+    color: COLORS.custom,
     fontWeight: 'bold',
     alignSelf: 'center',
     marginVertical: 20,
   },
   btnLogin: {
-    backgroundColor: 'red',
+    backgroundColor: COLORS.custom,
+    height: 46,
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
+  btnLogin1: {
+    backgroundColor: '#C5C5C5',
     height: 46,
     justifyContent: 'center',
     borderRadius: 10,
@@ -149,11 +163,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#ffff',
     borderRadius: 5,
-    borderColor: '#4FC4F5',
+    borderColor: '#C5C5C5',
     borderWidth: 1.5,
     height: 42,
     alignItems: 'center',
-    paddingLeft: 48,
+    // paddingLeft: 48,
+    justifyContent:'center'
   },
   imggg: {
     width: 24,
@@ -162,11 +177,11 @@ const styles = StyleSheet.create({
   txtgg: {
     color: '#000',
     fontSize: 16,
-    marginLeft: 35,
+    marginLeft: 10,
   },
   txtSignin: {
     alignSelf: 'center',
     fontSize: 17,
-    color: 'black',
+    color: 'white',
   },
 });
