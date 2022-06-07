@@ -5,7 +5,12 @@ import styles from '../styles/View.Payment.container';
 import COLORS from '../common/Color';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectedAddress, setChecked} from '../redux/addressSlice';
+import {
+  selectedAddress,
+  selectTimePicker,
+  setChecked,
+  setModalTime,
+} from '../redux/addressSlice';
 
 const AddressPayment = () => {
   let address = useSelector(selectedAddress);
@@ -108,13 +113,33 @@ const BodyUser = ({address}) => {
           alignSelf: 'center',
         }}
       />
-      <View style={{padding: 20, paddingEnd: 0}}>
-        <Text>
-          15-30 phút {'\n'}
-          <Text style={{fontSize: 18, color: 'black'}}>Càng sớm càng tốt</Text>
-        </Text>
-      </View>
+      <BtnChooseTime />
     </View>
+  );
+};
+
+const BtnChooseTime = () => {
+  const dispatch = useDispatch();
+  const timePicker = useSelector(selectTimePicker);
+
+  const getDateMonth = () => {
+    return `Ngày ${timePicker.getDate()}, Tháng ${timePicker.getMonth()}`;
+  };
+  const getHoursMinutes = () => {
+    return `${timePicker.getHours()} giờ ${timePicker.getMinutes()} phút`;
+  };
+
+  return (
+    <TouchableOpacity
+      style={{padding: 20, paddingEnd: 0}}
+      onPress={() => dispatch(setModalTime())}>
+      <Text>
+        {timePicker == null ? '15-30 phút' : getHoursMinutes()} {'\n'}
+        <Text style={{fontSize: 18, color: 'black'}}>
+          {timePicker === null ? 'Càng sớm càng tốt' : getDateMonth()}
+        </Text>
+      </Text>
+    </TouchableOpacity>
   );
 };
 

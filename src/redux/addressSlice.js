@@ -8,6 +8,8 @@ const addressSlice = createSlice({
     checked: false,
     modal: false,
     completed: false,
+    modalTime: false,
+    timePicker: null,
   },
   reducers: {
     setValue(state, action) {
@@ -28,6 +30,13 @@ const addressSlice = createSlice({
       if (state.completed == false) state.completed = true;
       else state.completed = false;
     },
+    setModalTime: state => {
+      if (state.modalTime == true) state.modalTime = false;
+      else state.modalTime = true;
+    },
+    setTimePicker(state, action) {
+      state.timePicker = action.payload;
+    },
   },
 });
 
@@ -37,11 +46,14 @@ export const {
   setChecked,
   openOrCloseModel,
   setCompleted,
+  setModalTime,
+  setTimePicker,
 } = addressSlice.actions;
 export const selectedAddress = state => state.address.value;
 export const selectedID = state => state.address.selected;
 export const selectChecked = state => state.address.checked;
 export const selectModal = state => state.address.modal;
 export const selectCompleted = state => state.address.completed;
+export const selectTimePicker = state => state.address.timePicker;
 
 export default addressSlice.reducer;

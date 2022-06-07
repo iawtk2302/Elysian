@@ -19,6 +19,7 @@ import {showMessage} from 'react-native-flash-message';
 
 const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
+  console.log(JSON.stringify(arrProduct, null, 2));
   const checked = useSelector(selectChecked);
   const addressChoose = useSelector(selectedAddress);
   const completed = useSelector(selectCompleted);
@@ -101,6 +102,7 @@ const BtnCompletePayment = () => {
         size: item.size.name,
         orderID: orderID,
         state: 'waiting',
+        toppingIDs: item.topping,
       });
     }
   };

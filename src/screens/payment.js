@@ -1,5 +1,5 @@
 import {View, ScrollView} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import HeaderPayment from '../components/HeaderPayment';
 import AddressPayment from '../components/AddressPayment';
@@ -11,10 +11,12 @@ import {setValue, setSelected, selectCompleted} from '../redux/addressSlice';
 import AlertCompleted from '../components/AlertCompleted';
 import CalculatePayment from '../components/CalculatePayment';
 import Loading from '../components/Loading';
+import ChooseTime from '../components/ChooseTime';
 
 const Payment = () => {
   const dispatch = useDispatch();
   const completed = useSelector(selectCompleted);
+  const [visible, setVisible] = useState(true);
   useEffect(() => {
     const loadAddress = () => {
       firestore()
@@ -52,6 +54,7 @@ const Payment = () => {
           title="Đang xử lý..."
         />
       )}
+      <ChooseTime />
     </>
   );
 };
