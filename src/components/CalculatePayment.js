@@ -8,13 +8,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Divider} from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { calculatorDiscount, calculatorTotal } from '../utils/solveVoucher';
+import COLORS from '../common/Color';
 const CalculatePayment = () => {
+  const total=calculatorTotal()
   return (
     <View style={[styles.aroundContainer]}>
       <Text style={{fontWeight: '700', color: 'black', fontSize: 14}}>
         Tổng cộng
       </Text>
-      <Total title="Thành tiền: " content={calculatorTotalPrice()} />
+      <Total title="Thành tiền: " content={total} />
       <Discount />
       <Payment />
     </View>
@@ -36,19 +39,61 @@ const Total = ({title, content}) => {
 };
 
 const Discount = () => {
-  const navigation=useNavigation()
-  const voucher=useSelector(state=>state.voucher)
+  const voucher = useSelector(state => state.voucher);
   return (
     <View>
-      <TouchableOpacity style={styles.totalItemContainer} onPress={()=>{navigation.navigate('Voucher')}}>
-        {
-          JSON.stringify(voucher) === '{}'?<Text>Chọn khuyến mãi</Text>:<Text>{voucher.title}</Text>
-        }
-        <Ionicons name="chevron-forward-outline" size={20} />
-      </TouchableOpacity>
+      <DiscountText voucher={voucher}/>
       <Divider />
     </View>
   );
+};
+
+const DiscountText = ({voucher}) => {
+  const navigation = useNavigation();
+  const discount=calculatorDiscount()
+  if(voucher==='')
+  return(
+    <TouchableOpacity
+        style={styles.totalItemContainer}
+        onPress={() => {
+          navigation.navigate('Voucher');
+        }}>
+        {/* {voucher === '' ? (
+          <DiscountText content="Chọn Voucher" />
+        ) : (
+          <DiscountText content={voucher.title} />
+        )} */}
+        <Text style={{color:COLORS.custom}}>Chọn voucher</Text>
+        <Ionicons name="chevron-forward-outline" size={20} />
+      </TouchableOpacity>
+  )
+  else
+  return(
+    <TouchableOpacity
+        style={styles.totalItemContainer}
+        onPress={() => {
+          navigation.navigate('Voucher');
+        }}>
+        {/* {voucher === '' ? (
+          <DiscountText content="Chọn Voucher" />
+        ) : (
+          <DiscountText content={voucher.title} />
+        )} */}
+        <View>
+          <Text style={{color:COLORS.custom}}>Chọn voucher</Text>
+          <Text>{voucher.title}</Text>
+        </View>
+        <NumberFormat
+        value={discount}
+        displayType="text"
+        thousandSeparator
+        suffix="đ"
+        renderText={value => (
+          <Text style={{color: 'black',alignSelf:'center'}}>-{value}</Text>
+        )}
+      />
+      </TouchableOpacity>
+  )
 };
 
 const Payment = () => {

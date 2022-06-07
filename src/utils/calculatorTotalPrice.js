@@ -9,7 +9,7 @@ export default function calculatorTotalPrice() {
   for (let item of arrProduct) {
     totalPrice += parseInt(item.total);
   }
-  if(voucher==={}){
+  if(voucher===''){
     return totalPrice
   }
   else{

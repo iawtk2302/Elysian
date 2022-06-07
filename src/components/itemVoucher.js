@@ -38,7 +38,6 @@ const ItemVoucher = ({item, type}) => {
   const total=calculatorTotal()
   const amount=TotalAmount()
   const add=()=>{
-    console.log(total)
     if(item.type=='total'){
       if(total>=parseInt(item.condition)){
         const action=chooseVoucher(item)
@@ -195,7 +194,10 @@ const ItemVoucher = ({item, type}) => {
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <Text style={{fontWeight: '500', marginTop: 20}}>Elysian</Text>
               <Text
+               
                 style={{
+                  textAlign:'center',
+                  width:250,
                   fontWeight: '500',
                   fontSize: 18,
                   color: 'black',

@@ -21,7 +21,7 @@ import Address from '../screens/address';
 import DetailAddress from '../screens/detailAddress';
 import Support from '../screens/support';
 import CancelledOrder from '../screens/cancelledOrder';
-
+import fireauth from '@react-native-firebase/auth'
 const Navigation = () => {
   async function onDisplayNotification() {
     // Create a channel
@@ -33,25 +33,18 @@ const Navigation = () => {
 
     // Display a notification
     await notifee.displayNotification({
-      title: 'Notification',
-      body: 'Xin chào',
+      title: 'Thông báo',
+      body: 'Đơn hàng đã giao thành công!',
       android: {
         channelId,
-        smallIcon: 'ic_launcher', // optional, defaults to 'ic_launcher'.
-        largeIcon:
-          'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png',
-        style: {
-          type: AndroidStyle.BIGPICTURE,
-          picture:
-            'https://gamek.mediacdn.vn/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png',
-        },
+        smallIcon: 'ic_launcher1', // optional, defaults to 'ic_launcher'.
       },
     });
   }
   useEffect(() => {
     firestore()
-      .collection('Products')
-      .where('type', '==', 'Trà sữa')
+      .collection('Orders')
+      .where('userID', '==', fireauth().currentUser.uid)
       .onSnapshot(snapShot => {
         let change = snapShot.docChanges();
         change.forEach(change => {
@@ -70,7 +63,7 @@ const Navigation = () => {
         <Stack.Screen name="Detail" component={DetailProduct} />
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
-        <Stack.Screen name="MoreAddresses" component={MoreAddresses} />
+        <Stack.Screen name="MoreAddresses" component={MoreAddresses} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Chọn địa chỉ khác'}}/>
         <Stack.Screen name="AddAddress" component={AddAddress} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Địa chỉ mới'}}/>
         <Stack.Screen name="Address" component={Address} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Địa chỉ'}}/>
         <Stack.Screen name="Support" component={Support} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Hỗ trợ'}}/>

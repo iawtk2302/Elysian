@@ -7,11 +7,11 @@ import fireAuth from '@react-native-firebase/auth';
 import COLORS from '../common/Color';
 import {useDispatch, useSelector} from 'react-redux';
 import {setSelected, setValue, selectedID} from '../redux/addressSlice';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MoreAddresses({navigation}) {
   return (
     <View>
-      <Top navigation={navigation} />
       <ScrollView>
         <Body navigation={navigation} />
         <Bot />
@@ -21,33 +21,24 @@ export default function MoreAddresses({navigation}) {
   );
 }
 
-const Top = ({navigation}) => {
-  return (
-    <View style={{backgroundColor: 'white'}}>
-      <View style={[styles.container, {padding: 15}]}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" style={styles.iconSize} />
-        </TouchableOpacity>
-        <Text style={styles.bold}>Chọn địa chỉ khác</Text>
-        <Text>SỬA</Text>
-      </View>
-    </View>
-  );
-};
+
 
 const Body = ({navigation}) => {
   const [update, setUpdate] = useState([]);
+  const onResult=(QuerySnapshot)=> {
+    const temp=[];
+    QuerySnapshot.forEach(documentSnapshot => {
+      temp.push(documentSnapshot.data())
+    });
+    setUpdate(temp)
+}
   useEffect(() => {
     const getMoreAddress = async () => {
       await firestore()
         .collection('Addresses')
         .where('userID', '==', fireAuth().currentUser.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            setUpdate(preUpdate => [...preUpdate, documentSnapshot.data()]);
-          });
-        });
+        .orderBy('selected', 'desc')
+        .onSnapshot(onResult)
     };
     getMoreAddress();
   }, []);
@@ -63,9 +54,11 @@ const Body = ({navigation}) => {
   );
 };
 const Bot = () => {
+  const navigation=useNavigation()
   return (
     <View style={{backgroundColor: 'white', marginTop: 20}}>
       <TouchableOpacity
+        onPress={()=>{navigation.push('AddAddress')}}
         style={[
           styles.container,
           {alignItems: 'center', justifyContent: 'center', padding: 15},
