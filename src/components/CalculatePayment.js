@@ -1,13 +1,13 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 import styles from '../styles/View.Payment.container';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 import FormatNumber from '../utils/FormatNumber';
 import NumberFormat from 'react-number-format';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Divider} from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 const CalculatePayment = () => {
   return (
     <View style={[styles.aroundContainer]}>
@@ -36,19 +36,29 @@ const Total = ({title, content}) => {
 };
 
 const Discount = () => {
-  const navigation=useNavigation()
-  const voucher=useSelector(state=>state.voucher)
+  const navigation = useNavigation();
+  const voucher = useSelector(state => state.voucher);
   return (
     <View>
-      <TouchableOpacity style={styles.totalItemContainer} onPress={()=>{navigation.navigate('Voucher')}}>
-        {
-          JSON.stringify(voucher) === '{}'?<Text>Chọn khuyến mãi</Text>:<Text>{voucher.title}</Text>
-        }
+      <TouchableOpacity
+        style={styles.totalItemContainer}
+        onPress={() => {
+          navigation.navigate('Voucher');
+        }}>
+        {JSON.stringify(voucher) === '{}' ? (
+          <DiscountText content="Chọn Voucher" />
+        ) : (
+          <DiscountText content={voucher.title} />
+        )}
         <Ionicons name="chevron-forward-outline" size={20} />
       </TouchableOpacity>
       <Divider />
     </View>
   );
+};
+
+const DiscountText = ({content}) => {
+  return <Text style={styles.discountText}>{content}</Text>;
 };
 
 const Payment = () => {

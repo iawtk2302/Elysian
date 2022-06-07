@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 import fireAuth from '@react-native-firebase/auth';
@@ -112,7 +112,22 @@ const BtnCompletePayment = () => {
   }
 
   const openModal = () => {
-    dispatch(openOrCloseModel());
+    if (addressChoose == '') {
+      Alert.alert(
+        'Chưa có địa chỉ giao hàng',
+        'Vui lòng thêm địa chỉ giao hàng',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => navigation.push('MoreAddresses')},
+        ],
+      );
+    } else {
+      dispatch(openOrCloseModel());
+    }
   };
   return (
     <View>

@@ -91,4 +91,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     borderColor: COLORS.custom,
   },
+  discountText: {
+    color: COLORS.custom,
+  },
 });

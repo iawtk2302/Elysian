@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Text,
-  Alert,
 } from 'react-native';
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
@@ -22,20 +21,22 @@ export default ModalOrderDetails = () => {
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={styles.modalContainer}>
-        <TouchableOpacity style={{flexDirection: 'row'}}>
+        {/* <TouchableOpacity style={{flexDirection: 'row'}}>
           <Text>Lịch sử đơn hàng</Text>
           <Ionicons
             name="chevron-forward-outline"
             style={{fontSize: 20, paddingStart: 10, alignSelf: 'flex-end'}}
           />
-        </TouchableOpacity>
-        <ScrollView>
+        </TouchableOpacity> */}
+        <ScrollView showsVerticalScrollIndicator={false}>
           {arrProduct.map((item, index) => (
             <View key={index}>
               <OrderDetail item={item} />
             </View>
           ))}
+          <View height={70} />
         </ScrollView>
+
         <BtnClose />
       </View>
     </Modal>
@@ -60,11 +61,8 @@ const BtnClose = () => {
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    margin: 10,
-    marginTop: 30,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 15,
+    backgroundColor: '#F5F5F5',
+
     shadowColor: '#000',
     elevation: 5,
     height: '95%',

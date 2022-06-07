@@ -16,10 +16,25 @@ const AddressPayment = () => {
   let address = useSelector(selectedAddress);
   return (
     <View style={[styles.aroundContainer]}>
+      <Store />
       <Header />
-      <BodyAddress address={address} />
-      <BodyUser address={address} />
+      {address === '' ? (
+        <NothingToShow />
+      ) : (
+        <View>
+          <BodyAddress address={address} />
+          <BodyUser address={address} />
+        </View>
+      )}
       <Bot />
+    </View>
+  );
+};
+
+const Store = () => {
+  return (
+    <View>
+      <Text>Cửa hàng</Text>
     </View>
   );
 };
@@ -140,6 +155,31 @@ const BtnChooseTime = () => {
         </Text>
       </Text>
     </TouchableOpacity>
+  );
+};
+
+const NothingToShow = () => {
+  const navigation = useNavigation();
+
+  const openMoreAddress = () => {
+    navigation.push('MoreAddresses');
+  };
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignItems: 'center',
+      }}>
+      <TouchableOpacity alignSelf="center" onPress={openMoreAddress}>
+        <Text style={{color: COLORS.custom}}>
+          Vui lòng chọn địa chỉ giao hàng
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
