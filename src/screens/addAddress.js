@@ -174,8 +174,10 @@ const AddAddress = () => {
             }
             <Text style={{ margin: 16 }}>Địa chỉ</Text>
             <DropDownPicker
+            searchable={true}
                 style={{ borderWidth: 0 }}
                 placeholder='Chọn tỉnh/thành phố'
+                searchPlaceholder='Tìm tỉnh/thành phố'
                 zIndex={10}
                 open={open}
                 value={province}

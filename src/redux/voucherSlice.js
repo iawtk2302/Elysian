@@ -2,13 +2,13 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const voucherSlice = createSlice({
   name: 'voucher',
-  initialState: {},
+  initialState: '',
   reducers: {
     chooseVoucher: (state, action) => {
       return action.payload
     },
     removeVoucher: (state, action) => {
-        return {}
+        return ''
       },
   },
 });

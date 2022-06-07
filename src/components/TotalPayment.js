@@ -9,7 +9,6 @@ import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 const TotalPayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
   const total = calculatorTotalPrice();
-
   const countALlProduct = () => {
     let count = 0;
     for (let product of arrProduct) count += product.count;
