@@ -19,6 +19,7 @@ const CalculatePayment = () => {
       </Text>
       <Total title="Thành tiền: " content={total} />
       <Discount />
+      <Ship/>
       <Payment />
     </View>
   );
@@ -74,11 +75,6 @@ const DiscountText = ({voucher}) => {
         onPress={() => {
           navigation.navigate('Voucher');
         }}>
-        {/* {voucher === '' ? (
-          <DiscountText content="Chọn Voucher" />
-        ) : (
-          <DiscountText content={voucher.title} />
-        )} */}
         <View>
           <Text style={{color: COLORS.custom}}>Chọn voucher</Text>
           <Text>{voucher.title}</Text>
@@ -95,7 +91,29 @@ const DiscountText = ({voucher}) => {
       </TouchableOpacity>
     );
 };
-
+const Ship = () => {
+  return (
+    <View>
+      <View style={[styles.totalItemContainer, {marginBottom: 10}]}>
+      <Text>
+        Phí vận chuyển
+      </Text>
+      <NumberFormat
+        value={30000}
+        displayType="text"
+        thousandSeparator
+        suffix="đ"
+        renderText={value => (
+          <Text style={{color: 'black'}}>{value}</Text>
+        )}
+      />
+    </View>
+    <View>
+        <Divider />
+      </View>
+    </View>
+  );
+};
 const Payment = () => {
   return (
     <View style={[styles.totalItemContainer, {marginBottom: 0}]}>

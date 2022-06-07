@@ -106,12 +106,32 @@ const BtnCompletePayment = () => {
       });
     }
   };
-
+  const checkLocation= async ()=>{
+    let check=false
+    await firestore()
+          .collection('Locations')
+          .where('ward','==',addressChoose.ward)
+          .get()
+          .then(snap=>{
+            if(snap.size>0)
+            check=true
+            else{ 
+              Alert.alert(
+                'Có lỗi',
+                'Cửa hàng quá xa so với vị trí bạn chọn',
+                [
+                  {text: 'OK', onPress: () => console.log('Ok Pressed')},
+                ],
+              );
+            }
+          })
+          return check
+  }
   if (completed == true) {
-    addOrderToFireBase();
+    addOrderToFireBase()
   }
 
-  const openModal = () => {
+  const openModal = async () => {
     if (addressChoose == '') {
       Alert.alert(
         'Chưa có địa chỉ giao hàng',
@@ -125,8 +145,11 @@ const BtnCompletePayment = () => {
           {text: 'OK', onPress: () => navigation.push('MoreAddresses')},
         ],
       );
-    } else {
-      dispatch(openOrCloseModel());
+    }
+     else {
+       const check=await checkLocation()
+       if(check)
+       dispatch(openOrCloseModel());  
     }
   };
   return (

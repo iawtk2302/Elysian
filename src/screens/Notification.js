@@ -88,16 +88,17 @@ const Notification = () => {
   }, []);
 
   if (loading) {
-    return <ActivityIndicator />;
+    return (
+      <View style={{justifyContent:'center', alignItems:'center'}}>
+        <ActivityIndicator color={COLORS.custom}/>
+      </View>
+    );
   }
   return (
     <ScrollView style={{marginTop: 15, flex: 1}}>
       {notiData.map((item, index) => {
         return <ItemNotification key={index} item={item} />;
       })}
-      <Button onPress={() => {navigation.navigate('Map', {markers: location})}}>
-        <Text>bac</Text>
-      </Button>
     </ScrollView>
   );
 };

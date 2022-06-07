@@ -16,7 +16,6 @@ const AddressPayment = () => {
   let address = useSelector(selectedAddress);
   return (
     <View style={[styles.aroundContainer]}>
-      <Store />
       <Header />
       {address === '' ? (
         <NothingToShow />
@@ -31,13 +30,6 @@ const AddressPayment = () => {
   );
 };
 
-const Store = () => {
-  return (
-    <View>
-      <Text>Cửa hàng</Text>
-    </View>
-  );
-};
 
 const Header = () => {
   return (

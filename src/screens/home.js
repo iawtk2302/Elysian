@@ -40,6 +40,7 @@ const Home = ({navigation}) => {
   const [dataProducts, setDataProducts] = useState([]);
   const [dataSize, setDataSize] = useState([]);
   const [datatopping, setDataTopping] = useState([]);
+  const [voucher,setVoucher]=useState(0)
   const getData = async () => {
     const listBanner = [];
     const listProduct = [];
@@ -65,6 +66,12 @@ const Home = ({navigation}) => {
           listProduct.push(documentSnapshot.data());
         });
         setDataProducts(listProduct);
+      });
+      await firestore()
+      .collection('Vouchers')
+      .get()
+      .then(querySnapshot => {
+        setVoucher(querySnapshot.size)
       });
     await firestore()
       .collection('Sizes')
@@ -146,7 +153,7 @@ const Home = ({navigation}) => {
             color={COLORS.custom}
           />
           <Text style={{marginLeft: 4, fontWeight: '500', color: 'black'}}>
-            5
+          {voucher}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.notificationContainer}>

@@ -5,6 +5,7 @@ export default function calculatorTotalPrice() {
   const arrProduct = useSelector(state => state.orders.list);
   const voucher=useSelector(state=>state.voucher)
   const dispatch=useDispatch()
+  let ship=30000
   let totalPrice = 0;
   for (let item of arrProduct) {
     totalPrice += parseInt(item.total);
@@ -29,6 +30,6 @@ export default function calculatorTotalPrice() {
       }
     }
   }
-  return totalPrice
+  return totalPrice+ship
 }
 

@@ -23,7 +23,7 @@ import Support from '../screens/support';
 import CancelledOrder from '../screens/cancelledOrder';
 import fireauth from '@react-native-firebase/auth'
 const Navigation = () => {
-  async function onDisplayNotification() {
+  async function onDisplayNotification(content) {
     // Create a channel
     const channelId = await notifee.createChannel({
       id: 'default',
@@ -34,7 +34,7 @@ const Navigation = () => {
     // Display a notification
     await notifee.displayNotification({
       title: 'Thông báo',
-      body: 'Đơn hàng đã giao thành công!',
+      body: `Đơn hàng ${content} đã giao thành công!`,
       android: {
         channelId,
         smallIcon: 'ic_launcher1', // optional, defaults to 'ic_launcher'.
@@ -49,8 +49,10 @@ const Navigation = () => {
         let change = snapShot.docChanges();
         change.forEach(change => {
           if (change.type == 'modified') {
-            console.log(change.doc.data());
-            onDisplayNotification();
+            if(change.doc.data().state=='complete')
+            {
+              onDisplayNotification(change.doc.data().orderID);
+            }   
           }
         });
       });
