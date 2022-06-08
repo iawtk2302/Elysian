@@ -31,7 +31,7 @@ export default BtnCancel = ({orderID}) => {
     dispatch(setFalseWaitForDelete());
     showMessage({
       message: 'Xóa thành công đơn hàng',
-      description: 'Elysian hận hạnh phục vụ bạn',
+      description: 'Elysian hân hạnh phục vụ bạn',
       type: 'danger',
     });
   };
