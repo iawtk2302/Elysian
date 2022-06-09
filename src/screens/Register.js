@@ -5,8 +5,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import DatePicker from 'react-native-date-picker';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {signOut} from '../utils/Auth';
+import COLORS from '../common/Color';
 
 const Register = ({setProfileUpdated}) => {
   const [date, setDate] = useState(new Date());
@@ -92,7 +93,7 @@ const Register = ({setProfileUpdated}) => {
           marginBottom: 50,
           marginTop: 10,
         }}>
-        <Icon name="times-circle" size={30} onPress={signOut} />
+        <Icon name="close-circle-outline" size={30} onPress={signOut} />
       </View>
       <Input
         placeholder="Nhập tên của bạn"
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
     left: 30,
     right: 30,
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: COLORS.custom,
     height: 46,
     justifyContent: 'center',
     borderRadius: 10,
@@ -191,6 +192,6 @@ const styles = StyleSheet.create({
   btnRegister: {
     alignSelf: 'center',
     fontSize: 17,
-    color: 'black',
+    color: 'white',
   },
 });

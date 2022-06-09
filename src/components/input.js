@@ -9,7 +9,7 @@ const Input = ({label, iconName, error, password, ...props}) => {
         style={[
           style.inputContainer,
           {
-            borderColor: error ? 'red' : 'black',
+            borderColor: error ? 'red' : '#C5C5C5',
             alignItems: 'center',
           },
         ]}>
@@ -50,7 +50,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: 'black',
+    borderColor: '#C5C5C5',
   },
 });
 

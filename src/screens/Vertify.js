@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import firestore from '@react-native-firebase/firestore';
+import COLORS from '../common/Color';
 
 const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber}) => {
   // const [phoneNumber, setPhoneNumber] = useState('0396891589');
@@ -84,7 +85,7 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber}) 
             if (isSocial === 1) confirmCodewithSocical();
             else confirmCode();
           }}>
-          <Text style={{alignSelf: 'center', fontSize: 17, color: 'black'}}>
+          <Text style={{alignSelf: 'center', fontSize: 17, color: 'white'}}>
             Xác nhận
           </Text>
         </TouchableOpacity>
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     left: 30,
     right: 30,
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: COLORS.custom,
     height: 46,
     justifyContent: 'center',
     borderRadius: 10,

@@ -114,19 +114,17 @@ export default SignIn;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'red',
     flex: 1,
   },
   header: {
     flex: 1,
-    backgroundColor: 'red',
   },
   imgBackground: {
     width: 400,
     height: 250,
   },
   footer: {
-    flex: 2,
+    flex: 2.2,
     backgroundColor: 'white',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
