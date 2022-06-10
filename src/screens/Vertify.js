@@ -1,11 +1,13 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import firestore from '@react-native-firebase/firestore';
 import COLORS from '../common/Color';
-
-const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber}) => {
+import {signOut} from '../utils/Auth';
+import Icon from 'react-native-vector-icons/Ionicons';
+import RNOtpVerify from 'react-native-otp-verify';
+const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber, setConfirm}) => {
   // const [phoneNumber, setPhoneNumber] = useState('0396891589');
   const [timetoResend, setTimetoResend] = useState('3:00');
   const [code, setCode] = useState('');
@@ -51,9 +53,24 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber}) 
       // console.log('added');
     });
   }
+  const otpHandler = message => {
+    const ootp = /(\d{6})/g.exec(message)[1];
+    setCode(ootp);
+    RNOtpVerify.removeListener();
+  };
+  useEffect(() => {
+    RNOtpVerify.getHash().then().catch(console.log);
+    RNOtpVerify.getOtp()
+      .then(p => RNOtpVerify.addListener(otpHandler))
+      .catch(p => console.log(p));
+    return RNOtpVerify.removeListener();
+  }, [])
   // if(profileUpdated)
   return (
     <View style={styles.container}>
+      <View style={{alignItems:"flex-end", marginTop: 10, marginRight: -10}}>
+        <Icon name="close-circle-outline" size={35} onPress={() => setConfirm(null)} />
+      </View>
       <View style={styles.header}>
         <Text style={styles.txtHeader}>Xác nhận mã OTP</Text>
         <Text style={styles.txtNoti}>
@@ -65,7 +82,7 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber}) 
         <OTPInputView
           style={{width: '100%', height: 100}}
           pinCount={6}
-          // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+          code={code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
           onCodeChanged={code => {
             setCode(code);
           }}
@@ -76,9 +93,9 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber}) 
             console.log(`Code is ${code}, you are good to go!`);
           }}
         />
-        <Text style={styles.txtNoti}>
+        {/* <Text style={styles.txtNoti}>
           Không nhận được mã Gửi lại ({timetoResend})
-        </Text>
+        </Text> */}
         <TouchableOpacity
           style={styles.btnLogin}
           onPress={() => {

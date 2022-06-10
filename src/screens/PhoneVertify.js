@@ -1,25 +1,39 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Input from '../components/input';
 import auth from '@react-native-firebase/auth';
 import Vertify from './Vertify';
 import { signOut } from '../utils/Auth';
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const PhoneVertify = ({setHasPhone}) => {
-  const [phoneNumber, setPhoneNumber] = useState('0396891589');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [confirm, setConfirm] = useState(null);
   const [isSocial, setIsSocial] = useState(1)
+  const [isPress, setIsPress] = useState(false);
   async function verifyPhoneNumber(phoneNumber) {
-    const confirmation = await auth().verifyPhoneNumber(phoneNumber);
-    setConfirm(confirmation)
+    try {
+      if (phoneNumber.charAt(0) === '0') {
+        let a = phoneNumber.substring(1);
+        phoneNumber = '+84'.concat(a);
+        console.log(phoneNumber);
+      }
+      const confirmation = await auth().verifyPhoneNumber(phoneNumber);
+      setConfirm(confirmation)
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show('Recheck your phone number', 4);
+    }
   }
-
+  useEffect(() => {
+    if (phoneNumber === '') setIsPress(false);
+    else setIsPress(true);
+  }, [phoneNumber]);
   if(!confirm)
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'flex-end', marginRight: -20, marginTop: 15}}>
-        <Icon name='times-circle' size={30} onPress={signOut}/>
+        <Icon name='close-circle-outline' size={35} onPress={signOut}/>
       </View>
       <View style={styles.header}>
         <Text style={styles.txtHeader}>Xác nhận số điện thoại</Text>
@@ -30,14 +44,15 @@ const PhoneVertify = ({setHasPhone}) => {
       </View>
       <View style={styles.body}>
         <Input
-          keyboardType="phone-pad"
+          keyboardType="numeric"
           placeholder="Nhập số điện thoại"
           onChangeText={text => {
             setPhoneNumber(text);
           }}
         />
         <TouchableOpacity
-          style={styles.btnLogin}
+          style={[styles.btnLogin, {backgroundColor: !isPress ? '#C5C5C5': 'red'}]}
+          disabled={!isPress}
           onPress={() => {
             verifyPhoneNumber(phoneNumber)
           }}>
@@ -49,7 +64,7 @@ const PhoneVertify = ({setHasPhone}) => {
     </View>
   );
   return (
-    <Vertify confirm={confirm} isSocial={isSocial} setHasPhone={setHasPhone}/>
+    <Vertify confirm={confirm} isSocial={isSocial} setHasPhone={setHasPhone} setConfirm={setConfirm}/>
   )
 };
 
@@ -109,7 +124,6 @@ const styles = StyleSheet.create({
     // left: 30,
     // right: 30,
     // flex: 1,
-    backgroundColor: 'red',
     height: 46,
     justifyContent: 'center',
     borderRadius: 10,

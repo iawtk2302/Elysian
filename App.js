@@ -22,7 +22,7 @@ const App = () => {
   const [profileUpdated, setProfileUpdated] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const [loading, setLoading] = useState(true);
-  const checkpProfileUpdated = async () => {
+  const checkProfileUpdated = async () => {
     await firestore()
       .collection('Users')
       .doc(auth().currentUser.uid)
@@ -44,10 +44,15 @@ const App = () => {
   };
   function onAuthStateChanged(user) {
     setUser(user);
+    if(user === null){
+      setHasPhone(false)
+      setProfileUpdated(false)
+      setLoading(true)
+    }
     if (initializing) setInitializing(false);
     if (auth().currentUser !== null) {
       if (auth().currentUser.displayName !== null) {
-        checkpProfileUpdated();
+        checkProfileUpdated();
       }
       else{
         setLoading(false)
@@ -64,7 +69,6 @@ const App = () => {
 
   useEffect(() => {
     SplashScreen.hide();
-    setHasPhone(false);
     requestUserPermission();
     notificationListener();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

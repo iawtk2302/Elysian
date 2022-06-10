@@ -9,7 +9,7 @@ import {
   Keyboard,
   ToastAndroid,
 } from 'react-native';
-import COLORS from '../common/Color'
+import COLORS from '../common/Color';
 import React, {useState, useEffect} from 'react';
 import Input from '../components/input';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -23,8 +23,9 @@ const SignIn = ({navigation}) => {
   });
   const [confirm, setConfirm] = useState(null);
   const [phone, setPhone] = useState('');
-  const [isPress,setIsPress]=useState(false)
+  const [isPress, setIsPress] = useState(false);
   async function signInWithPhoneNumber(phoneNumber) {
+    console.log('first')
     try {
       if (phoneNumber.charAt(0) === '0') {
         let a = phoneNumber.substring(1);
@@ -38,15 +39,16 @@ const SignIn = ({navigation}) => {
       ToastAndroid.show('Recheck your phone number', 4);
     }
   }
-  useEffect(()=>{
-    if(phone=='')
-    setIsPress(false)
-    else
-    setIsPress(true)
-  },[phone])
+  useEffect(() => {
+    if (phone == '') setIsPress(false);
+    else setIsPress(true);
+  }, [phone]);
   if (!confirm)
     return (
-      <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Image
@@ -63,7 +65,7 @@ const SignIn = ({navigation}) => {
               onChangeText={text => setPhone(text)}
             />
             <TouchableOpacity
-              style={isPress?styles.btnLogin:styles.btnLogin1}
+              style={isPress ? styles.btnLogin : styles.btnLogin1}
               disabled={!isPress}
               onPress={() => signInWithPhoneNumber(phone)}>
               <Text style={styles.txtSignin}>Đăng nhập</Text>
@@ -107,7 +109,9 @@ const SignIn = ({navigation}) => {
         </View>
       </TouchableWithoutFeedback>
     );
-  return <Vertify confirm={confirm} phoneNumber={phone} />;
+  return (
+    <Vertify confirm={confirm} phoneNumber={phone} setConfirm={setConfirm} />
+  );
 };
 
 export default SignIn;
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
     height: 42,
     alignItems: 'center',
     // paddingLeft: 48,
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   imggg: {
     width: 24,
