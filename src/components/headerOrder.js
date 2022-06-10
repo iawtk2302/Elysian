@@ -4,17 +4,24 @@ import COLORS from '../common/Color';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
-const HeaderOrder = () => {
+const HeaderOrder = ({data,topping,size}) => {
   const Navigation = useNavigation();
   const navPayment = () => {
     Navigation.push('Favorite');
+  };
+  const navSearch = () => {
+    Navigation.push('SearchProduct',{data:data,topping:topping,size:size});
   };
   return (
     <View style={styles.container}>
       <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
         Đặt hàng
       </Text>
-      <Icon name="heart-outline" size={26} color="white" onPress={navPayment} />
+      <View style={{flexDirection:'row'}}>
+        <Icon name="search-outline" size={26} color="white" onPress={navSearch} style={{marginRight:15}}/>
+        <Icon name="heart-outline" size={26} color="white" onPress={navPayment} />
+      </View>
+      
     </View>
   );
 };

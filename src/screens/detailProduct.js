@@ -31,6 +31,7 @@ const DetailProduct = () => {
   const [id, setId] = useState();
   const [selectedTopping, setselectedTopping] = useState([]);
   LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  LogBox.ignoreAllLogs();
   const total =
     (parseInt(size.price) +
       parseInt(price) +
