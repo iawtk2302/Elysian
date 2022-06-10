@@ -10,7 +10,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeProduct} from '../redux/orderSlice';
 import {showMessage} from 'react-native-flash-message';
-import { removeVoucher } from '../redux/voucherSlice';
+import {removeVoucher} from '../redux/voucherSlice';
 
 const PaymentDetail = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -18,7 +18,6 @@ const PaymentDetail = () => {
     <View style={[styles.aroundContainer]}>
       <Header />
       <SwipeListView
-        useFlatList={true}
         data={arrProduct}
         renderItem={(rowData, rowMap) => (
           <View style={{marginTop: 5}}>
@@ -51,7 +50,7 @@ const Options = ({data, rowMap}) => {
     dispatch(removeProduct(data.item));
 
     if (arrProduct.length == 1) {
-      dispatch(removeVoucher())
+      dispatch(removeVoucher());
       navigation.goBack();
     }
     showMessage({
