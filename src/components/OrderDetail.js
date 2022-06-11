@@ -6,6 +6,7 @@ import FormatNumber from '../utils/FormatNumber';
 import totalTopping from '../utils/totalTopping';
 
 const OrderDetail = ({item}) => {
+  console.log(JSON.stringify(item, null, 2));
   return (
     <View
       style={{
@@ -34,7 +35,7 @@ const OrderDetail = ({item}) => {
       <Divider margin={10} />
       <PennyTotal
         amount={item.amount}
-        price={item.products.price}
+        price={+item.products.price + +item.size.price}
         priceTopping={totalTopping(item.toppingIDs)}
       />
     </View>
@@ -51,7 +52,9 @@ const Detail = ({data}) => {
       <Text style={{color: 'black', fontSize: 16}}>{data.products.name}</Text>
       <Text>
         Kích cỡ:{' '}
-        <Text style={{color: 'black', fontWeight: 'bold'}}>{data.size}</Text>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>
+          {data.size.name}
+        </Text>
       </Text>
       <View style={styles.layout}>
         <Text>
@@ -61,7 +64,7 @@ const Detail = ({data}) => {
           </Text>
         </Text>
         <Text>
-          Giá: <FormatNumber number={data.products.price} />
+          Giá: <FormatNumber number={+data.products.price + +data.size.price} />
         </Text>
       </View>
     </View>

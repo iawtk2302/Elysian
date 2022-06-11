@@ -20,7 +20,7 @@ const Activities = () => {
         <TopTabOrder />
       </View>
       {waitingForDelete && (
-        <Loading uri={require('../assets/15120-delete.json')} />
+        <Loading uri={require('../assets/lf30_editor_fhzlpncq.json')} />
       )}
     </>
   );
