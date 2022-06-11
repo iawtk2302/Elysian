@@ -43,6 +43,7 @@ const Register = ({setProfileUpdated}) => {
         isFull = false;
         handleErrors('Vui lòng nhập email', 'email');
       } else if (!inputs?.email.match(validRegex)) {
+        isFull = false
         handleErrors('Email sai định dạng', 'email');
       }
     if (!inputs?.name) {

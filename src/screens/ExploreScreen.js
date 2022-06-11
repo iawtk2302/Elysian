@@ -111,6 +111,7 @@ const ExploreScreen = ({route}) => {
         initialRegion={state.region}
         style={styles.container}
         provider={PROVIDER_GOOGLE}
+        showsUserLocation={true}
         // customMapStyle={theme.dark ? mapDarkStyle : mapStandardStyle}
       >
         {state.markers.map((marker, index) => {
