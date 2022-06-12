@@ -38,7 +38,7 @@ const ItemBanner = ({item, navigation}) => {
           />
         </SharedElement>
       </TouchableWithoutFeedback>
-      <Text style={{color: 'black'}}>{uitem.title.toUpperCase()}</Text>
+      {/* <Text style={{color: 'black'}}>{uitem.title.toUpperCase()}</Text> */}
     </View>
   );
 };

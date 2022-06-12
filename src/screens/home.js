@@ -36,27 +36,32 @@ const Home = ({navigation}) => {
   // const navPayment = () => {
   //   if (orders.length > 0) navigation.push('Payment');
   // };
-  const [databanner, setDatabanner] = useState([]);
+  const [databanner, setDatabanner] = useState([
+    // 'https://gongcha.com.vn/wp-content/uploads/2022/02/toffee.395x280-01.jpg',
+    // 'https://gongcha.com.vn/wp-content/uploads/2022/05/longan.395x280-01-1400x993.jpg',
+    // 'https://gongcha.com.vn/wp-content/uploads/2022/02/choco.395x280-01.jpg',
+  ]);
   const [dataProducts, setDataProducts] = useState([]);
   const [dataSize, setDataSize] = useState([]);
   const [datatopping, setDataTopping] = useState([]);
-  const [voucher,setVoucher]=useState(0)
+  const [voucher, setVoucher] = useState(0);
+  const [isReady, setIsReady] = useState(false);
   const getData = async () => {
     const listBanner = [];
     const listProduct = [];
     const size = [];
     const topping = [];
     await firestore()
-      .collection('Banners')
-      .get()
-      .then(querySnapshot => {
-        // console.log('Total users: ', querySnapshot.size);
-        querySnapshot.forEach(documentSnapshot => {
-          listBanner.push(documentSnapshot.data());
-          // console.log(documentSnapshot.data());
-        });
-        setDatabanner(listBanner);
+    .collection('Banners')
+    .get()
+    .then(querySnapshot => {
+      // console.log('Total users: ', querySnapshot.size);
+      querySnapshot.forEach(documentSnapshot => {
+        listBanner.push(documentSnapshot.data());
+        // console.log(documentSnapshot.data());
       });
+      setDatabanner(listBanner);
+    });
     await firestore()
       .collection('Products')
       .limit(5)
@@ -67,12 +72,13 @@ const Home = ({navigation}) => {
         });
         setDataProducts(listProduct);
       });
-      await firestore()
+    await firestore()
       .collection('Vouchers')
       .get()
       .then(querySnapshot => {
-        setVoucher(querySnapshot.size)
+        setVoucher(querySnapshot.size);
       });
+
     await firestore()
       .collection('Sizes')
       .get()
@@ -82,6 +88,7 @@ const Home = ({navigation}) => {
         });
         setDataSize(size);
       });
+    
     await firestore()
       .collection('Toppings')
       .get()
@@ -91,7 +98,10 @@ const Home = ({navigation}) => {
         });
         setDataTopping(topping);
       });
+    
+    setIsReady(true)
   };
+
   const getCountNewNotification = async () => {
     await firestore()
       .collection('Users')
@@ -153,7 +163,7 @@ const Home = ({navigation}) => {
             color={COLORS.custom}
           />
           <Text style={{marginLeft: 4, fontWeight: '500', color: 'black'}}>
-          {voucher}
+            {voucher}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.notificationContainer}>
@@ -179,32 +189,33 @@ const Home = ({navigation}) => {
             dotStyle={{marginTop: 40}}
             activeDotStyle={{marginTop: 40}}
             style={{height: width / 2 + 22}}
-            autoplay={true}
-            autoplayTimeout={3}
-            loop={true}
-            key={1}>
-            {databanner.map((item, index) => {
-              return (
-                <TouchableWithoutFeedback
-                  key={index}
-                  onPress={() => {
-                    navigator.navigate('Banner', {item: item});
-                  }}>
-                  <Image
-                    // key={index}
-                    style={{
-                      borderRadius: 20,
-                      // flex: 1,
-                      width: width - 30,
-                      height: width / 2,
-                      resizeMode: 'contain',
-                    }}
-                    source={{uri: item.image}}
-                    // resizeMethod='resize'
-                  />
-                </TouchableWithoutFeedback>
-              );
-            })}
+            autoplay
+            autoplayTimeout={2}
+            key={Math.random(5)}
+            loop={true}>
+            {isReady &&
+              databanner.map((item, index) => {
+                return (
+                  <TouchableWithoutFeedback
+                    key={item.image}
+                    onPress={() => {
+                      navigator.navigate('Banner', {item: item});
+                    }}>
+                    <Image
+                      key={index}
+                      style={{
+                        borderRadius: 20,
+                        // flex: 1,
+                        width: width - 30,
+                        height: width / 2,
+                        resizeMode: 'contain',
+                      }}
+                      source={{uri: item.image}}
+                      // resizeMethod='resize'
+                    />
+                  </TouchableWithoutFeedback>
+                );
+              })}
           </Swiper>
         </View>
         {/* Slider end */}
@@ -243,7 +254,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'white'
+    backgroundColor: 'white',
   },
   header: {
     height: 60,
