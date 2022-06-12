@@ -46,6 +46,7 @@ const App = () => {
   };
   function onAuthStateChanged(user) {
     setUser(user);
+    console.log(user)
     if(user === null){
       setHasPhone(false)
       setProfileUpdated(false)

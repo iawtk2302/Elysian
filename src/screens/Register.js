@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity, Keyboard} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Input from '../components/input';
 import DropDownPicker from 'react-native-dropdown-picker';
 import auth from '@react-native-firebase/auth';
@@ -23,6 +23,7 @@ const Register = ({setProfileUpdated}) => {
   const [errors, setErrors] = useState({});
   const UpdateProfile = async () => {
     // console.log(inputs)
+    
     await firestore()
       .collection('Users')
       .doc(auth().currentUser.uid)
@@ -63,9 +64,10 @@ const Register = ({setProfileUpdated}) => {
     }
     
     // console.log(value)
-
+    
     if (isFull) {
       console.log('first');
+      
       // setInputs(prevState => ({...prevState, ['dateofbirth']: date}))
       UpdateProfile();
     }
@@ -82,12 +84,15 @@ const Register = ({setProfileUpdated}) => {
     handleErrors(null, input);
     setInputs(prevState => ({...prevState, [input]: text}));
   };
-
   const SetProfile = async () => {
     // console.log('first');
     // await auth().currentUser.updateProfile({displayName: displayName});
   };
-
+  useEffect(() => {
+    setInputs(prevState => ({...prevState, ['phoneNumber']: auth().currentUser.phoneNumber}));
+    if(auth().currentUser.email !== null)
+      setInputs(prevState => ({...prevState, ['email']: auth().currentUser.email}));
+  }, [])
   return (
     <View style={styles.container}>
       <View

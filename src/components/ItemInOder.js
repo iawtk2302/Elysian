@@ -41,7 +41,7 @@ export default ItemInOder = ({item}) => {
         name: item.size,
         price: item.size === 'L' ? '8000' : item.size === 'M' ? '16000' : '0',
       };
-      item.products = products;
+      item.products  = products;
       item.size = size;
     }
     dispatch(setProducts(arrDetailOrder));
