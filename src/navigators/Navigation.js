@@ -22,6 +22,7 @@ import DetailAddress from '../screens/detailAddress';
 import Support from '../screens/support';
 import CancelledOrder from '../screens/cancelledOrder';
 import fireauth from '@react-native-firebase/auth'
+import SearchProduct from '../screens/searchProduct';
 const Navigation = () => {
   async function onDisplayNotification(content) {
     // Create a channel
@@ -65,6 +66,7 @@ const Navigation = () => {
         <Stack.Screen name="Detail" component={DetailProduct} />
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
+        <Stack.Screen name="SearchProduct" component={SearchProduct} />
         <Stack.Screen name="MoreAddresses" component={MoreAddresses} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Chọn địa chỉ khác'}}/>
         <Stack.Screen name="AddAddress" component={AddAddress} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Địa chỉ mới'}}/>
         <Stack.Screen name="Address" component={Address} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Địa chỉ'}}/>

@@ -1,7 +1,11 @@
 import {View, TouchableOpacity, Text} from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {openOrClose, setOrderID} from '../redux/orderDetailSlide';
+import {
+  openOrClose,
+  setOrderID,
+  setWaitForLoadDetail,
+} from '../redux/orderDetailSlide';
 import fireStore from '@react-native-firebase/firestore';
 import {setProducts} from '../redux/orderDetailSlide';
 import BtnActionOrder from './BtnActionOrder';
@@ -33,16 +37,24 @@ export default ItemInOder = ({item}) => {
         .then(docSnap => {
           products = docSnap.data();
         });
+      const size = {
+        name: item.size,
+        price: item.size === 'L' ? '8000' : item.size === 'M' ? '16000' : '0',
+      };
       item.products = products;
+      item.size = size;
     }
     dispatch(setProducts(arrDetailOrder));
+
     arrDetailOrder = [];
   };
 
   const OpenModal = () => {
     dispatch(setOrderID(item.orderID));
-    loadProducts();
+    dispatch(setWaitForLoadDetail());
+    loadProducts(item.orderID);
     dispatch(openOrClose());
+    dispatch(setWaitForLoadDetail());
   };
 
   return (

@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View,LogBox} from 'react-native';
 import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register';
 import PhoneVertify from './src/screens/PhoneVertify';
 import {Provider} from 'react-redux';
-import store from './src/redux/store';
+import {store, persistor} from './src/redux/store'
 import {ActivityIndicator} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import { PersistGate } from 'redux-persist/integration/react'
 import {
   notificationListener,
   requestUserPermission,
@@ -22,6 +23,7 @@ const App = () => {
   const [profileUpdated, setProfileUpdated] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const [loading, setLoading] = useState(true);
+  LogBox.ignoreAllLogs()
   const checkProfileUpdated = async () => {
     await firestore()
       .collection('Users')
@@ -106,10 +108,12 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <SafeAreaView style={{flex: 1}}>
         <Navigation />
       </SafeAreaView>
       <FlashMessage position="top" />
+      </PersistGate>
     </Provider>
   );
 };

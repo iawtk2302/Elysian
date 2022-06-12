@@ -83,8 +83,6 @@ const BodyAddress = ({address}) => {
           <Text>
             {address.detail +
               ', ' +
-              address.village +
-              ', ' +
               address.ward +
               ', ' +
               address.district +

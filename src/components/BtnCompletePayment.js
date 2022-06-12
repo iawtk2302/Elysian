@@ -19,7 +19,6 @@ import {showMessage} from 'react-native-flash-message';
 
 const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
-  console.log(JSON.stringify(arrProduct, null, 2));
   const checked = useSelector(selectChecked);
   const addressChoose = useSelector(selectedAddress);
   const completed = useSelector(selectCompleted);
@@ -106,29 +105,24 @@ const BtnCompletePayment = () => {
       });
     }
   };
-  const checkLocation= async ()=>{
-    let check=false
+  const checkLocation = async () => {
+    let check = false;
     await firestore()
-          .collection('Locations')
-          .where('ward','==',addressChoose.ward)
-          .get()
-          .then(snap=>{
-            if(snap.size>0)
-            check=true
-            else{ 
-              Alert.alert(
-                'Có lỗi',
-                'Cửa hàng quá xa so với vị trí bạn chọn',
-                [
-                  {text: 'OK', onPress: () => console.log('Ok Pressed')},
-                ],
-              );
-            }
-          })
-          return check
-  }
+      .collection('Locations')
+      .where('ward', '==', addressChoose.ward)
+      .get()
+      .then(snap => {
+        if (snap.size > 0) check = true;
+        else {
+          Alert.alert('Có lỗi', 'Cửa hàng quá xa so với vị trí bạn chọn', [
+            {text: 'OK', onPress: () => console.log('Ok Pressed')},
+          ]);
+        }
+      });
+    return check;
+  };
   if (completed == true) {
-    addOrderToFireBase()
+    addOrderToFireBase();
   }
 
   const openModal = async () => {
@@ -145,11 +139,9 @@ const BtnCompletePayment = () => {
           {text: 'OK', onPress: () => navigation.push('MoreAddresses')},
         ],
       );
-    }
-     else {
-       const check=await checkLocation()
-       if(check)
-       dispatch(openOrCloseModel());  
+    } else {
+      const check = await checkLocation();
+      if (check) dispatch(openOrCloseModel());
     }
   };
   return (
