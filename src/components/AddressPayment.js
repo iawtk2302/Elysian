@@ -30,7 +30,6 @@ const AddressPayment = () => {
   );
 };
 
-
 const Header = () => {
   return (
     <View style={styles.container}>
@@ -82,8 +81,6 @@ const BodyAddress = ({address}) => {
         ) : (
           <Text>
             {address.detail +
-              ', ' +
-              address.village +
               ', ' +
               address.ward +
               ', ' +

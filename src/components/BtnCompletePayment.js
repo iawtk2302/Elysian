@@ -16,6 +16,7 @@ import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 import {removeAllProduct} from '../redux/orderSlice';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
+import {clearNote, selectNote} from '../redux/orderSlice';
 
 const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -25,6 +26,7 @@ const BtnCompletePayment = () => {
   const total = calculatorTotalPrice();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const note = useSelector(selectNote);
 
   let orderID = '';
   let time = null;
@@ -39,6 +41,7 @@ const BtnCompletePayment = () => {
         orderID: 'temp',
         idAddress: address.idAddress,
         state: 'waiting',
+        note: note,
         createdAt: (time = firestore.Timestamp.now()),
       })
       .then(snap => {
