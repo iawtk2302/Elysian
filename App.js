@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View,LogBox} from 'react-native';
 import Navigation from './src/navigators/Navigation';
 import auth from '@react-native-firebase/auth';
 import SiginInNavigate from './src/navigators/SiginInNavigate';
 import Register from './src/screens/Register';
 import PhoneVertify from './src/screens/PhoneVertify';
 import {Provider} from 'react-redux';
-import store from './src/redux/store';
+import {store, persistor} from './src/redux/store'
 import {ActivityIndicator} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import { PersistGate } from 'redux-persist/integration/react'
 import {
   notificationListener,
   requestUserPermission,
@@ -22,7 +23,8 @@ const App = () => {
   const [profileUpdated, setProfileUpdated] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const [loading, setLoading] = useState(true);
-  const checkpProfileUpdated = async () => {
+  LogBox.ignoreAllLogs()
+  const checkProfileUpdated = async () => {
     await firestore()
       .collection('Users')
       .doc(auth().currentUser.uid)
@@ -44,10 +46,15 @@ const App = () => {
   };
   function onAuthStateChanged(user) {
     setUser(user);
+    if(user === null){
+      setHasPhone(false)
+      setProfileUpdated(false)
+      setLoading(true)
+    }
     if (initializing) setInitializing(false);
     if (auth().currentUser !== null) {
       if (auth().currentUser.displayName !== null) {
-        checkpProfileUpdated();
+        checkProfileUpdated();
       }
       else{
         setLoading(false)
@@ -64,7 +71,6 @@ const App = () => {
 
   useEffect(() => {
     SplashScreen.hide();
-    setHasPhone(false);
     requestUserPermission();
     notificationListener();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -102,10 +108,12 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <SafeAreaView style={{flex: 1}}>
         <Navigation />
       </SafeAreaView>
       <FlashMessage position="top" />
+      </PersistGate>
     </Provider>
   );
 };

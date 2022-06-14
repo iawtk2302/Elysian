@@ -22,6 +22,7 @@ const Order = () => {
   const [section, setSection] = useState([]);
   const [topping, setTopping] = useState([]);
   const [size, setSize] = useState([]);
+  const [dataAll,setDataAll]=useState([])
   const navigation = useNavigation();
   const orders = useSelector(state => state.orders.list);
   const [dataCategory, setDataCategory] = useState([
@@ -103,6 +104,7 @@ const Order = () => {
     const dataCF = [];
     const dataNE = [];
     const dataSC = [];
+    const temp=[]
     await firestore()
       .collection('Products')
       .get()
@@ -125,8 +127,10 @@ const Order = () => {
           } else if (documentSnapshot.data().type === 'Nước ép') {
             dataNE.push(documentSnapshot.data());
           }
+          temp.push(documentSnapshot.data())
         });
       });
+    setDataAll(temp)
     const tempSection = [
       {
         title: 'Trà sữa',
@@ -202,7 +206,7 @@ const Order = () => {
   return (
     <>
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <HeaderOrder />
+        <HeaderOrder data={dataAll} topping={topping} size={size}/>
         <FlatList
           style={{
             height: 50,

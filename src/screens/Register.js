@@ -34,35 +34,38 @@ const Register = ({setProfileUpdated}) => {
     setProfileUpdated(true);
   };
   const validate = () => {
-    // console.log(inputs)
     let isFull = true;
-    // console.log(auth().currentUser.uid);
+    const validRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     Keyboard.dismiss();
-    if(!auth().currentUser?.email)
+    if (!auth().currentUser?.email)
       if (!inputs.email) {
         isFull = false;
         handleErrors('Vui lòng nhập email', 'email');
+      } else if (!inputs?.email.match(validRegex)) {
+        isFull = false
+        handleErrors('Email sai định dạng', 'email');
       }
-    if (!inputs.name) {
+    if (!inputs?.name) {
       isFull = false;
       handleErrors('Vui lòng nhập tên', 'name');
     }
-    if (!inputs.dateofbirth) {
+    if (!inputs?.dateofbirth) {
       isFull = false;
       handleErrors('Vui lòng nhập ngày sinh', 'dateofbirth');
     }
-    if (!inputs.gender) {
+    else if (new Date().getFullYear() - date.getFullYear() < 15) {
+      isFull = false;
+      handleErrors('Bạn chưa đủ 15 tuổi', 'dateofbirth')
+    }
+    if (!inputs?.gender) {
       setGenderFill(false);
     }
-    // if (new Date().getFullYear() - date.getFullYear() < 18) {
-    //   isFull = false;
-    //   console.log(new Date().getFullYear());
-    //   console.log(date.getFullYear());
-    // }
+    
     // console.log(value)
 
     if (isFull) {
-      console.log('first')
+      console.log('first');
       // setInputs(prevState => ({...prevState, ['dateofbirth']: date}))
       UpdateProfile();
     }
@@ -76,6 +79,7 @@ const Register = ({setProfileUpdated}) => {
   };
 
   const handleOnChange = (text, input) => {
+    handleErrors(null, input);
     setInputs(prevState => ({...prevState, [input]: text}));
   };
 
@@ -88,13 +92,16 @@ const Register = ({setProfileUpdated}) => {
     <View style={styles.container}>
       <View
         style={{
-          alignItems: 'flex-end',
-          marginRight: -20,
-          marginBottom: 50,
+          // alignItems: 'flex-end',
+          flexDirection: 'row',
           marginTop: 10,
         }}>
-        <Icon name="close-circle-outline" size={30} onPress={signOut} />
+        <Icon name="chevron-back-outline" size={30} onPress={signOut} />
+        <View style={{alignSelf: 'center', alignItems: 'center', flex: 1, marginLeft: -25}}>
+          <Text style={{fontWeight: 'bold', fontSize: 17, color: '#000'}}>Tạo tài khoản</Text>
+        </View>
       </View>
+      <View style={{height: 1, backgroundColor: '#ccc',marginBottom: 50, marginTop: 5, marginHorizontal: -10}}></View>
       <Input
         placeholder="Nhập tên của bạn"
         onChangeText={text => {
@@ -105,6 +112,7 @@ const Register = ({setProfileUpdated}) => {
       {/* <Input placeholder="Nhập họ của bạn" onChangeText={(text) => handleOnChange(text, '')}/> */}
       {!auth().currentUser.email && (
         <Input
+          keyboardType="email-address"
           placeholder="Nhập email của bạn"
           onChangeText={text => {
             handleOnChange(text, 'email');
@@ -113,6 +121,7 @@ const Register = ({setProfileUpdated}) => {
         />
       )}
       <Input
+        editable={false}
         value={date.toLocaleDateString()}
         placeholder="Chọn ngày sinh"
         iconName={'calendar'}

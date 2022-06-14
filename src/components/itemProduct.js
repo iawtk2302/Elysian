@@ -14,7 +14,7 @@ const ItemProduct = ({item, topping, size}) => {
         <Image source={{uri: item.linkImage}} style={styles.img} />
       </View>
       <View style={styles.info}>
-        <Text style={{fontWeight: 'bold', marginBottom: 4}} numberOfLines={1}>
+        <Text style={{fontWeight: 'bold', marginBottom: 4, color:'black'}} numberOfLines={1}>
           {item.name}
         </Text>
         <FormatNumber number={parseInt(item.price)} />
