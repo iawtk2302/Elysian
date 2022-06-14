@@ -5,7 +5,6 @@ const orderSlice = createSlice({
   initialState: {list: [], index: 0, note: ''},
   reducers: {
     addProduct: (state, action) => {
-      console.log(JSON.stringify(action, null, 2));
       let check = true;
       let index = 0;
       let temp = {};
@@ -51,7 +50,6 @@ const orderSlice = createSlice({
     },
     changeNote(state, action) {
       state.note = action.payload;
-      console.log(state.note);
     },
     clearNote(state) {
       state.note = '';

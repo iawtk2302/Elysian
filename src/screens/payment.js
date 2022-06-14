@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import HeaderPayment from '../components/HeaderPayment';
 import AddressPayment from '../components/AddressPayment';

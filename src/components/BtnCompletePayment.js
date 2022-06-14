@@ -11,6 +11,7 @@ import {
   openOrCloseModel,
   selectCompleted,
   setCompleted,
+  setChecked,
 } from '../redux/addressSlice';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 import {removeAllProduct} from '../redux/orderSlice';
@@ -71,6 +72,8 @@ const BtnCompletePayment = () => {
     }
     dispatch(setCompleted());
     dispatch(removeAllProduct());
+    dispatch(clearNote());
+    dispatch(setChecked());
     navigation.goBack();
     showMessage({
       message: 'Đặt hàng thành công',
@@ -103,7 +106,6 @@ const BtnCompletePayment = () => {
         productID: item.product.productID,
         size: item.size.name,
         orderID: orderID,
-        state: 'waiting',
         toppingIDs: item.topping,
       });
     }
@@ -143,8 +145,9 @@ const BtnCompletePayment = () => {
         ],
       );
     } else {
-      const check = await checkLocation();
-      if (check) dispatch(openOrCloseModel());
+      // const check = await checkLocation();
+      // if (check)
+      dispatch(openOrCloseModel());
     }
   };
   return (

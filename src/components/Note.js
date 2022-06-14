@@ -9,7 +9,7 @@ const Note = () => {
   const dispatch = useDispatch();
   const note = useSelector(selectNote);
   return (
-    <View>
+    <View style={{marginTop: 15}}>
       <TextInput
         placeholder="Ghi chú cho đơn hàng"
         value={note}
