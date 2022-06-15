@@ -15,20 +15,20 @@ export default function HeaderPayment() {
   const {t} = useTranslation();
 
   const clearOrder = () => {
-    Alert.alert('Xóa giỏ hàng', 'Giỏ hàng sẽ bị xóa', [
+    Alert.alert(t('Clear cart'), t('Cart will be remove'), [
       {
-        text: 'Hủy',
+        text: t('Cancel'),
         style: 'cancel',
       },
       {
-        text: 'Đồng ý',
+        text: t('Yes'),
         onPress: () => {
           dispatch(removeAllProduct());
           dispatch(removeVoucher());
           navigation.goBack();
           showMessage({
-            message: 'Giỏ hàng đã bị xóa',
-            description: 'Chọn món hàng để thêm vào giỏ',
+            message: t('Cart has been deleted'),
+            description: t('Select an item to add to cart'),
             type: 'warning',
           });
         },
@@ -42,7 +42,7 @@ export default function HeaderPayment() {
         <TouchableOpacity onPress={clearOrder}>
           <Text>{t('Clear All')}</Text>
         </TouchableOpacity>
-        <Text style={styles.bold}>{t('Checkout')}</Text>
+        <Text style={[styles.bold, {fontSize: 16}]}>{t('Checkout')}</Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="close-outline" style={styles.iconSize} />
         </TouchableOpacity>

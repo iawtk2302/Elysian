@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setModalTime, setTimePicker} from '../redux/addressSlice';
 import COLORS from '../common/Color';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import {useTranslation} from 'react-i18next';
 
 const ChooseTime = () => {
   const selectModalTime = useSelector(state => state.address.modalTime);
@@ -16,11 +17,14 @@ const ChooseTime = () => {
 };
 
 const ModalDetail = () => {
+  const {t} = useTranslation();
   return (
     <View style={styles.modalContainer}>
       <View style={styles.container}>
         <BtnClose />
-        <Text style={{alignSelf: 'center'}}>Thời gian bạn muốn nhận hàng</Text>
+        <Text style={{alignSelf: 'center'}}>
+          {t('Time you want to receive the goods')}
+        </Text>
         <TimePickerCustomer />
       </View>
     </View>
@@ -50,6 +54,7 @@ const TimePickerCustomer = () => {
 
 const BtnOption = ({date}) => {
   const dispatch = useDispatch();
+  const {t} = useTranslation();
 
   const closeModal = () => {
     dispatch(setModalTime());
@@ -68,7 +73,7 @@ const BtnOption = ({date}) => {
       <TouchableOpacity
         onPress={defaultTimepicker}
         style={[styles.btnOption, {backgroundColor: 'gray', marginEnd: 5}]}>
-        <Text style={styles.optionsBtnText}>Mặc định</Text>
+        <Text style={styles.optionsBtnText}>{t('Default')}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={completedTimepicker}
@@ -76,7 +81,7 @@ const BtnOption = ({date}) => {
           styles.btnOption,
           {backgroundColor: COLORS.custom, marginStart: 5},
         ]}>
-        <Text style={styles.optionsBtnText}>Xác nhận</Text>
+        <Text style={styles.optionsBtnText}>{t('Confirm')}</Text>
       </TouchableOpacity>
     </View>
   );

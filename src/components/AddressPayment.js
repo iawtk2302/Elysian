@@ -43,13 +43,14 @@ const Header = () => {
 };
 
 const Bot = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const isEnabled = useSelector(state => state.address.checked);
   const toggleSwitch = () => dispatch(setChecked());
 
   return (
     <View style={[styles.addressContain]}>
-      <Text>Lưu thông tin giao hàng cho lần sau</Text>
+      <Text>{t('Save the shipping address for next time')}</Text>
       <Switch
         trackColor={{false: COLORS.gray, true: COLORS.backgroundWeak}}
         thumbColor={COLORS.custom}
@@ -122,6 +123,7 @@ const BodyUser = ({address}) => {
 };
 
 const BtnChooseTime = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const timePicker = useSelector(selectTimePicker);
 
@@ -137,9 +139,9 @@ const BtnChooseTime = () => {
       style={{padding: 20, paddingEnd: 0}}
       onPress={() => dispatch(setModalTime())}>
       <Text>
-        {timePicker == null ? '15-30 phút' : getHoursMinutes()} {'\n'}
+        {timePicker == null ? t('MinutesDefault') : getHoursMinutes()} {'\n'}
         <Text style={{fontSize: 18, color: 'black'}}>
-          {timePicker === null ? 'Càng sớm càng tốt' : getDateMonth()}
+          {timePicker === null ? t('As soon as possible') : getDateMonth()}
         </Text>
       </Text>
     </TouchableOpacity>
@@ -147,6 +149,7 @@ const BtnChooseTime = () => {
 };
 
 const NothingToShow = () => {
+  const {t} = useTranslation();
   const navigation = useNavigation();
 
   const openMoreAddress = () => {
@@ -164,7 +167,7 @@ const NothingToShow = () => {
       }}>
       <TouchableOpacity alignSelf="center" onPress={openMoreAddress}>
         <Text style={{color: COLORS.custom}}>
-          Vui lòng chọn địa chỉ giao hàng
+          {t('Please choose a shipping address')}
         </Text>
       </TouchableOpacity>
     </View>

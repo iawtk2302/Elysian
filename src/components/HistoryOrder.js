@@ -2,45 +2,46 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {selectHistory} from '../redux/orderDetailSlide';
-import converTimeToFB from '../utils/convertTimeToFB';
+import convertTimeToFB from '../utils/convertTimeToFB';
 import COLORS from '../common/Color';
+import {useTranslation} from 'react-i18next';
 
 const HistoryOrder = () => {
   const his = useSelector(selectHistory);
-  console.log(JSON.stringify(his, null, 2));
+  const {t} = useTranslation();
 
   return (
     <View style={{marginTop: 15, backgroundColor: 'white', padding: 10}}>
       <Text style={{alignSelf: 'center', color: 'black', fontSize: 15}}>
-        Lịch sử đơn hàng
+        {t('Order history')}
       </Text>
       <View>
-        <ConfirmTime time={his.createTime} title="Đã đặt hàng:" color="black" />
+        <ConfirmTime time={his.createTime} title={t('Ordered')} color="black" />
         {his.checkedTime !== '' ? (
           <ConfirmTime
             time={his.checkedTime}
-            title="Đã xác nhận:"
+            title={t('Confirmed')}
             color={COLORS.waiting}
           />
         ) : null}
         {his.shippingTime !== '' ? (
           <ConfirmTime
             time={his.shippingTime}
-            title="Bắt đầu vận chuyển:"
+            title={t('Start delivery')}
             color={COLORS.shipping}
           />
         ) : null}
         {his.cancelledTime !== '' ? (
           <ConfirmTime
             time={his.cancelledTime}
-            title="Đã hủy hàng:"
+            title={t('Cancelled order')}
             color={COLORS.cancelled}
           />
         ) : null}
         {his.completeTime !== '' ? (
           <ConfirmTime
             time={his.completeTime}
-            title="Đã giao hàng:"
+            title={t('Delivered')}
             color={COLORS.completed}
           />
         ) : null}
@@ -50,12 +51,13 @@ const HistoryOrder = () => {
 };
 
 const ConfirmTime = ({time, title, color}) => {
+  const lang = useSelector(state => state.lang);
   return (
     <View paddingTop={10}>
       <Text style={{color: color, fontWeight: '600', fontSize: 15}}>
         {title}
       </Text>
-      <Text style={{paddingStart: 20}}>{converTimeToFB(time)}</Text>
+      <Text style={{paddingStart: 20}}>{convertTimeToFB(time, lang)}</Text>
     </View>
   );
 };

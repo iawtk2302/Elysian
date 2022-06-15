@@ -7,7 +7,8 @@ import fireAuth from '@react-native-firebase/auth';
 import COLORS from '../common/Color';
 import {useDispatch, useSelector} from 'react-redux';
 import {setSelected, setValue, selectedID} from '../redux/addressSlice';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 export default function MoreAddresses({navigation}) {
   return (
@@ -21,24 +22,22 @@ export default function MoreAddresses({navigation}) {
   );
 }
 
-
-
 const Body = ({navigation}) => {
   const [update, setUpdate] = useState([]);
-  const onResult=(QuerySnapshot)=> {
-    const temp=[];
+  const onResult = QuerySnapshot => {
+    const temp = [];
     QuerySnapshot.forEach(documentSnapshot => {
-      temp.push(documentSnapshot.data())
+      temp.push(documentSnapshot.data());
     });
-    setUpdate(temp)
-}
+    setUpdate(temp);
+  };
   useEffect(() => {
     const getMoreAddress = async () => {
       await firestore()
         .collection('Addresses')
         .where('userID', '==', fireAuth().currentUser.uid)
         .orderBy('selected', 'desc')
-        .onSnapshot(onResult)
+        .onSnapshot(onResult);
     };
     getMoreAddress();
   }, []);
@@ -54,17 +53,22 @@ const Body = ({navigation}) => {
   );
 };
 const Bot = () => {
-  const navigation=useNavigation()
+  const {t} = useTranslation();
+  const navigation = useNavigation();
   return (
     <View style={{backgroundColor: 'white', marginTop: 20}}>
       <TouchableOpacity
-        onPress={()=>{navigation.push('AddAddress')}}
+        onPress={() => {
+          navigation.push('AddAddress');
+        }}
         style={[
           styles.container,
           {alignItems: 'center', justifyContent: 'center', padding: 15},
         ]}>
         <Ionicons name="add" size={20} />
-        <Text style={{marginStart: 5, color: 'black'}}>Thêm địa chỉ mới</Text>
+        <Text style={{marginStart: 5, color: 'black'}}>
+          {t('Add new address')}
+        </Text>
       </TouchableOpacity>
     </View>
   );

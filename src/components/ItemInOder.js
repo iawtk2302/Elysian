@@ -1,6 +1,6 @@
 import {View, TouchableOpacity, Text} from 'react-native';
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   openOrClose,
   setHistory,
@@ -13,11 +13,14 @@ import BtnActionOrder from './BtnActionOrder';
 import FormatNumber from '../utils/FormatNumber';
 import {Divider} from 'react-native-paper';
 import convertTimeToFB from '../utils/convertTimeToFB';
+import {useTranslation} from 'react-i18next';
 
 export default ItemInOder = ({item}) => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   let arrDetailOrder = [];
   let his = {};
+  const lang = useSelector(state => state.lang);
 
   const loadProducts = async () => {
     await fireStore()
@@ -82,9 +85,11 @@ export default ItemInOder = ({item}) => {
       }}>
       <TouchableOpacity onPress={OpenModal}>
         <Text>
-          Tổng cộng: <FormatNumber number={item.totalCost} />
+          {t('Total')}: <FormatNumber number={item.totalCost} />
         </Text>
-        <Text>Ngày tạo: {convertTimeToFB(item.createdAt)}</Text>
+        <Text>
+          {t('Create Time')}: {convertTimeToFB(item.createdAt, lang)}
+        </Text>
       </TouchableOpacity>
       <Divider style={{marginTop: 15}} />
       <BtnActionOrder state={item.state} orderID={item.orderID} />
