@@ -44,7 +44,7 @@ const App = () => {
         }
       });
   };
-  function onAuthStateChanged(user) {
+  const  onAuthStateChanged =(user) =>{
     setUser(user);
     console.log(user)
     if(user === null){

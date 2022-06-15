@@ -25,18 +25,23 @@ const SignIn = ({navigation}) => {
   const [phone, setPhone] = useState('');
   const [isPress, setIsPress] = useState(false);
   async function signInWithPhoneNumber(phoneNumber) {
-    console.log('first')
+    const format = /[!@#$%^&*()_\-=\[\]{};':"\\|,.<>\/?]+/;
+    const formatphone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+    if(format.test(phoneNumber) || !formatphone.test(phoneNumber)){
+      ToastAndroid.show("Số điện thoại chưa đúng", 3)
+      return;
+    }
     try {
       if (phoneNumber.charAt(0) === '0') {
         let a = phoneNumber.substring(1);
         phoneNumber = '+84'.concat(a);
-        console.log(phoneNumber);
+        console.log(phoneNumber); 
       }
       const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
       await setConfirm(confirmation);
     } catch (error) {
       console.log(error);
-      ToastAndroid.show('Recheck your phone number', 4);
+      ToastAndroid.show('Số điện thoại chưa đúng', 4);
     }
   }
   useEffect(() => {
