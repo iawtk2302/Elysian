@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ItemSupport from '../components/itemSupport'
+import { useTranslation } from 'react-i18next'
 
 const Support = () => {
+    const {t}=useTranslation()
     const data=[
     {
         icon:'phone',
-        title:'Tổng đài',
+        title:t('Tổng đài'),
         value:'02871087088',
         type:'phone'
     },

@@ -4,11 +4,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import COLORS from '../common/Color'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import ItemProduct from '../components/itemProduct'
+import { useTranslation } from 'react-i18next'
 const SearchProduct = () => {
     const navigation=useNavigation();
     const router=useRoute();
     const [data,setData]=useState([])
     const inputRef = useRef();
+    const {t}=useTranslation()
     function removeAccents(str) {
         var AccentsMap = [
           "aàảãáạăằẳẵắặâầẩẫấậ",
@@ -49,9 +51,9 @@ const SearchProduct = () => {
       <View style={{height:65,alignItems:'center',justifyContent:'center',flexDirection:'row',marginHorizontal:16}}>
         <View style={{flexDirection:'row',alignItems:'center',height:40, backgroundColor:'#F5F5F5', borderRadius:5,width:'85%'}}>
             <Icon name='search-outline' size={24} style={{marginLeft:15}}/>
-            <TextInput placeholder='Tìm kiếm' style={{width:'88%'}} onChangeText={search} ref={inputRef}/>
+            <TextInput placeholder={t('Tìm kiếm')} style={{width:'88%'}} onChangeText={search} ref={inputRef}/>
         </View>
-        <Text style={{width:'15%',paddingLeft:10,color:COLORS.custom}} onPress={()=>{navigation.goBack()}}>Hủy</Text>
+        <Text style={{width:'15%',paddingLeft:10,color:COLORS.custom}} onPress={()=>{navigation.goBack()}}>{t('Hủy')}</Text>
       </View>
       <View style={{height:0.7,backgroundColor:'#F5F5F5'}}/>
         <FlatList

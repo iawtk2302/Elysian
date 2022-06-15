@@ -5,8 +5,10 @@ import firestore from '@react-native-firebase/firestore'
 import fireauth from '@react-native-firebase/auth'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 const Address = () => {
     const navigation=useNavigation()
+    const {t}=useTranslation()
     const [data, setData] = useState([])
     const onResult=(QuerySnapshot)=> {
         const temp = []
@@ -35,7 +37,7 @@ const Address = () => {
             <TouchableOpacity style={{ height: 50, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10, }} 
                 activeOpacity={0.5}
                 onPress={()=>{navigation.push('AddAddress')}}>
-                <Text style={{ color: 'black' }}>Thêm địa chỉ mới</Text>
+                <Text style={{ color: 'black' }}>{t('Thêm địa chỉ mới')}</Text>
                 <Icon name='add-outline' size={24} />
             </TouchableOpacity>
             <View style={{height:50}}></View>
