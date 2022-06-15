@@ -34,18 +34,7 @@ const Home = ({navigation}) => {
   const [notificationNum, setNotiNum] = useState('0');
   const orders = useSelector(state => state.orders.list);
   const navigator = useNavigation();
-<<<<<<< HEAD
-  // const navPayment = () => {
-  //   if (orders.length > 0) navigation.push('Payment');
-  // };
-  const [databanner, setDatabanner] = useState([
-    // 'https://gongcha.com.vn/wp-content/uploads/2022/02/toffee.395x280-01.jpg',
-    // 'https://gongcha.com.vn/wp-content/uploads/2022/05/longan.395x280-01-1400x993.jpg',
-    // 'https://gongcha.com.vn/wp-content/uploads/2022/02/choco.395x280-01.jpg',
-  ]);
-=======
   const [databanner, setDatabanner] = useState([]);
->>>>>>> main
   const [dataProducts, setDataProducts] = useState([]);
   const [dataSize, setDataSize] = useState([]);
   const [datatopping, setDataTopping] = useState([]);
