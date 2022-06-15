@@ -23,7 +23,7 @@ export default ModalOrderDetails = () => {
   return (
     <View style={{height: '100%'}}>
       <Modal animationType="slide" visible={modalVisible}>
-        <Text>Chi tiết đơn hàng</Text>
+        <Header />
         {arrProduct.length != 0 ? (
           <View style={styles.modalContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -63,13 +63,28 @@ const BtnClose = () => {
   );
 };
 
+const Header = () => {
+  return (
+    <View
+      style={{
+        backgroundColor: '#F5F5F5',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 15,
+      }}>
+      <Text style={{fontWeight: '600', color: COLORS.custom, fontSize: 18}}>
+        ⭐ Chi tiết đơn hàng ⭐
+      </Text>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: '#F5F5F5',
 
     shadowColor: '#000',
-    elevation: 5,
     height: '95%',
   },
   closeBtn: {

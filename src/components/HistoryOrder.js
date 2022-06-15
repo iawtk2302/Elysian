@@ -7,8 +7,11 @@ import converTimeToFB from '../utils/convertTimeToFB';
 const HistoryOrder = () => {
   const his = useSelector(selectHistory);
   return (
-    <View>
-      <Text>{converTimeToFB(his.createTime)}</Text>
+    <View style={{marginTop: 15, backgroundColor: 'white', padding: 10}}>
+      <Text style={{alignSelf: 'center'}}>Lịch sử đơn hàng</Text>
+      <View>
+        <Text>{converTimeToFB(his.createTime)}</Text>
+      </View>
     </View>
   );
 };

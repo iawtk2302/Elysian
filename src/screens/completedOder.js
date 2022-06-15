@@ -10,6 +10,8 @@ import {
   resetCompletedOrder,
 } from '../redux/orderDetailSlide';
 import fireauth from '@react-native-firebase/auth';
+import NothingToShow from '../components/NothingToShow';
+
 const OnGoing = () => {
   const dispatch = useDispatch();
   const Orders = useSelector(selectCompletedOrders);
@@ -38,7 +40,13 @@ const OnGoing = () => {
     loadOrder();
     setRefreshing(false);
   };
-
+  if (Orders.length == 0)
+    return (
+      <NothingToShow
+        uri={require('../assets/NothingToShow.json')}
+        title="Chưa có hóa đơn đơn để hiển thị"
+      />
+    );
   return (
     <View>
       <ScrollView
