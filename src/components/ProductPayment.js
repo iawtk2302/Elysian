@@ -2,8 +2,11 @@ import {Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import styles from '../styles/View.Payment.container';
 import NumberFormat from 'react-number-format';
+import {useTranslation} from 'react-i18next';
 
 const ProductPayment = ({item}) => {
+  const {t} = useTranslation();
+
   return (
     <View style={styles.productPayment}>
       <View style={{flexDirection: 'row'}}>
@@ -18,7 +21,7 @@ const ProductPayment = ({item}) => {
             x{item.count} {item.product.name}
           </Text>
           <Text>
-            Kích cỡ: <Text style={styles.textColor}> {item.size.name}</Text>
+            {t('Size')}: <Text style={styles.textColor}> {item.size.name}</Text>
           </Text>
         </TouchableOpacity>
       </View>

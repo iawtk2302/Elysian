@@ -15,15 +15,17 @@ import {selectAllProduct} from '../redux/orderDetailSlide';
 import OrderDetail from './OrderDetail';
 import HistoryOrder from './HistoryOrder';
 import Loading from './Loading';
+import {useTranslation} from 'react-i18next';
 
 export default ModalOrderDetails = () => {
   const modalVisible = useSelector(selectModal);
   const arrProduct = useSelector(selectAllProduct);
+  const {t} = useTranslation();
 
   return (
     <View style={{height: '100%'}}>
       <Modal animationType="slide" visible={modalVisible}>
-        <Text>Chi tiết đơn hàng</Text>
+        <Header />
         {arrProduct.length != 0 ? (
           <View style={styles.modalContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -40,7 +42,7 @@ export default ModalOrderDetails = () => {
         ) : (
           <Loading
             uri={require('../assets/lf30_editor_fhzlpncq.json')}
-            title="Dang tai"
+            title={t('Loading...')}
           />
         )}
       </Modal>
@@ -63,13 +65,29 @@ const BtnClose = () => {
   );
 };
 
+const Header = () => {
+  const {t} = useTranslation();
+  return (
+    <View
+      style={{
+        backgroundColor: '#F5F5F5',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 15,
+      }}>
+      <Text style={{fontWeight: '600', color: COLORS.custom, fontSize: 18}}>
+        {t('Order detail')}
+      </Text>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: '#F5F5F5',
 
     shadowColor: '#000',
-    elevation: 5,
     height: '95%',
   },
   closeBtn: {

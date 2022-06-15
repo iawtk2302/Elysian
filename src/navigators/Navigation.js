@@ -21,9 +21,9 @@ import Address from '../screens/address';
 import DetailAddress from '../screens/detailAddress';
 import Support from '../screens/support';
 import CancelledOrder from '../screens/cancelledOrder';
-import fireauth from '@react-native-firebase/auth'
+import fireauth from '@react-native-firebase/auth';
 import SearchProduct from '../screens/searchProduct';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 const Navigation = () => {
   async function onDisplayNotification(content) {
@@ -35,7 +35,7 @@ const Navigation = () => {
 
     // Display a notification
     await notifee.displayNotification({
-      title: 'Thông báo',
+      title: t('Notification'),
       body: `Đơn hàng ${content} đã giao thành công!`,
       android: {
         channelId,
@@ -43,8 +43,8 @@ const Navigation = () => {
       },
     });
   }
-  const lang=useSelector(state=>state.lang)
-  const {t,i18n}=useTranslation();
+  const lang = useSelector(state => state.lang);
+  const {t, i18n} = useTranslation();
   useEffect(() => {
     firestore()
       .collection('Orders')
@@ -53,17 +53,16 @@ const Navigation = () => {
         let change = snapShot.docChanges();
         change.forEach(change => {
           if (change.type == 'modified') {
-            if(change.doc.data().state=='completed')
-            {
+            if (change.doc.data().state == 'completed') {
               onDisplayNotification(change.doc.data().orderID);
-            }   
+            }
           }
         });
-      });  
+      });
   }, []);
-  useEffect(()=>{
-    i18n.changeLanguage(lang)
-  },[lang]) 
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang]);
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -73,24 +72,99 @@ const Navigation = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="SearchProduct" component={SearchProduct} />
-        <Stack.Screen name="MoreAddresses" component={MoreAddresses} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Chọn địa chỉ khác'}}/>
-        <Stack.Screen name="AddAddress" component={AddAddress} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Địa chỉ mới'}}/>
-        <Stack.Screen name="Address" component={Address} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:t('Địa chỉ')}}/>
-        <Stack.Screen name="Support" component={Support} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Hỗ trợ'}}/>
-        <Stack.Screen name="DetailAddress" component={DetailAddress} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:'Sửa địa chỉ'}}/>
-        <Stack.Screen name="Favorite" component={FavoriteProduct} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:t('Sản phẩm yêu thích')}}/>
-        <Stack.Screen name="InfoUser" component={InfoUser} options={{headerShown: true, headerTitleAlign: 'center',headerTitle:t('Cập nhật thông tin')}}/>
-        <Stack.Screen name="Notification" component={Notification} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Thông báo'} }/>
-        <Stack.Screen name="Banner" component={Banner} 
-        options={{
-          gestureEnabled: true,
-          transitionSpec: {
-            open: {animation: 'timing', config: {duration: 300}},
-            close: {animation: 'timing', config: {duration: 300}},
-          }
-        }}/>
-        <Stack.Screen name='Map' component={ExploreScreen}/>
-        <Stack.Screen name='Voucher' component={Voucher} options={{headerShown: true, headerTitleAlign: 'center', headerTitle:'Khuyến mãi'} }/>
+        <Stack.Screen
+          name="MoreAddresses"
+          component={MoreAddresses}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: t('Choose another address'),
+          }}
+        />
+        <Stack.Screen
+          name="AddAddress"
+          component={AddAddress}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: 'Địa chỉ mới',
+          }}
+        />
+        <Stack.Screen
+          name="Address"
+          component={Address}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: t('Địa chỉ'),
+          }}
+        />
+        <Stack.Screen
+          name="Support"
+          component={Support}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: 'Hỗ trợ',
+          }}
+        />
+        <Stack.Screen
+          name="DetailAddress"
+          component={DetailAddress}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: 'Sửa địa chỉ',
+          }}
+        />
+        <Stack.Screen
+          name="Favorite"
+          component={FavoriteProduct}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: t('Sản phẩm yêu thích'),
+          }}
+        />
+        <Stack.Screen
+          name="InfoUser"
+          component={InfoUser}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: t('Cập nhật thông tin'),
+          }}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={Notification}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: 'Thông báo',
+          }}
+        />
+        <Stack.Screen
+          name="Banner"
+          component={Banner}
+          options={{
+            gestureEnabled: true,
+            transitionSpec: {
+              open: {animation: 'timing', config: {duration: 300}},
+              close: {animation: 'timing', config: {duration: 300}},
+            },
+          }}
+        />
+        <Stack.Screen name="Map" component={ExploreScreen} />
+        <Stack.Screen
+          name="Voucher"
+          component={Voucher}
+          options={{
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitle: 'Khuyến mãi',
+          }}
+        />
         <Stack.Screen name="Cancel" component={CancelledOrder} />
       </Stack.Navigator>
     </NavigationContainer>
