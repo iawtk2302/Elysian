@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import Loading from '../components/Loading';
+import { useTranslation } from 'react-i18next';
 const Order = () => {
   const [loading, setLoading] = useState(true);
   const [section, setSection] = useState([]);
@@ -25,44 +26,45 @@ const Order = () => {
   const [dataAll,setDataAll]=useState([])
   const navigation = useNavigation();
   const orders = useSelector(state => state.orders.list);
+  const {t}=useTranslation();
   const [dataCategory, setDataCategory] = useState([
     {
-      title: 'Trà sữa',
+      title: t("Trà sữa"),
       index: 0,
       select: 'true',
     },
     {
-      title: 'Trà',
+      title: t("Trà"),
       index: 1,
       select: 'false',
     },
     {
-      title: 'Đá xay',
+      title: t('Đá xay'),
       index: 2,
       select: 'false',
     },
     {
-      title: 'Latte',
+      title: t('Latte'),
       index: 3,
       select: 'false',
     },
     {
-      title: 'Sinh tố',
+      title: t('Sinh tố'),
       index: 4,
       select: 'false',
     },
     {
-      title: 'Cà phê',
+      title: t('Cà phê'),
       index: 5,
       select: 'false',
     },
     {
-      title: 'Sữa chua',
+      title: t('Sữa chua'),
       index: 6,
       select: 'false',
     },
     {
-      title: 'Nước ép',
+      title: t('Nước ép'),
       index: 7,
       select: 'false',
     },
@@ -133,35 +135,35 @@ const Order = () => {
     setDataAll(temp)
     const tempSection = [
       {
-        title: 'Trà sữa',
+        title: t('Trà sữa'),
         data: dataTS,
       },
       {
-        title: 'Trà',
+        title: t('Trà'),
         data: dataT,
       },
       {
-        title: 'Đá xay',
+        title: t('Đá xay'),
         data: dataDX,
       },
       {
-        title: 'Latte',
+        title: t('Latte'),
         data: dataL,
       },
       {
-        title: 'Sinh tố',
+        title: t('Sinh tố'),
         data: dataST,
       },
       {
-        title: 'Cà phê',
+        title: t('Cà phê'),
         data: dataCF,
       },
       {
-        title: 'Sữa chua',
+        title: t('Sữa chua'),
         data: dataSC,
       },
       {
-        title: 'Nước ép',
+        title: t('Nước ép'),
         data: dataNE,
       },
     ];

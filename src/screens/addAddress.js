@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, TextInput, Switch, Button } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
 import COLORS from '../common/Color'
-import axios from 'axios'
 import firestore from '@react-native-firebase/firestore'
 import fireauth from '@react-native-firebase/auth'
 import { useNavigation } from '@react-navigation/native';
+const customData = require('../assets/address.json');
 const AddAddress = () => {
     const [open, setOpen] = useState(false);
     const [province, setProvince] = useState(null);
@@ -28,14 +28,19 @@ const AddAddress = () => {
     const [detailAddress, setDetailAddress] = useState('')
     const navigation=useNavigation()
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    // const getData = () => {
+    //     axios.get(`https://provinces.open-api.vn/api/?depth=3`)
+    //         .then(res => {
+    //             const location = res.data;
+    //             setData(res.data)
+    //             setItems(location.map((e) => { return { label: e.name, value: e.name } }))
+    //         })
+    //         .catch(error => console.log(error));
+    // }
     const getData = () => {
-        axios.get(`https://provinces.open-api.vn/api/?depth=3`)
-            .then(res => {
-                const location = res.data;
-                setData(res.data)
+        const location = customData;
+                setData(customData)
                 setItems(location.map((e) => { return { label: e.name, value: e.name } }))
-            })
-            .catch(error => console.log(error));
     }
     useEffect(() => {
         getData()
