@@ -5,7 +5,8 @@ import styles from '../../src/styles/View.Payment.container';
 import {useDispatch} from 'react-redux';
 import {removeAllProduct} from '../redux/orderSlice';
 import {useNavigation} from '@react-navigation/native';
-import { removeVoucher } from '../redux/voucherSlice';
+import {removeVoucher} from '../redux/voucherSlice';
+import {showMessage} from 'react-native-flash-message';
 
 export default function HeaderPayment() {
   const dispatch = useDispatch();
@@ -23,6 +24,11 @@ export default function HeaderPayment() {
           dispatch(removeAllProduct());
           dispatch(removeVoucher());
           navigation.goBack();
+          showMessage({
+            message: 'Giỏ hàng đã bị xóa',
+            description: 'Chọn món hàng để thêm vào giỏ',
+            type: 'warning',
+          });
         },
       },
     ]);

@@ -11,6 +11,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {removeProduct} from '../redux/orderSlice';
 import {showMessage} from 'react-native-flash-message';
 import {removeVoucher} from '../redux/voucherSlice';
+import Note from './Note';
 
 const PaymentDetail = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -32,6 +33,7 @@ const PaymentDetail = () => {
         rightOpenValue={-150}
         disableRightSwipe={true}
       />
+      <Note />
     </View>
   );
 };

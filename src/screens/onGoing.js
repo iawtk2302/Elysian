@@ -4,12 +4,13 @@ import ItemInOder from '../components/ItemInOder';
 import fireStore from '@react-native-firebase/firestore';
 import COLORS from '../common/Color';
 import {useDispatch, useSelector} from 'react-redux';
-import fireauth from '@react-native-firebase/auth'
+import fireauth from '@react-native-firebase/auth';
 import {
   selectShippingOrders,
   addShippingOrder,
   resetShippingOrder,
 } from '../redux/orderDetailSlide';
+import NothingToShow from '../components/NothingToShow';
 
 const OnGoing = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const OnGoing = () => {
     await fireStore()
       .collection('Orders')
       .where('state', '==', 'shipping')
-      .where('userID','==',fireauth().currentUser.uid)
+      .where('userID', '==', fireauth().currentUser.uid)
       .onSnapshot(snap => {
         dispatch(resetShippingOrder());
         snap.forEach(documentSnapshot => {
@@ -38,6 +39,13 @@ const OnGoing = () => {
     loadOrder();
     setRefreshing(false);
   };
+  if (Orders.length == 0)
+    return (
+      <NothingToShow
+        uri={require('../assets/NothingToShow.json')}
+        title="Chưa có hóa đơn đơn để hiển thị"
+      />
+    );
   return (
     <View>
       <ScrollView

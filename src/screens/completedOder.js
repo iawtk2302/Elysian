@@ -9,15 +9,16 @@ import {
   addCompletedOrder,
   resetCompletedOrder,
 } from '../redux/orderDetailSlide';
-import fireauth from '@react-native-firebase/auth'
+import fireauth from '@react-native-firebase/auth';
 const OnGoing = () => {
   const dispatch = useDispatch();
   const Orders = useSelector(selectCompletedOrders);
   const loadOrder = async () => {
+    let arrHis = [];
     await fireStore()
       .collection('Orders')
       .where('state', '==', 'completed')
-      .where('userID','==',fireauth().currentUser.uid)
+      .where('userID', '==', fireauth().currentUser.uid)
       .onSnapshot(snap => {
         dispatch(resetCompletedOrder());
         snap.forEach(documentSnapshot => {
@@ -37,6 +38,7 @@ const OnGoing = () => {
     loadOrder();
     setRefreshing(false);
   };
+
   return (
     <View>
       <ScrollView

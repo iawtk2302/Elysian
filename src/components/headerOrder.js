@@ -3,9 +3,11 @@ import React from 'react';
 import COLORS from '../common/Color';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const HeaderOrder = ({data,topping,size}) => {
   const Navigation = useNavigation();
+  const {t}=useTranslation();
   const navPayment = () => {
     Navigation.push('Favorite');
   };
@@ -15,7 +17,7 @@ const HeaderOrder = ({data,topping,size}) => {
   return (
     <View style={styles.container}>
       <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-        Đặt hàng
+        {t("Đặt hàng")}
       </Text>
       <View style={{flexDirection:'row'}}>
         <Icon name="search-outline" size={26} color="white" onPress={navSearch} style={{marginRight:15}}/>

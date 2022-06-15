@@ -10,6 +10,7 @@ import {
   addWaitingOrder,
   resetWaitingOrder,
 } from '../redux/orderDetailSlide';
+import NothingToShow from '../components/NothingToShow';
 
 const WaitToConfirm = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,13 @@ const WaitToConfirm = () => {
     loadOrder();
     setRefreshing(false);
   };
+  if (Orders.length == 0)
+    return (
+      <NothingToShow
+        uri={require('../assets/NothingToShow.json')}
+        title="Chưa có hóa đơn đơn để hiển thị"
+      />
+    );
   return (
     <View>
       <ScrollView

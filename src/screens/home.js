@@ -27,12 +27,14 @@ import ItemProduct from '../components/itemProduct';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Button} from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 const {height, width} = Dimensions.get('window');
 
 const Home = ({navigation}) => {
   const [notificationNum, setNotiNum] = useState('0');
   const orders = useSelector(state => state.orders.list);
   const navigator = useNavigation();
+<<<<<<< HEAD
   // const navPayment = () => {
   //   if (orders.length > 0) navigation.push('Payment');
   // };
@@ -41,6 +43,9 @@ const Home = ({navigation}) => {
     // 'https://gongcha.com.vn/wp-content/uploads/2022/05/longan.395x280-01-1400x993.jpg',
     // 'https://gongcha.com.vn/wp-content/uploads/2022/02/choco.395x280-01.jpg',
   ]);
+=======
+  const [databanner, setDatabanner] = useState([]);
+>>>>>>> main
   const [dataProducts, setDataProducts] = useState([]);
   const [dataSize, setDataSize] = useState([]);
   const [datatopping, setDataTopping] = useState([]);
@@ -117,6 +122,7 @@ const Home = ({navigation}) => {
         }
       });
   };
+  const {t,i18n}=useTranslation()
   useEffect(() => {
     getData();
     getCountNewNotification();
@@ -131,7 +137,7 @@ const Home = ({navigation}) => {
           style={styles.imageLogo}
         />
         <Text style={styles.txtHeader}>
-          Xin chào, {auth().currentUser.displayName}
+          {t("Xin chào")}, {auth().currentUser.displayName}
         </Text>
         <TouchableOpacity
           onPress={() => {
@@ -181,7 +187,7 @@ const Home = ({navigation}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{paddingHorizontal: 15}}>
-        <Text style={styles.txtBST}>Bộ sưu tập</Text>
+        <Text style={styles.txtBST}>{t("Bộ sưu tập")}</Text>
         {/* Slider start */}
         <View style={styles.slider}>
           <Swiper
@@ -219,7 +225,7 @@ const Home = ({navigation}) => {
           </Swiper>
         </View>
         {/* Slider end */}
-        <Text style={styles.txtSuggest}>Gợi ý riêng cho bạn</Text>
+        <Text style={styles.txtSuggest}>{t("Gợi ý")}</Text>
         {/* Suggest Product start */}
         <View>
           {dataProducts.map((item, index) => {
@@ -234,7 +240,7 @@ const Home = ({navigation}) => {
           })}
         </View>
         {/* Suggest Product end */}
-        <Text style={styles.txtDiscover}>Khám phá thêm</Text>
+        <Text style={styles.txtDiscover}>{t("Khám phá thêm")}</Text>
         {/* Banner start */}
         <View style={styles.Banner}>
           {databanner.map((item, index) => {

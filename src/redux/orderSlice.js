@@ -2,10 +2,9 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const orderSlice = createSlice({
   name: 'order',
-  initialState: {list: [], index: 0},
+  initialState: {list: [], index: 0, note: ''},
   reducers: {
     addProduct: (state, action) => {
-      console.log(JSON.stringify(action, null, 2));
       let check = true;
       let index = 0;
       let temp = {};
@@ -49,9 +48,22 @@ const orderSlice = createSlice({
     removeAllProduct: state => {
       state.list.splice(0, state.list.length);
     },
+    changeNote(state, action) {
+      state.note = action.payload;
+    },
+    clearNote(state) {
+      state.note = '';
+    },
   },
 });
 
-export const {addProduct, removeProduct, removeAllProduct} = orderSlice.actions;
+export const {
+  addProduct,
+  removeProduct,
+  removeAllProduct,
+  changeNote,
+  clearNote,
+} = orderSlice.actions;
+export const selectNote = state => state.orders.note;
 
 export default orderSlice.reducer;

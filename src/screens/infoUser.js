@@ -8,6 +8,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
 import fireauth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
+import { useTranslation } from 'react-i18next';
 const InfoUser = () => {
     const navigation=useNavigation()
     const router=useRoute()
@@ -18,6 +19,7 @@ const InfoUser = () => {
     const [checkName,setCheckName]=useState(true)
     const [checkEmail,setCheckEmail]=useState(true)
     const [isChange,setIsChange]=useState(false)
+    const {t}=useTranslation()
     const openCamera = () => {
         ImagePicker.openCamera({
             cropping: true,
@@ -139,13 +141,13 @@ const validateEmail = (email) => {
             >
                 <Avatar.Accessory size={24} onPress={() => { setModalVisible(true) }} />
             </Avatar>
-            <TextInput value={name} placeholder='Nhập họ tên' onChangeText={(text)=>{setName(text), validateName(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
+            <TextInput value={name} placeholder={t('Nhập họ tên')} onChangeText={(text)=>{setName(text), validateName(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
             <View style={{height:25}}>
                 {
                     !checkName&&<Text style={{marginLeft:25,color: '#D9415D'}}>Họ và tên không hợp lệ !</Text>
                 }
             </View>
-            <TextInput value={email} placeholder='Nhập email' onChangeText={(text)=>{setEmail(text), validateEmail(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
+            <TextInput value={email} placeholder={t('Nhập Email')} onChangeText={(text)=>{setEmail(text), validateEmail(text)}} style={{ borderRadius: 10, borderWidth: 1, marginHorizontal: 16, fontSize: 16, borderColor: 'gray', paddingLeft: 15 }} />
             <View style={{height:25}}>
                 {
                     !checkEmail&&<Text style={{marginLeft:25,color: '#D9415D'}}>Email không hợp lệ !</Text>
@@ -156,11 +158,11 @@ const validateEmail = (email) => {
                 <Icon name='calendar-outline' size={24} color='black'/>
             </View>
             <View style={{ height: 50, borderRadius: 10, marginHorizontal: 16, fontSize: 18, backgroundColor: '#C4C4C4', marginTop:20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 15, paddingRight: 6 }}>
-                <Text style={{ fontSize: 16, color: 'black' }}>{user.gender}</Text>
+                <Text style={{ fontSize: 16, color: 'black' }}>{t(user.gender)}</Text>
                 <Icon name='transgender-outline' size={24} color='black'/>
             </View>
             <TouchableOpacity style={{ marginTop: 150, height: 50, backgroundColor: isChange?COLORS.custom:'#C4C4C4', borderRadius: 10, marginHorizontal: 16, alignItems: 'center', justifyContent: 'center', marginVertical: 6 }} onPress={update} disabled={!isChange}>
-                <Text style={{ color: 'white' }}>Cập nhật thông tin</Text>
+                <Text style={{ color: 'white' }}>{t('Cập nhật thông tin')}</Text>
             </TouchableOpacity>
             <Modal
                 animationType="slide"
@@ -171,16 +173,16 @@ const validateEmail = (email) => {
                 }}>
                 <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
                     <View style={{ height: 280, backgroundColor: 'white' }}>
-                        <Text style={{ fontSize: 20, fontWeight: '500', color: 'black', alignSelf: 'center', marginTop: 10 }}>Cập nhật ảnh</Text>
-                        <Text style={{ fontSize: 14, alignSelf: 'center', marginTop: 4 }}>Chọn ảnh đại diện của bạn</Text>
+                        <Text style={{ fontSize: 20, fontWeight: '500', color: 'black', alignSelf: 'center', marginTop: 10 }}>{t('Cập nhật ảnh')}</Text>
+                        <Text style={{ fontSize: 14, alignSelf: 'center', marginTop: 4 }}>{t('Chọn ảnh đại diện của bạn')}</Text>
                         <TouchableOpacity style={{ height: 50, backgroundColor: COLORS.custom, borderRadius: 10, marginHorizontal: 16, alignItems: 'center', justifyContent: 'center', marginVertical: 6 }} onPress={() => { openCamera() }}>
-                            <Text style={{ color: 'white' }}>Chụp ảnh</Text>
+                            <Text style={{ color: 'white' }}>{t('Chụp ảnh')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ height: 50, backgroundColor: COLORS.custom, borderRadius: 10, marginHorizontal: 16, alignItems: 'center', justifyContent: 'center', marginVertical: 6 }} onPress={() => { openGalery() }}>
-                            <Text style={{ color: 'white' }}>Chọn ảnh từ thư viện</Text>
+                            <Text style={{ color: 'white' }}>{t('Chọn ảnh từ thư viện')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ height: 50, backgroundColor: COLORS.custom, borderRadius: 10, marginHorizontal: 16, alignItems: 'center', justifyContent: 'center', marginVertical: 6 }} onPress={() => { setModalVisible(false) }}>
-                            <Text style={{ color: 'white' }}>Hủy</Text>
+                            <Text style={{ color: 'white' }}>{t('Hủy')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
