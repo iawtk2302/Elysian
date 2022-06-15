@@ -15,6 +15,7 @@ import NothingToShow from '../components/NothingToShow';
 const WaitToConfirm = () => {
   const dispatch = useDispatch();
   const Orders = useSelector(selectWaitingOrders);
+
   const loadOrder = async () => {
     await fireStore()
       .collection('Orders')
@@ -22,10 +23,15 @@ const WaitToConfirm = () => {
       .where('userID', '==', fireauth().currentUser.uid)
       .onSnapshot(
         snap => {
+          const temp = [];
           dispatch(resetWaitingOrder());
           snap.forEach(documentSnapshot => {
-            dispatch(addWaitingOrder(documentSnapshot.data()));
+            temp.push(documentSnapshot.data());
           });
+          temp.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+          });
+          dispatch(addWaitingOrder(temp));
         },
         er => {
           console.log(er);

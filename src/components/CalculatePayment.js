@@ -19,7 +19,7 @@ const CalculatePayment = () => {
       </Text>
       <Total title="Thành tiền: " content={total} />
       <Discount />
-      <Ship/>
+      <Ship />
       <Payment />
     </View>
   );
@@ -95,20 +95,16 @@ const Ship = () => {
   return (
     <View>
       <View style={[styles.totalItemContainer, {marginBottom: 10}]}>
-      <Text>
-        Phí vận chuyển
-      </Text>
-      <NumberFormat
-        value={30000}
-        displayType="text"
-        thousandSeparator
-        suffix="đ"
-        renderText={value => (
-          <Text style={{color: 'black'}}>{value}</Text>
-        )}
-      />
-    </View>
-    <View>
+        <Text>Phí vận chuyển</Text>
+        <NumberFormat
+          value={30000}
+          displayType="text"
+          thousandSeparator
+          suffix="đ"
+          renderText={value => <Text style={{color: 'black'}}>{value}</Text>}
+        />
+      </View>
+      <View>
         <Divider />
       </View>
     </View>
@@ -121,7 +117,7 @@ const Payment = () => {
         Số tiền thanh toán
       </Text>
       <NumberFormat
-        value={parseInt(calculatorTotalPrice())}
+        value={calculatorTotalPrice()}
         displayType="text"
         thousandSeparator
         suffix="đ"

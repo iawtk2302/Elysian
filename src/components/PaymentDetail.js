@@ -6,7 +6,6 @@ import COLORS from '../common/Color';
 import {useNavigation} from '@react-navigation/native';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeProduct} from '../redux/orderSlice';
 import {showMessage} from 'react-native-flash-message';
@@ -72,10 +71,15 @@ const Options = ({data, rowMap}) => {
       </TouchableOpacity>
 
       <TouchableOpacity
+        onPress={() => closeRow(rowMap, data.item.key)}
         style={[styles.optionContainer, {backgroundColor: 'black'}]}>
         <View>
-          <FontAwesome name="pencil-alt" size={20} style={{color: 'white'}} />
-          <Text style={styles.optionsText}>Sửa</Text>
+          <Ionicons
+            name="close"
+            size={25}
+            style={{color: 'white', alignSelf: 'center'}}
+          />
+          <Text style={styles.optionsText}>Đóng</Text>
         </View>
       </TouchableOpacity>
     </View>

@@ -21,10 +21,16 @@ const CancelledOrder = () => {
       .where('state', '==', 'cancelled')
       .where('userID', '==', fireauth().currentUser.uid)
       .onSnapshot(snap => {
+        const temp = [];
         dispatch(resetCancelledOrder());
         snap.forEach(documentSnapshot => {
-          dispatch(addCancelledOrder(documentSnapshot.data()));
+          temp.push(documentSnapshot.data());
+          // d
         });
+        temp.sort((a, b) => {
+          return b.createdAt - a.createdAt;
+        });
+        dispatch(addCancelledOrder(temp));
       });
   };
 

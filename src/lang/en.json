@@ -42,6 +42,11 @@
         "Vui lòng chọn ngôn ngữ":"Please choose language",
         "Tiếng Việt":"Vietnamese",
         "Tiếng Anh":"English",
-        "Thêm địa chỉ mới":"Add new address"
+        "Thêm địa chỉ mới":"Add new address",
+        "Delivery": "Delivery address",
+        "Clear All": "Clear All",
+        "Checkout": "Checkout",
+        "Add more": "Add more",
+        "Selected product" : "Items"
     }
 }

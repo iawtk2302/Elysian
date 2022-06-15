@@ -73,7 +73,7 @@ const Header = () => {
         paddingTop: 15,
       }}>
       <Text style={{fontWeight: '600', color: COLORS.custom, fontSize: 18}}>
-        ⭐ Chi tiết đơn hàng ⭐
+        Chi tiết đơn hàng
       </Text>
     </View>
   );

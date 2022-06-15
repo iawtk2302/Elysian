@@ -42,6 +42,14 @@
         "Vui lòng chọn ngôn ngữ":"Vui lòng chọn ngôn ngữ",
         "Tiếng Việt":"Tiếng Việt",
         "Tiếng Anh":"Tiếng Anh",
-        "Thêm địa chỉ mới":"Thêm địa chỉ mới"
+        "Thêm địa chỉ mới":"Thêm địa chỉ mới",
+        "Delivery address": "Địa chỉ giao hàng",
+        "Clear All": "Xóa",
+        "Delete" : "Xóa",
+        "Checkout": "Xác nhận đơn hàng",
+        "Add more": "Thêm",
+        "Selected product" : "Sản phẩm đã chọn"
+        
+
     }
 }

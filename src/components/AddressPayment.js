@@ -11,6 +11,7 @@ import {
   setChecked,
   setModalTime,
 } from '../redux/addressSlice';
+import {useTranslation} from 'react-i18next';
 
 const AddressPayment = () => {
   let address = useSelector(selectedAddress);
@@ -31,14 +32,12 @@ const AddressPayment = () => {
 };
 
 const Header = () => {
+  const {t} = useTranslation();
   return (
-    <View style={styles.container}>
-      <Text>Giao hàng tận nơi</Text>
-      <TouchableOpacity>
-        <View style={styles.btnContainer}>
-          <Text style={{color: COLORS.custom}}>Thay Đổi</Text>
-        </View>
-      </TouchableOpacity>
+    <View style={[styles.container, {paddingBottom: 10, alignItems: 'center'}]}>
+      <Text style={{color: 'black', alignSelf: 'center'}}>
+        {t('Delivery address')}
+      </Text>
     </View>
   );
 };

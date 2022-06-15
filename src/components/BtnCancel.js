@@ -24,7 +24,21 @@ export default BtnCancel = ({orderID}) => {
     ]);
 
   const cancelOrder = async () => {
+    let historyID = '';
     dispatch(setTrueWaitForDelete());
+    await fireStore()
+      .collection('OrderHistories')
+      .where('orderID', '==', orderID)
+      .get()
+      .then(query => {
+        query.forEach(doc => {
+          historyID = doc.id;
+        });
+      });
+
+    await fireStore().collection('OrderHistories').doc(historyID).update({
+      cancelledTime: fireStore.Timestamp.now(),
+    });
     await fireStore().collection('Orders').doc(orderID).update({
       state: 'cancelled',
     });
