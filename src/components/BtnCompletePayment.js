@@ -11,11 +11,13 @@ import {
   openOrCloseModel,
   selectCompleted,
   setCompleted,
+  setChecked,
 } from '../redux/addressSlice';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
 import {removeAllProduct} from '../redux/orderSlice';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
+import {clearNote, selectNote} from '../redux/orderSlice';
 
 const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -25,6 +27,7 @@ const BtnCompletePayment = () => {
   const total = calculatorTotalPrice();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const note = useSelector(selectNote);
 
   let orderID = '';
   let time = null;
@@ -39,6 +42,7 @@ const BtnCompletePayment = () => {
         orderID: 'temp',
         idAddress: address.idAddress,
         state: 'waiting',
+        note: note,
         createdAt: (time = firestore.Timestamp.now()),
       })
       .then(snap => {
@@ -68,6 +72,8 @@ const BtnCompletePayment = () => {
     }
     dispatch(setCompleted());
     dispatch(removeAllProduct());
+    dispatch(clearNote());
+    dispatch(setChecked());
     navigation.goBack();
     showMessage({
       message: 'Đặt hàng thành công',
@@ -100,7 +106,6 @@ const BtnCompletePayment = () => {
         productID: item.product.productID,
         size: item.size.name,
         orderID: orderID,
-        state: 'waiting',
         toppingIDs: item.topping,
       });
     }
@@ -140,8 +145,9 @@ const BtnCompletePayment = () => {
         ],
       );
     } else {
-      const check = await checkLocation();
-      if (check) dispatch(openOrCloseModel());
+      // const check = await checkLocation();
+      // if (check)
+      dispatch(openOrCloseModel());
     }
   };
   return (

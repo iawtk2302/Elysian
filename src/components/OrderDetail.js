@@ -6,7 +6,6 @@ import FormatNumber from '../utils/FormatNumber';
 import totalTopping from '../utils/totalTopping';
 
 const OrderDetail = ({item}) => {
-  console.log(JSON.stringify(item, null, 2));
   return (
     <View
       style={{

@@ -30,7 +30,6 @@ const AddressPayment = () => {
   );
 };
 
-
 const Header = () => {
   return (
     <View style={styles.container}>

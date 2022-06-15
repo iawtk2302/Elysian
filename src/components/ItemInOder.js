@@ -1,8 +1,9 @@
 import {View, TouchableOpacity, Text} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {
   openOrClose,
+  setHistory,
   setOrderID,
   setWaitForLoadDetail,
 } from '../redux/orderDetailSlide';
@@ -16,6 +17,7 @@ import convertTimeToFB from '../utils/convertTimeToFB';
 export default ItemInOder = ({item}) => {
   const dispatch = useDispatch();
   let arrDetailOrder = [];
+  let his = {};
 
   const loadProducts = async () => {
     await fireStore()
@@ -25,6 +27,16 @@ export default ItemInOder = ({item}) => {
       .then(snap => {
         snap.forEach(docSnap => {
           arrDetailOrder = [...arrDetailOrder, docSnap.data()];
+        });
+      });
+
+    await fireStore()
+      .collection('OrderHistories')
+      .where('orderID', '==', item.orderID)
+      .get()
+      .then(querySnap => {
+        querySnap.forEach(docSnap => {
+          his = docSnap.data();
         });
       });
 
@@ -45,7 +57,7 @@ export default ItemInOder = ({item}) => {
       item.size = size;
     }
     dispatch(setProducts(arrDetailOrder));
-
+    dispatch(setHistory(his));
     arrDetailOrder = [];
   };
 
@@ -60,7 +72,9 @@ export default ItemInOder = ({item}) => {
   return (
     <View
       style={{
-        margin: 15,
+        marginTop: 15,
+        marginStart: 15,
+        marginEnd: 15,
         backgroundColor: 'white',
         borderRadius: 10,
         borderRadius: 15,
