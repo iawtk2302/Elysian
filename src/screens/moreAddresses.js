@@ -75,6 +75,7 @@ const Bot = () => {
 };
 
 const Address = ({address, navigation}) => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const changeAdd = () => {
     dispatch(setValue(address));
@@ -91,7 +92,7 @@ const Address = ({address, navigation}) => {
             </Text>
             {address.selected == true ? (
               <Text style={{color: COLORS.custom, paddingStart: 10}}>
-                [Mặc định]
+                [{t('Default')}]
               </Text>
             ) : null}
           </View>

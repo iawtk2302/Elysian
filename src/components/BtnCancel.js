@@ -16,7 +16,7 @@ export default BtnCancel = ({orderID}) => {
   const dispatch = useDispatch();
 
   const createTwoButtonAlert = () =>
-    Alert.alert(t('Cancel order'), 'Order will be canceled', [
+    Alert.alert(t('Cancel order'), t('Order will be canceled'), [
       {
         text: t('Cancel'),
         onPress: () => console.log('Cancel Pressed'),

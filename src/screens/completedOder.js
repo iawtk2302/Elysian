@@ -16,16 +16,20 @@ const OnGoing = () => {
   const dispatch = useDispatch();
   const Orders = useSelector(selectCompletedOrders);
   const loadOrder = async () => {
-    let arrHis = [];
     await fireStore()
       .collection('Orders')
       .where('state', '==', 'completed')
       .where('userID', '==', fireauth().currentUser.uid)
       .onSnapshot(snap => {
+        const temp = [];
         dispatch(resetCompletedOrder());
         snap.forEach(documentSnapshot => {
-          dispatch(addCompletedOrder(documentSnapshot.data()));
+          temp.push(documentSnapshot.data());
         });
+        temp.sort((a, b) => {
+          return b.createdAt - a.createdAt;
+        });
+        dispatch(addCompletedOrder(temp));
       });
   };
 
@@ -41,12 +45,7 @@ const OnGoing = () => {
     setRefreshing(false);
   };
   if (Orders.length == 0)
-    return (
-      <NothingToShow
-        uri={require('../assets/NothingToShow.json')}
-        title="Chưa có hóa đơn đơn để hiển thị"
-      />
-    );
+    return <NothingToShow uri={require('../assets/NothingToShow.json')} />;
   return (
     <View>
       <ScrollView

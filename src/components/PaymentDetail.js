@@ -57,7 +57,7 @@ const Options = ({data, rowMap}) => {
       navigation.goBack();
     }
     showMessage({
-      message: `Đã xóa ${data.item.count} ${data.item.product.name}`,
+      message: `${t('Deleted')} ${data.item.count} ${data.item.product.name}`,
       type: 'warning',
     });
   };

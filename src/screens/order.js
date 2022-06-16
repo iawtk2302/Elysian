@@ -181,13 +181,6 @@ const Order = () => {
   useEffect(() => {
     addSection();
   }, []);
-  // if (loading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <ActivityIndicator color={COLORS.custom} />
-  //     </View>
-  //   );
-  // }
   const scroll = index => {
     if (index == 0) {
       sectionRef.current.scrollToLocation({

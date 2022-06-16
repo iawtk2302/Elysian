@@ -11,12 +11,18 @@ const HistoryOrder = () => {
   const {t} = useTranslation();
 
   return (
-    <View style={{marginTop: 15, backgroundColor: 'white', padding: 10}}>
-      <Text style={{alignSelf: 'center', color: 'black', fontSize: 15}}>
+    <View style={{marginTop: 15, backgroundColor: 'white', padding: 15}}>
+      <Text
+        style={{
+          alignSelf: 'center',
+          color: 'black',
+          fontSize: 17,
+          fontWeight: '600',
+        }}>
         {t('Order history')}
       </Text>
       <View>
-        <ConfirmTime time={his.createTime} title={t('Ordered')} color="black" />
+        <ConfirmTime time={his.createTime} title={t('Ordered')} color="green" />
         {his.checkedTime !== '' ? (
           <ConfirmTime
             time={his.checkedTime}
@@ -57,7 +63,9 @@ const ConfirmTime = ({time, title, color}) => {
       <Text style={{color: color, fontWeight: '600', fontSize: 15}}>
         {title}
       </Text>
-      <Text style={{paddingStart: 20}}>{convertTimeToFB(time, lang)}</Text>
+      <Text style={{paddingStart: 20, color: 'black'}}>
+        {convertTimeToFB(time, lang)}
+      </Text>
     </View>
   );
 };

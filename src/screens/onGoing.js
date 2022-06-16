@@ -21,10 +21,15 @@ const OnGoing = () => {
       .where('state', '==', 'shipping')
       .where('userID', '==', fireauth().currentUser.uid)
       .onSnapshot(snap => {
+        const temp = [];
         dispatch(resetShippingOrder());
         snap.forEach(documentSnapshot => {
-          dispatch(addShippingOrder(documentSnapshot.data()));
+          temp.push(documentSnapshot.data());
         });
+        temp.sort((a, b) => {
+          return b.createdAt - a.createdAt;
+        });
+        dispatch(addShippingOrder(temp));
       });
   };
 
@@ -40,12 +45,7 @@ const OnGoing = () => {
     setRefreshing(false);
   };
   if (Orders.length == 0)
-    return (
-      <NothingToShow
-        uri={require('../assets/NothingToShow.json')}
-        title="Chưa có hóa đơn đơn để hiển thị"
-      />
-    );
+    return <NothingToShow uri={require('../assets/NothingToShow.json')} />;
   return (
     <View>
       <ScrollView

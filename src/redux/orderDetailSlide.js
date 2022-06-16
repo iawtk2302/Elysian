@@ -49,7 +49,7 @@ const orderDetailSlide = createSlice({
       state.waitingOrders.splice(prev, 1);
     },
     addShippingOrder(state, action) {
-      state.shippingOrders = [...state.shippingOrders, action.payload];
+      state.shippingOrders = action.payload;
     },
     resetShippingOrder(state) {
       state.shippingOrders = [];
@@ -61,7 +61,7 @@ const orderDetailSlide = createSlice({
       state.cancelledOrders = [];
     },
     addCompletedOrder(state, action) {
-      state.completedOrders = [...state.completedOrders, action.payload];
+      state.completedOrders = action.payload;
     },
     resetCompletedOrder(state) {
       state.completedOrders = [];
