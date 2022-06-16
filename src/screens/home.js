@@ -27,7 +27,7 @@ import ItemProduct from '../components/itemProduct';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Button} from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 const {height, width} = Dimensions.get('window');
 
 const Home = ({navigation}) => {
@@ -38,7 +38,7 @@ const Home = ({navigation}) => {
   const [dataProducts, setDataProducts] = useState([]);
   const [dataSize, setDataSize] = useState([]);
   const [datatopping, setDataTopping] = useState([]);
-  const [voucher,setVoucher]=useState(0)
+  const [voucher, setVoucher] = useState(0);
   const getData = async () => {
     const listBanner = [];
     const listProduct = [];
@@ -48,10 +48,8 @@ const Home = ({navigation}) => {
       .collection('Banners')
       .get()
       .then(querySnapshot => {
-        // console.log('Total users: ', querySnapshot.size);
         querySnapshot.forEach(documentSnapshot => {
           listBanner.push(documentSnapshot.data());
-          // console.log(documentSnapshot.data());
         });
         setDatabanner(listBanner);
       });
@@ -65,11 +63,11 @@ const Home = ({navigation}) => {
         });
         setDataProducts(listProduct);
       });
-      await firestore()
+    await firestore()
       .collection('Vouchers')
       .get()
       .then(querySnapshot => {
-        setVoucher(querySnapshot.size)
+        setVoucher(querySnapshot.size);
       });
     await firestore()
       .collection('Sizes')
@@ -98,14 +96,13 @@ const Home = ({navigation}) => {
         try {
           const data = Object.values(doc.data().Notifications);
           const count = data.filter(value => value === true).length;
-          // console.log(count)
           setNotiNum(count);
         } catch (error) {
           setNotiNum(0);
         }
       });
   };
-  const {t,i18n}=useTranslation()
+  const {t, i18n} = useTranslation();
   useEffect(() => {
     getData();
     getCountNewNotification();
@@ -120,7 +117,7 @@ const Home = ({navigation}) => {
           style={styles.imageLogo}
         />
         <Text style={styles.txtHeader}>
-          {t("Xin chào")}, {auth().currentUser.displayName}
+          {t('Xin chào')}, {auth().currentUser.displayName}
         </Text>
         <TouchableOpacity
           onPress={() => {
@@ -152,7 +149,7 @@ const Home = ({navigation}) => {
             color={COLORS.custom}
           />
           <Text style={{marginLeft: 4, fontWeight: '500', color: 'black'}}>
-          {voucher}
+            {voucher}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.notificationContainer}>
@@ -170,7 +167,7 @@ const Home = ({navigation}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{paddingHorizontal: 15}}>
-        <Text style={styles.txtBST}>{t("Bộ sưu tập")}</Text>
+        <Text style={styles.txtBST}>{t('Bộ sưu tập')}</Text>
         {/* Slider start */}
         <View style={styles.slider}>
           <Swiper
@@ -207,7 +204,7 @@ const Home = ({navigation}) => {
           </Swiper>
         </View>
         {/* Slider end */}
-        <Text style={styles.txtSuggest}>{t("Gợi ý")}</Text>
+        <Text style={styles.txtSuggest}>{t('Gợi ý')}</Text>
         {/* Suggest Product start */}
         <View>
           {dataProducts.map((item, index) => {
@@ -222,7 +219,7 @@ const Home = ({navigation}) => {
           })}
         </View>
         {/* Suggest Product end */}
-        <Text style={styles.txtDiscover}>{t("Khám phá thêm")}</Text>
+        <Text style={styles.txtDiscover}>{t('Khám phá thêm')}</Text>
         {/* Banner start */}
         <View style={styles.Banner}>
           {databanner.map((item, index) => {
@@ -242,7 +239,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'white'
+    backgroundColor: 'white',
   },
   header: {
     height: 60,

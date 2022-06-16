@@ -103,7 +103,7 @@ const DetailProduct = () => {
     navigation.goBack();
     showMessage({
       message: `${t('Add')} ${value.product.name} ${t('to cart successfully')}`,
-      description: 'Press to go to cart',
+      description: t('Press to go to cart'),
       type: 'success',
       onPress: () => {
         navigation.push('Payment');

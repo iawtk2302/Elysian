@@ -14,7 +14,6 @@ import {createSharedElementStackNavigator} from 'react-navigation-shared-element
 const {width, height} = Dimensions.get('window');
 const ItemBanner = ({item, navigation}) => {
   const uitem = item;
-  // console.log(item.index);
   return (
     <View
       style={{

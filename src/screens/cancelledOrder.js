@@ -25,7 +25,6 @@ const CancelledOrder = () => {
         dispatch(resetCancelledOrder());
         snap.forEach(documentSnapshot => {
           temp.push(documentSnapshot.data());
-          // d
         });
         temp.sort((a, b) => {
           return b.createdAt - a.createdAt;

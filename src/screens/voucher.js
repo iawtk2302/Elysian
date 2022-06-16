@@ -2,8 +2,10 @@ import {StyleSheet, Text, View, SectionList} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import ItemVoucher from '../components/itemVoucher';
 import firestore from '@react-native-firebase/firestore';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 const Voucher = () => {
+  const {t} = useTranslation();
   const [dataVoucher, setDataVoucher] = useState([]);
   const convertTime = time => {
     const newTime = new Date(time * 1000);
@@ -46,11 +48,11 @@ const Voucher = () => {
         });
         const temp = [
           {
-            title: 'Sắp hết hạn',
+            title: t('Expiration soon'),
             data: tempExpired,
           },
           {
-            title: 'Sẵn sàng sử dụng',
+            title: t('Available to use'),
             data: tempReady,
           },
         ];
@@ -66,7 +68,7 @@ const Voucher = () => {
       <SectionList
         sections={dataVoucher}
         keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => <ItemVoucher item={item}/>}
+        renderItem={({item}) => <ItemVoucher item={item} />}
         renderSectionHeader={({section: {title}}) => (
           <Text
             style={{

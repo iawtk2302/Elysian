@@ -147,6 +147,21 @@
         "to cart successfully" : "vào giỏ hàng thành công",
         "Deteled": "Đã xóa",
         "Use voucher successfully!": "Sử dụng voucher thành công!",
-        "You are not eligible to use!": "Bạn chưa đủ điều kiện để sử dụng"
+        "You are not eligible to use!": "Bạn chưa đủ điều kiện để sử dụng",
+        "Expires in": "Hết hạn trong ",
+        "hours": " giờ",
+        "Expired": "Hết hạn ",
+        "Expiration soon": "Sắp hết hạn",
+        "Available to use": "Sẵn sàng để sử dụng",
+        "Time you want to receive the goods": "Chọn thời gian bạn muốn nhận hàng",
+        "Deleted": "Đã xóa",
+        "Full name": "Họ và tên",
+        "Setting": "Cài đặt",
+        "Set address to default": "Đặt làm mặc định",
+        "Complete": "Hoàn thành",
+        "Phone number is not invalid": "Số điện thoại không hợp lệ",
+        "Full name is not valid": "Họ và tên không hợp lệ"
+
+
     }
 }

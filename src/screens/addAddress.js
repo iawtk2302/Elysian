@@ -5,8 +5,10 @@ import COLORS from '../common/Color';
 import firestore from '@react-native-firebase/firestore';
 import fireauth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 const customData = require('../assets/address.json');
 const AddAddress = () => {
+  const {t} = useTranslation();
   const [open, setOpen] = useState(false);
   const [province, setProvince] = useState(null);
   const [items, setItems] = useState([]);
@@ -161,9 +163,9 @@ const AddAddress = () => {
   };
   return (
     <View style={{flex: 1}}>
-      <Text style={{margin: 16}}>Liên hệ</Text>
+      <Text style={{margin: 16}}>{t('Contact')}</Text>
       <TextInput
-        placeholder="Họ và tên"
+        placeholder={t('Full name')}
         value={name}
         style={{paddingLeft: 10, backgroundColor: 'white'}}
         onChangeText={text => {
@@ -178,11 +180,13 @@ const AddAddress = () => {
             height: 30,
             justifyContent: 'center',
           }}>
-          <Text style={{color: '#D9415D'}}>Họ và tên không hợp lệ !</Text>
+          <Text style={{color: '#D9415D'}}>
+            {t('Full name is not valid')} !
+          </Text>
         </View>
       )}
       <TextInput
-        placeholder="Số điện thoại"
+        placeholder={t('Phone number')}
         value={phone}
         style={{paddingLeft: 10, backgroundColor: 'white'}}
         keyboardType="phone-pad"
@@ -199,10 +203,12 @@ const AddAddress = () => {
             height: 30,
             justifyContent: 'center',
           }}>
-          <Text style={{color: '#D9415D'}}>Số điện thoại không hợp lệ !</Text>
+          <Text style={{color: '#D9415D'}}>
+            {t('Phone number is not valid')}
+          </Text>
         </View>
       )}
-      <Text style={{margin: 16}}>Địa chỉ</Text>
+      <Text style={{margin: 16}}>{t('Address')}</Text>
       <DropDownPicker
         searchable={true}
         style={{borderWidth: 0}}
@@ -245,7 +251,7 @@ const AddAddress = () => {
         editable={isDetailAddress}
         onChangeText={setDetailAddress}
       />
-      <Text style={{margin: 16}}>Cài đặt</Text>
+      <Text style={{margin: 16}}>{t('Setting')}</Text>
       <View
         style={{
           backgroundColor: 'white',
@@ -256,7 +262,7 @@ const AddAddress = () => {
           marginBottom: 40,
         }}>
         <Text style={{color: 'black', marginLeft: 10}}>
-          Đặt làm địa chỉ mặc định
+          {t('Set address to default')}
         </Text>
         <Switch
           trackColor={{false: '#767577', true: COLORS.backgroundWeak}}
@@ -267,7 +273,7 @@ const AddAddress = () => {
         />
       </View>
       <Button
-        title="Hoàn thành"
+        title={t('Complete')}
         disabled={!isComplete}
         color={COLORS.custom}
         onPress={onSubmit}

@@ -145,7 +145,18 @@
         "to cart successfully": "to cart successfully",
         "Deleted": "Deleted",
         "Use voucher successfully!": "Use voucher successfully!",
-        "You are not eligible to use!": "You are not eligible to use!"
-        
+        "You are not eligible to use!": "You are not eligible to use!",
+        "Expires in": " Expires in",
+        "hours": " hours",
+        "Expired": "Expired ",
+        "Expiration soon": "Expiration soon",
+        "Available to use": "Available to use",
+        "Full name": "Full name",
+        "Setting": "Setting",
+        "Set address to default": "Set to default",
+        "Complete": "Complete",
+        "Phone number is not invalid": "Phone number is not invalid",
+        "Full name is not valid": "Full name is not valid"
+
     }
 }

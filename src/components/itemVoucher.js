@@ -31,10 +31,10 @@ const ItemVoucher = ({item, type}) => {
       (end.getTime() - now.getTime()) * (2.77777778 * 0.0000001),
     );
     if (temp <= 24) {
-      setTime('Hết hạn trong ' + temp + ' giờ');
+      setTime(t('Expires in') + temp + t('hours'));
       setIsExpired(true);
     } else {
-      setTime('Hết hạn ' + end.toLocaleDateString());
+      setTime(t('Expired') + end.toLocaleDateString());
     }
   };
   const total = calculatorTotal();
@@ -87,7 +87,6 @@ const ItemVoucher = ({item, type}) => {
           height: 120,
           backgroundColor: '#FFF',
           justifyContent: 'center',
-          // borderRadius: 10,
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
           borderStyle: 'dotted',
@@ -102,7 +101,6 @@ const ItemVoucher = ({item, type}) => {
           flexDirection: 'column',
           backgroundColor: '#fff',
           height: 120,
-          // borderRadius: 20,
           alignItems: 'center',
           justifyContent: 'space-around',
         }}>

@@ -86,7 +86,7 @@ const ItemNotification = ({item}) => {
         });
     } catch (error) {
       console.log(error);
-      navigator.navigate('Order')
+      navigator.navigate('Order');
     }
     SetIsNew();
   };
@@ -112,10 +112,7 @@ const ItemNotification = ({item}) => {
       style={[styles.container]}
       activeOpacity={0.7}
       onPress={() => {
-        // ItemClick();
-        // console.log(item)
         Click();
-        // remove()
       }}>
       <View style={{flex: 1}}>
         <SharedElement id={`${item.linkImage}`}>
