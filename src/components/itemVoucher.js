@@ -7,21 +7,23 @@ import {
   Modal,
   TouchableOpacity,
   ScrollView,
-  Alert
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { useDispatch } from 'react-redux';
-import { chooseVoucher } from '../redux/voucherSlice';
-import { useNavigation } from '@react-navigation/native';
-import { calculatorTotal, TotalAmount } from '../utils/solveVoucher';
+import {useDispatch} from 'react-redux';
+import {chooseVoucher} from '../redux/voucherSlice';
+import {useNavigation} from '@react-navigation/native';
+import {calculatorTotal, TotalAmount} from '../utils/solveVoucher';
+import {useTranslation} from 'react-i18next';
 const {width, height} = Dimensions.get('window');
 const ItemVoucher = ({item, type}) => {
   const [time, setTime] = useState();
   const [isExpired, setIsExpired] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation=useNavigation()
-  const dispatch=useDispatch()
+  const {t} = useTranslation();
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const getTime = time => {
     const end = new Date(time * 1000);
     const now = new Date();
@@ -35,38 +37,41 @@ const ItemVoucher = ({item, type}) => {
       setTime('Hết hạn ' + end.toLocaleDateString());
     }
   };
-  const total=calculatorTotal()
-  const amount=TotalAmount()
-  const add=()=>{
-    if(item.type=='total'){
-      if(total>=parseInt(item.condition)){
-        const action=chooseVoucher(item)
-        dispatch(action)
-        Alert.alert('Thông báo','Sử dụng voucher thành công!',[
-          { text: "OK", onPress: () =>  {
-              setModalVisible(false)
-          }}
-        ])
+  const total = calculatorTotal();
+  const amount = TotalAmount();
+  const add = () => {
+    if (item.type == 'total') {
+      if (total >= parseInt(item.condition)) {
+        const action = chooseVoucher(item);
+        dispatch(action);
+        Alert.alert(t('Notification'), t('Use voucher successfully!'), [
+          {
+            text: 'OK',
+            onPress: () => {
+              setModalVisible(false);
+            },
+          },
+        ]);
+      } else {
+        Alert.alert(t('Notification'), t('You are not eligible to use!'));
       }
-      else{
-        Alert.alert('Thông báo','Bạn chưa đủ điều kiện để sử dụng!')
+    } else {
+      if (amount >= item.count) {
+        const action = chooseVoucher(item);
+        dispatch(action);
+        Alert.alert(t('Notification'), t('Use voucher successfully!'), [
+          {
+            text: 'OK',
+            onPress: () => {
+              setModalVisible(false);
+            },
+          },
+        ]);
+      } else {
+        Alert.alert(t('Notification'), t('You are not eligible to use!'));
       }
     }
-    else{
-      if(amount>=item.count){
-        const action=chooseVoucher(item)
-        dispatch(action)
-        Alert.alert('Thông báo','Sử dụng voucher thành công!',[
-          { text: "OK", onPress: () =>  {
-              setModalVisible(false)
-          }}
-        ])
-      }
-      else{
-        Alert.alert('Thông báo','Bạn chưa đủ điều kiện để sử dụng!')
-      }
-    }
-  }
+  };
   useEffect(() => {
     getTime(item.end.seconds);
   }, []);
@@ -194,10 +199,9 @@ const ItemVoucher = ({item, type}) => {
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <Text style={{fontWeight: '500', marginTop: 20}}>Elysian</Text>
               <Text
-               
                 style={{
-                  textAlign:'center',
-                  width:250,
+                  textAlign: 'center',
+                  width: 250,
                   fontWeight: '500',
                   fontSize: 18,
                   color: 'black',
@@ -264,8 +268,15 @@ const ItemVoucher = ({item, type}) => {
                 marginVertical: 20,
               }}
             />
-            <Text style={{alignSelf:'center',paddingHorizontal:25, fontSize:15}}>{item.content.replace(/\\n/g, '\n')}</Text>
-            <View style={{height:50}}/>
+            <Text
+              style={{
+                alignSelf: 'center',
+                paddingHorizontal: 25,
+                fontSize: 15,
+              }}>
+              {item.content.replace(/\\n/g, '\n')}
+            </Text>
+            <View style={{height: 50}} />
           </ScrollView>
         </View>
       </Modal>

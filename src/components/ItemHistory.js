@@ -9,18 +9,14 @@ import {
 import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
+import {useTranslation} from 'react-i18next';
 
 const ItemHistory = ({iitem, setRerender}) => {
-  // console.log(item)
-  // console.log(iitem)
-  // console.log(iitem.id);
-  // const [item, setItem] = useState(iitem);
-  // console.log(id)
-  // const [newItem, setNewItem] = useState()
+  const {t} = useTranslation();
   const [colorStatus, setColorStatus] = useState(
     iitem.status === 'delivery'
       ? '#4FC4F5'
-      : iitem.status == 'complete'
+      : iitem.status == 'completed'
       ? 'green'
       : 'red',
   );
@@ -60,16 +56,16 @@ const ItemHistory = ({iitem, setRerender}) => {
         .onSnapshot(documentSnapshot => {
           console.log('User data: ', documentSnapshot.data());
           // setItem(documentSnapshot.data());
-          setRerender(true)
+          setRerender(true);
         });
       setColorStatus(
         iitem.status === 'delivery'
           ? '#4FC4F5'
-          : iitem.status == 'complete'
+          : iitem.status == 'completed'
           ? 'green'
           : 'red',
       );
-      return () => subscriber()
+      return () => subscriber();
     }
   }, []);
 

@@ -87,7 +87,7 @@ const Navigation = () => {
           options={{
             headerShown: true,
             headerTitleAlign: 'center',
-            headerTitle: 'Địa chỉ mới',
+            headerTitle: t('New address'),
           }}
         />
         <Stack.Screen
@@ -105,7 +105,7 @@ const Navigation = () => {
           options={{
             headerShown: true,
             headerTitleAlign: 'center',
-            headerTitle: 'Hỗ trợ',
+            headerTitle: t('Support'),
           }}
         />
         <Stack.Screen
@@ -114,7 +114,7 @@ const Navigation = () => {
           options={{
             headerShown: true,
             headerTitleAlign: 'center',
-            headerTitle: 'Sửa địa chỉ',
+            headerTitle: t('Repair address'),
           }}
         />
         <Stack.Screen
@@ -141,7 +141,7 @@ const Navigation = () => {
           options={{
             headerShown: true,
             headerTitleAlign: 'center',
-            headerTitle: 'Thông báo',
+            headerTitle: t('Notification'),
           }}
         />
         <Stack.Screen
@@ -162,7 +162,7 @@ const Navigation = () => {
           options={{
             headerShown: true,
             headerTitleAlign: 'center',
-            headerTitle: 'Khuyến mãi',
+            headerTitle: t('Voucher'),
           }}
         />
         <Stack.Screen name="Cancel" component={CancelledOrder} />

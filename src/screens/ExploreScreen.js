@@ -18,7 +18,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 import {mapDarkStyle, mapStandardStyle} from '../utils/mapData';
-import { Button } from 'react-native-paper';
+import {Button} from 'react-native-paper';
+import {useTranslation} from 'react-i18next';
 // import StarRating from '../components/StarRating';
 
 // import { useTheme } from '@react-navigation/native';
@@ -29,8 +30,9 @@ const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const ExploreScreen = ({route}) => {
+  const {t} = useTranslation();
   //   const theme = useTheme();
-  const markers = route.params.markers
+  const markers = route.params.markers;
   const initialMapState = {
     markers,
     region: {
@@ -72,7 +74,7 @@ const ExploreScreen = ({route}) => {
         }
       }, 100);
     });
-  },[]);
+  }, []);
 
   const interpolations = state.markers.map((marker, index) => {
     const inputRange = [
@@ -170,45 +172,45 @@ const ExploreScreen = ({route}) => {
         )}>
         {state.markers.map((marker, index) => {
           return (
-            (
-              <View style={styles.card} key={index}>
-                <Image
-                  source={{uri: marker.image}}
-                  style={styles.cardImage}
-                  resizeMode="cover"
-                />
-                <View style={styles.textContent}>
-                  <Text numberOfLines={1} style={styles.cardtitle}>
-                    {marker.title}
-                  </Text>
-                  <Text numberOfLines={1} style={styles.cardDescription}>
-                    {marker.description}
-                  </Text>
-                  <View style={styles.button}>
-                    <TouchableOpacity
-                      onPress={() => {console.log(markers[0].coordinate)}}
+            <View style={styles.card} key={index}>
+              <Image
+                source={{uri: marker.image}}
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+              <View style={styles.textContent}>
+                <Text numberOfLines={1} style={styles.cardtitle}>
+                  {marker.title}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {marker.description}
+                </Text>
+                <View style={styles.button}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log(markers[0].coordinate);
+                    }}
+                    style={[
+                      styles.signIn,
+                      {
+                        borderColor: '#FF6347',
+                        borderWidth: 1,
+                      },
+                    ]}>
+                    <Text
                       style={[
-                        styles.signIn,
+                        styles.textSign,
                         {
-                          borderColor: '#FF6347',
-                          borderWidth: 1,
+                          color: '#FF6347',
                         },
                       ]}>
-                      <Text
-                        style={[
-                          styles.textSign,
-                          {
-                            color: '#FF6347',
-                          },
-                        ]}>
-                        Order Now
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                      {t('Order now')}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-            )
-          )
+            </View>
+          );
         })}
       </Animated.ScrollView>
     </View>

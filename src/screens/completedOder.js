@@ -41,12 +41,7 @@ const OnGoing = () => {
     setRefreshing(false);
   };
   if (Orders.length == 0)
-    return (
-      <NothingToShow
-        uri={require('../assets/NothingToShow.json')}
-        title="Chưa có hóa đơn đơn để hiển thị"
-      />
-    );
+    return <NothingToShow uri={require('../assets/NothingToShow.json')} />;
   return (
     <View>
       <ScrollView
