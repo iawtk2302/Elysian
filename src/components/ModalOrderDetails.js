@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {selectModal, openOrClose} from '../redux/orderDetailSlide';
+import {selectModal, openOrClose, selectOrder} from '../redux/orderDetailSlide';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import COLORS from '../common/Color';
 import {selectAllProduct} from '../redux/orderDetailSlide';
@@ -16,6 +16,9 @@ import OrderDetail from './OrderDetail';
 import HistoryOrder from './HistoryOrder';
 import Loading from './Loading';
 import {useTranslation} from 'react-i18next';
+import {Divider} from 'react-native-paper';
+import FormatNumber from '../utils/FormatNumber';
+import NumberFormat from 'react-number-format';
 
 export default ModalOrderDetails = () => {
   const modalVisible = useSelector(selectModal);
@@ -34,7 +37,9 @@ export default ModalOrderDetails = () => {
                   <OrderDetail item={item} />
                 </View>
               ))}
+              <Total />
               <HistoryOrder />
+
               <View height={70} />
             </ScrollView>
             <BtnClose />
@@ -78,6 +83,67 @@ const Header = () => {
       <Text style={{fontWeight: '600', color: COLORS.custom, fontSize: 18}}>
         {t('Order detail')}
       </Text>
+    </View>
+  );
+};
+
+const Total = () => {
+  const {t} = useTranslation();
+  const order = useSelector(selectOrder);
+  return (
+    <View style={{marginTop: 10, backgroundColor: 'white', padding: 15}}>
+      <Text
+        style={{
+          alignSelf: 'center',
+          color: 'black',
+          fontSize: 17,
+          fontWeight: '600',
+        }}>
+        {t('Total')}
+      </Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text>{t('Merchandise Subtotal')}</Text>
+        <Text>
+          <FormatNumber number={order.totalBeforeCheckout} />
+        </Text>
+      </View>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text>{t('Decrease price')}</Text>
+        <Text>
+          -<FormatNumber number={order.decreasePrice} />
+        </Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginBottom: 10,
+        }}>
+        <Text>{t('Shipping Subtotal')}</Text>
+        <Text>
+          <FormatNumber number={30000} />
+        </Text>
+      </View>
+      <Divider />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingTop: 15,
+        }}>
+        <Text style={{fontSize: 17, color: COLORS.custom}}>{t('Total')}</Text>
+        <Text>
+          <NumberFormat
+            value={parseInt(order.totalCost)}
+            displayType="text"
+            thousandSeparator
+            suffix="đ"
+            renderText={value => (
+              <Text style={{color: COLORS.custom, fontSize: 17}}>{value}</Text>
+            )}
+          />
+        </Text>
+      </View>
     </View>
   );
 };

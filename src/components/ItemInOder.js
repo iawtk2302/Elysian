@@ -6,6 +6,7 @@ import {
   setHistory,
   setOrderID,
   setWaitForLoadDetail,
+  setOrder,
 } from '../redux/orderDetailSlide';
 import fireStore from '@react-native-firebase/firestore';
 import {setProducts} from '../redux/orderDetailSlide';
@@ -14,6 +15,7 @@ import FormatNumber from '../utils/FormatNumber';
 import {Divider} from 'react-native-paper';
 import convertTimeToFB from '../utils/convertTimeToFB';
 import {useTranslation} from 'react-i18next';
+import COLORS from '../common/Color';
 
 export default ItemInOder = ({item}) => {
   const {t} = useTranslation();
@@ -21,6 +23,22 @@ export default ItemInOder = ({item}) => {
   let arrDetailOrder = [];
   let his = {};
   const lang = useSelector(state => state.lang);
+
+  const loadOrder = async () => {
+    let order = {};
+    await fireStore()
+      .collection('Orders')
+      .doc(item.orderID)
+      .get()
+      .then(documentSnapshot => {
+        order = {
+          decreasePrice: documentSnapshot.data().decreasePrice,
+          totalCost: documentSnapshot.data().totalCost,
+          totalBeforeCheckout: documentSnapshot.data().totalBeforeCheckout,
+        };
+      });
+    dispatch(setOrder(order));
+  };
 
   const loadProducts = async () => {
     await fireStore()
@@ -54,7 +72,7 @@ export default ItemInOder = ({item}) => {
         });
       const size = {
         name: item.size,
-        price: item.size === 'L' ? '8000' : item.size === 'M' ? '16000' : '0',
+        price: item.size === 'L' ? '16000' : item.size === 'M' ? '8000' : '0',
       };
       item.products = products;
       item.size = size;
@@ -67,6 +85,7 @@ export default ItemInOder = ({item}) => {
   const OpenModal = () => {
     dispatch(setOrderID(item.orderID));
     dispatch(setWaitForLoadDetail());
+    loadOrder();
     loadProducts(item.orderID);
     dispatch(openOrClose());
     dispatch(setWaitForLoadDetail());
