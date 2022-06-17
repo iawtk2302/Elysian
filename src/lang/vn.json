@@ -112,7 +112,7 @@
         "Default": "Mặc định",
         "Time": "Thời gian",
         "Voucher": "Khuyến mãi",
-        "Repair address" : "Sủa địa chỉ",
+        "Repair address" : "Sửa địa chỉ",
         "Support": "Hỗ trợ",
         "Enter your phone number": "Nhập số điện thoại",
         "Update": "Cập nhật",
@@ -161,7 +161,8 @@
         "Complete": "Hoàn thành",
         "Phone number is not invalid": "Số điện thoại không hợp lệ",
         "Full name is not valid": "Họ và tên không hợp lệ",
-        "Decrease price": "Giảm giá"
+        "Decrease price": "Giảm giá",
+        "New address": "Địa chỉ mới"
 
 
     }
