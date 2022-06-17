@@ -84,7 +84,6 @@ const Register = ({setProfileUpdated}) => {
     handleErrors(null, input);
     setInputs(prevState => ({...prevState, [input]: text}));
   };
-<<<<<<< HEAD
   const SetProfile = async () => {
     // console.log('first');
     // await auth().currentUser.updateProfile({displayName: displayName});
@@ -94,9 +93,6 @@ const Register = ({setProfileUpdated}) => {
     if(auth().currentUser.email !== null)
       setInputs(prevState => ({...prevState, ['email']: auth().currentUser.email}));
   }, [])
-=======
-
->>>>>>> main
   return (
     <View style={styles.container}>
       <View

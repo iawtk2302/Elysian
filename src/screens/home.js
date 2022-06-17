@@ -39,17 +39,13 @@ const Home = ({navigation}) => {
   const [dataSize, setDataSize] = useState([]);
   const [datatopping, setDataTopping] = useState([]);
   const [voucher, setVoucher] = useState(0);
-<<<<<<< HEAD
   const [isReady, setIsReady] = useState(false);
-=======
->>>>>>> main
   const getData = async () => {
     const listBanner = [];
     const listProduct = [];
     const size = [];
     const topping = [];
     await firestore()
-<<<<<<< HEAD
     .collection('Banners')
     .get()
     .then(querySnapshot => {
@@ -57,15 +53,6 @@ const Home = ({navigation}) => {
       querySnapshot.forEach(documentSnapshot => {
         listBanner.push(documentSnapshot.data());
         // console.log(documentSnapshot.data());
-=======
-      .collection('Banners')
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          listBanner.push(documentSnapshot.data());
-        });
-        setDatabanner(listBanner);
->>>>>>> main
       });
       setDatabanner(listBanner);
     });

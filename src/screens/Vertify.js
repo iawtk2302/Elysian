@@ -19,14 +19,9 @@ const Vertify = ({
   // const [phoneNumber, setPhoneNumber] = useState('0396891589');
   const [timetoResend, setTimetoResend] = useState('3:00');
   const [code, setCode] = useState('');
-<<<<<<< HEAD
   const [user, setUser] = useState(null)
   const [isPress, setIsPress] = useState(false);
-  
-=======
-  const [user, setUser] = useState(null);
   const {t} = useTranslation();
->>>>>>> main
   async function confirmCode() {
     try {
       // console.log(confirm);
@@ -81,12 +76,8 @@ const Vertify = ({
     if (code === '') setIsPress(false);
     else setIsPress(true);
     return RNOtpVerify.removeListener();
-<<<<<<< HEAD
     
   }, [code])
-=======
-  }, []);
->>>>>>> main
   // if(profileUpdated)
   return (
     <View style={styles.container}>

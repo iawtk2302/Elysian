@@ -27,16 +27,12 @@ const SignIn = ({navigation}) => {
   const [isPress, setIsPress] = useState(false);
   const {t} = useTranslation();
   async function signInWithPhoneNumber(phoneNumber) {
-<<<<<<< HEAD
     const format = /[!@#$%^&*()_\-=\[\]{};':"\\|,.<>\/?]+/;
     const formatphone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
     if(format.test(phoneNumber) || !formatphone.test(phoneNumber)){
       ToastAndroid.show("Số điện thoại chưa đúng", 3)
       return;
     }
-=======
-    console.log('first');
->>>>>>> main
     try {
       if (phoneNumber.charAt(0) === '0') {
         let a = phoneNumber.substring(1);

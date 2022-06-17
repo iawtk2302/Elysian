@@ -7,12 +7,8 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {ActivityIndicator} from 'react-native';
 import {Button} from 'react-native-paper';
-<<<<<<< HEAD
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/Loading';
-=======
-import {useNavigation} from '@react-navigation/native';
->>>>>>> main
 const Notification = () => {
   const navigation = useNavigation();
   const [notiData, setNotiData] = useState([]);

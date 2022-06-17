@@ -112,14 +112,11 @@ const ItemNotification = ({item}) => {
       style={[styles.container]}
       activeOpacity={0.7}
       onPress={() => {
-<<<<<<< HEAD
         // ItemClick();
         // console.log(item)
         // Click();
-        remove()
-=======
+        // remove()
         Click();
->>>>>>> main
       }}>
       <View style={{flex: 1}}>
         <SharedElement id={`${item.linkImage}`}>
