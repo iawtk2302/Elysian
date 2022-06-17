@@ -19,7 +19,7 @@ const Vertify = ({
   // const [phoneNumber, setPhoneNumber] = useState('0396891589');
   const [timetoResend, setTimetoResend] = useState('3:00');
   const [code, setCode] = useState('');
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
   const [isPress, setIsPress] = useState(false);
   const {t} = useTranslation();
   async function confirmCode() {
@@ -64,9 +64,11 @@ const Vertify = ({
       });
   };
   const otpHandler = message => {
-    const ootp = /(\d{6})/g.exec(message)[1];
-    setCode(ootp);
-    RNOtpVerify.removeListener();
+    try {
+      const ootp = /(\d{6})/g.exec(message)[1];
+      setCode(ootp);
+      RNOtpVerify.removeListener();
+    } catch (error) {}
   };
   useEffect(() => {
     RNOtpVerify.getHash().then().catch(console.log);
@@ -76,8 +78,7 @@ const Vertify = ({
     if (code === '') setIsPress(false);
     else setIsPress(true);
     return RNOtpVerify.removeListener();
-    
-  }, [code])
+  }, [code]);
   // if(profileUpdated)
   return (
     <View style={styles.container}>
@@ -115,7 +116,10 @@ const Vertify = ({
           Không nhận được mã Gửi lại ({timetoResend})
         </Text> */}
         <TouchableOpacity
-          style={[styles.btnLogin, {backgroundColor: !isPress ? '#ccc' : COLORS.custom}]}
+          style={[
+            styles.btnLogin,
+            {backgroundColor: !isPress ? '#ccc' : COLORS.custom},
+          ]}
           onPress={() => {
             if (isSocial === 1) confirmCodewithSocical();
             else confirmCode();

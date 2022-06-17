@@ -7,29 +7,15 @@ import firestore from '@react-native-firebase/firestore';
 
 const AddNotification = async data => {
   try {
-    let temp
-    if(data.data.NotificationID !== undefined){
-      temp = {
-        title: data.notification.title,
-        body: data.notification.body,
-        linkImage:
-          data.notification.android.imageUrl ||
-          'https://firebasestorage.googleapis.com/v0/b/elysian-cfa87.appspot.com/o/Elysian.png?alt=media&token=aa75058b-9d6d-4fba-892d-88ef8cd512d9',
-        date: firestore.Timestamp.now(),
-        BannerID: data.data.NotificationID,
-      };
-    }
-    else{
-      temp = {
-        title: data.notification.title,
-        body: data.notification.body,
-        linkImage:
-          data.notification.android.imageUrl ||
-          'https://firebasestorage.googleapis.com/v0/b/elysian-cfa87.appspot.com/o/Elysian.png?alt=media&token=aa75058b-9d6d-4fba-892d-88ef8cd512d9',
-        date: firestore.Timestamp.now(),
-        // BannerID: data.data.NotificationID,
-      };
-    }
+    const temp = {
+      title: data.notification.title,
+      body: data.notification.body,
+      linkImage:
+        data.notification.android.imageUrl ||
+        'https://firebasestorage.googleapis.com/v0/b/elysian-cfa87.appspot.com/o/Elysian.png?alt=media&token=aa75058b-9d6d-4fba-892d-88ef8cd512d9',
+      date: firestore.Timestamp.now(),
+      BannerID: data.data.NotificationID,
+    };
     // console.log(temp)
     await firestore()
     .collection('Notifications')
