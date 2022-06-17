@@ -30,13 +30,12 @@ const AddNotification = async data => {
   
 };
 const AddNotificationToUser = async id => {
-  let data = {};
   await firestore()
     .collection('Users')
     .get()
     .then(query => {
       query.forEach(doc => {
-        data = {};
+        const data = {};
         Object.assign(data, doc.data().Notifications);
         data[id] = true;
         doc.ref.update({
@@ -77,7 +76,7 @@ export const notificationListener = () => {
     console.log(
       'Notification caused app to open from background state:',
       remoteMessage.notification,
-      AddNotification(remoteMessage),
+      // AddNotification(remoteMessage),
     );
   });
   messaging()
@@ -88,7 +87,7 @@ export const notificationListener = () => {
           'Notification caused app to open from quit state:',
           remoteMessage.notification,
         );
-        AddNotification(remoteMessage);
+        // AddNotification(remoteMessage);
       }
     });
   messaging().onMessage(async remoteMessage => {

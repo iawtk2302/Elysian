@@ -72,11 +72,14 @@ const App = () => {
   }
 
   useEffect(() => {
+    let isMounted = true;
     SplashScreen.hide();
-    requestUserPermission();
-    notificationListener();
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    if(isMounted)requestUserPermission();
+    if(isMounted)notificationListener();
+    auth().onAuthStateChanged(onAuthStateChanged);
+    return () => {
+      isMounted = false
+    }; // unsubscribe on unmount
   }, []);
 
   if (initializing) return null;
