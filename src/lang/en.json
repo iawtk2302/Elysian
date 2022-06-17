@@ -158,6 +158,11 @@
         "Phone number is not invalid": "Phone number is not invalid",
         "Full name is not valid": "Full name is not valid",
         "Decrease price": "Decrease price",
-        "Order history":"Order history"
+        "Order history":"Order history",
+        "Chọn tỉnh/thành phố":"Choose province/city",
+        "Chọn quận/huyện":"Choose district",
+        "Chọn phường/xã":"Choose ward",
+        "Tìm tỉnh/thành phố":"Search province/city",
+        "Tên đường, Tòa nhà, Số nhà.":"Detail"
     }
 }

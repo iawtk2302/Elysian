@@ -204,7 +204,7 @@ const AddAddress = () => {
             justifyContent: 'center',
           }}>
           <Text style={{color: '#D9415D'}}>
-            {t('Phone number is not valid')}
+            {t('Phone number is not invalid')}
           </Text>
         </View>
       )}
@@ -212,8 +212,8 @@ const AddAddress = () => {
       <DropDownPicker
         searchable={true}
         style={{borderWidth: 0}}
-        placeholder="Chọn tỉnh/thành phố"
-        searchPlaceholder="Tìm tỉnh/thành phố"
+        placeholder={t("Chọn tỉnh/thành phố")}
+        searchPlaceholder={t("Tìm tỉnh/thành phố")}
         zIndex={10}
         open={open}
         value={province}
@@ -224,7 +224,7 @@ const AddAddress = () => {
       />
       <DropDownPicker
         style={{borderWidth: 0}}
-        placeholder="Chọn quận/huyện"
+        placeholder={t("Chọn quận/huyện")}
         zIndex={5}
         open={open1}
         value={district}
@@ -235,7 +235,7 @@ const AddAddress = () => {
       />
       <DropDownPicker
         style={{borderWidth: 0}}
-        placeholder="Chọn phường/xã"
+        placeholder={t("Chọn phường/xã")}
         zIndex={3}
         open={open2}
         value={ward}
@@ -245,7 +245,7 @@ const AddAddress = () => {
         setItems={setItems2}
       />
       <TextInput
-        placeholder="Tên đường, Tòa nhà, Số nhà."
+        placeholder={t("Tên đường, Tòa nhà, Số nhà.")}
         value={detailAddress}
         style={{paddingLeft: 10, backgroundColor: 'white'}}
         editable={isDetailAddress}

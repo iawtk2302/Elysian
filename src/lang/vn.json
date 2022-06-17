@@ -163,7 +163,11 @@
         "Full name is not valid": "Họ và tên không hợp lệ",
         "Decrease price": "Giảm giá",
         "New address": "Địa chỉ mới",
-        "Order history":"Lịch sử đơn hàng"
-
+        "Order history":"Lịch sử đơn hàng",
+        "Chọn tỉnh/thành phố":"Chọn tỉnh/thành phố",
+        "Chọn quận/huyện":"Chọn quận/huyện",
+        "Chọn phường/xã":"Chọn phường/xã",
+        "Tìm tỉnh/thành phố":"Tìm tỉnh/thành phố",
+        "Tên đường, Tòa nhà, Số nhà.":"Tên đường, Tòa nhà, Số nhà."
     }
 }
