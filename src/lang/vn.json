@@ -162,8 +162,8 @@
         "Phone number is not invalid": "Số điện thoại không hợp lệ",
         "Full name is not valid": "Họ và tên không hợp lệ",
         "Decrease price": "Giảm giá",
-        "New address": "Địa chỉ mới"
-
+        "New address": "Địa chỉ mới",
+        "Order history":"Lịch sử đơn hàng"
 
     }
 }

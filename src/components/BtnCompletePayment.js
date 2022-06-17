@@ -154,8 +154,8 @@ const BtnCompletePayment = () => {
         ],
       );
     } else {
-      // const check = await checkLocation();
-      // if (check)
+      const check = await checkLocation();
+      if (check)
       dispatch(openOrCloseModel());
     }
   };
