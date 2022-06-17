@@ -24,4 +24,6 @@ Use cases:
   - Technology and framework: React Native & Javascript
   - IDE: Visual Studio Code
  
-## Demo video: https://youtu.be/1-o0pHP0PP4
+## Demo video: https://youtu.be/ACQFug9GSaA
+
+## Link Github: https://github.com/iawtk2302/Elysian
