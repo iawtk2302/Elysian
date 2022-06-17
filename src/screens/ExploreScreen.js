@@ -186,29 +186,6 @@ const ExploreScreen = ({route}) => {
                 <Text numberOfLines={1} style={styles.cardDescription}>
                   {marker.description}
                 </Text>
-                <View style={styles.button}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      console.log(markers[0].coordinate);
-                    }}
-                    style={[
-                      styles.signIn,
-                      {
-                        borderColor: '#FF6347',
-                        borderWidth: 1,
-                      },
-                    ]}>
-                    <Text
-                      style={[
-                        styles.textSign,
-                        {
-                          color: '#FF6347',
-                        },
-                      ]}>
-                      {t('Order now')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
               </View>
             </View>
           );

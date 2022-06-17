@@ -67,7 +67,9 @@ const User = () => {
     return () => {};
   }, []);
   if (loading) {
-    return <ActivityIndicator />;
+    return (<View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+      <ActivityIndicator color={COLORS.custom}/>
+    </View>);
   }
   return (
     <View style={{flex: 1}}>
@@ -270,7 +272,7 @@ const User = () => {
           paddingHorizontal: 10,
         }}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="people-outline" size={24} />
+          <Icon name="menu-outline" size={24} />
           <Text
             style={{
               fontSize: 16,

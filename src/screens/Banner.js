@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {SharedElement} from 'react-navigation-shared-element';
-
+import Icon from 'react-native-vector-icons/Ionicons'
+import { useNavigation } from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
 const Banner = ({route}) => {
   const item = route.params.item;
@@ -16,8 +17,9 @@ const Banner = ({route}) => {
   useEffect(() => {
     setText(item.content.replace(/\\n/g, '\n'));
   });
+  const navigation=useNavigation()
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1,backgroundColor:'white'}}>
       <SharedElement id={`${item.image}`}>
         <Image
           source={{uri: item.image}}
@@ -26,8 +28,12 @@ const Banner = ({route}) => {
       </SharedElement>
 
       <View style={{paddingHorizontal: 16}}>
-        <Text style={{color: 'black', fontSize: 15}}>{text}</Text>
+        <Text style={{color: 'black', fontSize: 15,marginTop:10}}>{text}</Text>
       </View>
+      <TouchableOpacity style={{height:30,width:30,borderRadius:15, backgroundColor:'white',position:'absolute',top:10,left:10,justifyContent:'center', alignItems:'center'}}
+        onPress={()=>{navigation.goBack()}}>
+        <Icon name='close-outline' size={24} color='gray'/>
+      </TouchableOpacity>
     </View>
   );
 };
