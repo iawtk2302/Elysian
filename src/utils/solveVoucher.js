@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 export const calculatorTotal = () => {
   const arrProduct = useSelector(state => state.orders.list);
   let totalPrice = 0;
@@ -17,25 +17,22 @@ export const TotalAmount = () => {
 };
 export const calculatorDiscount = () => {
   const arrProduct = useSelector(state => state.orders.list);
-  const voucher=useSelector(state=>state.voucher)
+  const voucher = useSelector(state => state.voucher);
   let discount = 0;
-  let totalPrice=0
+  let totalPrice = 0;
   for (let item of arrProduct) {
     totalPrice += parseInt(item.total);
   }
-  if(voucher===''){
-    return discount
-  }
-  else{
-    if(voucher.type=='total'){
-      discount=voucher.discount
-    }
-    else{
-      if(parseFloat(voucher.percent)*totalPrice>=voucher.max){
-        discount=voucher.max
-      }
-      else{
-        discount=Math.floor((totalPrice/1000)*voucher.percent)*1000
+  if (voucher === '') {
+    return discount;
+  } else {
+    if (voucher.type == 'total') {
+      discount = voucher.discount;
+    } else {
+      if (parseFloat(voucher.percent) * totalPrice >= voucher.max) {
+        discount = voucher.max;
+      } else {
+        discount = Math.floor((totalPrice / 1000) * voucher.percent) * 1000;
       }
     }
   }

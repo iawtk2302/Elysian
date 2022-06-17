@@ -19,6 +19,8 @@ import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import {clearNote, selectNote} from '../redux/orderSlice';
 import {useTranslation} from 'react-i18next';
+import {calculatorDiscount} from '../utils/solveVoucher';
+import {calculatorTotal} from '../utils/solveVoucher';
 
 const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -30,6 +32,9 @@ const BtnCompletePayment = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const note = useSelector(selectNote);
+
+  const decreasePrice = calculatorDiscount();
+  const totalBeforeCheckout = calculatorTotal();
 
   let orderID = '';
   let time = null;
@@ -45,7 +50,10 @@ const BtnCompletePayment = () => {
         idAddress: address.idAddress,
         state: 'waiting',
         note: note,
+        decreasePrice: decreasePrice,
+        shippingPrice: 30000,
         createdAt: (time = firestore.Timestamp.now()),
+        totalBeforeCheckout: totalBeforeCheckout,
       })
       .then(snap => {
         orderID = snap.id;
@@ -147,8 +155,9 @@ const BtnCompletePayment = () => {
         ],
       );
     } else {
-      const check = await checkLocation();
-      if (check) dispatch(openOrCloseModel());
+      // const check = await checkLocation();
+      // if (check)
+      dispatch(openOrCloseModel());
     }
   };
   return (

@@ -51,7 +51,7 @@
         "Notes for orders" : "Notes for orders",
         "Size": "Size",
         "Total": "Total",
-        "Merchandise Subtotal": "Subtotal",
+        "Merchandise Subtotal": "Sub total",
         "Shipping Subtotal" : "Shipping fee",
         "Total Payment": "Total Payment",
         "Select voucher": "Select voucher",
@@ -156,7 +156,8 @@
         "Set address to default": "Set to default",
         "Complete": "Complete",
         "Phone number is not invalid": "Phone number is not invalid",
-        "Full name is not valid": "Full name is not valid"
+        "Full name is not valid": "Full name is not valid",
+        "Decrease price": "Decrease price"
 
     }
 }
