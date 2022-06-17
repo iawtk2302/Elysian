@@ -13,7 +13,8 @@ i18next.use(initReactI18next).init({
       },
       react: {
         useSuspense:false,
-     }
+     },
+     lng:'vn'
 })
 
 export default i18next;

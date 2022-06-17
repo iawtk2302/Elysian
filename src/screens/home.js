@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     borderRadius: 7.5,
     position: 'absolute',
     left: 20,
-    top: 0,
+    top: 5,
   },
   txtNotiNum: {
     fontSize: 10,
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   txtDiscover: {
     fontSize: 19,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 40,
     color: 'black',
   },

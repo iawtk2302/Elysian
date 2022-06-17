@@ -19,7 +19,7 @@ const ItemBanner = ({item, navigation}) => {
       style={{
         height: width / 2 - 10,
         width: width / 2 - 25,
-        marginBottom: 40,
+        marginBottom: 25,
         marginHorizontal: 7,
       }}>
       <TouchableWithoutFeedback

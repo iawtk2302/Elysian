@@ -19,8 +19,8 @@ const Register = ({setProfileUpdated}) => {
   const [value, setValue] = useState(null);
   const [genderFill, setGenderFill] = useState(true);
   const [items, setItems] = useState([
-    {label: ` ${t('nam')}`, value: 'nam'},
-    {label: ` ${t('nữ')}`, value: 'nữ'},
+    {label: t('nam'), value: t('nam')},
+    {label: t('nữ'), value: t('nữ')},
   ]);
   const [inputs, setInputs] = useState([]);
   const [errors, setErrors] = useState({});
