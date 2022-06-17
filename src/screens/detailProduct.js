@@ -14,13 +14,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ButtonGroup from '../components/buttonGroup';
 import COLOR from '../common/Color';
 import SelectMultiple from 'react-native-select-multiple';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {addProduct} from '../redux/orderSlice';
 import firestore from '@react-native-firebase/firestore';
 import fireauth from '@react-native-firebase/auth';
 import {showMessage} from 'react-native-flash-message';
+import {useTranslation} from 'react-i18next';
 
 const DetailProduct = () => {
+  const {t} = useTranslation();
   const uid = fireauth().currentUser.uid;
   const router = useRoute();
   const navigation = useNavigation();
@@ -100,8 +102,8 @@ const DetailProduct = () => {
     dispatch(action);
     navigation.goBack();
     showMessage({
-      message: `Thêm ${value.product.name} vào giỏ hàng thành công`,
-      description: 'Nhấn để đi đến giỏ hàng',
+      message: `${t('Add')} ${value.product.name} ${t('to cart successfully')}`,
+      description: t('Press to go to cart'),
       type: 'success',
       onPress: () => {
         navigation.push('Payment');
@@ -201,7 +203,7 @@ const DetailProduct = () => {
             <Text style={{fontWeight: 'bold', fontSize: 18, marginTop: 10}}>
               Size
             </Text>
-            <Text>Chọn 1 loại size</Text>
+            <Text>{t('Select size')}</Text>
             <ButtonGroup
               size={router.params.size}
               item={router.params.item}
@@ -218,7 +220,7 @@ const DetailProduct = () => {
             <Text style={{fontWeight: 'bold', fontSize: 18, marginTop: 10}}>
               Topping
             </Text>
-            <Text>Chọn tối đa 2 loại</Text>
+            <Text>{t('Select up to 2 types')}</Text>
             <SelectMultiple
               renderLabel={renderLabel}
               items={topping}
@@ -279,7 +281,9 @@ const DetailProduct = () => {
               thousandSeparator
               suffix="đ"
               renderText={value => (
-                <Text style={{color: 'white'}}>Thêm vào giỏ : {value}</Text>
+                <Text style={{color: 'white'}}>
+                  {t('Add to cart')}: {value}
+                </Text>
               )}
             />
           </TouchableOpacity>

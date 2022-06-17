@@ -7,11 +7,20 @@ import COLORS from '../common/Color';
 import {signOut} from '../utils/Auth';
 import Icon from 'react-native-vector-icons/Ionicons';
 import RNOtpVerify from 'react-native-otp-verify';
-const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber, setConfirm}) => {
+import {useTranslation} from 'react-i18next';
+const Vertify = ({
+  navigation,
+  confirm,
+  isSocial = 0,
+  setHasPhone,
+  phoneNumber,
+  setConfirm,
+}) => {
   // const [phoneNumber, setPhoneNumber] = useState('0396891589');
   const [timetoResend, setTimetoResend] = useState('3:00');
   const [code, setCode] = useState('');
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+  const {t} = useTranslation();
   async function confirmCode() {
     try {
       // console.log(confirm);
@@ -29,8 +38,8 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber, s
       );
       let userData = await auth().currentUser.linkWithCredential(credential);
       setUser(userData.user);
-      setHasPhone(true)
-      UpdateUser()
+      setHasPhone(true);
+      UpdateUser();
     } catch (error) {
       if (error.code == 'auth/invalid-verification-code') {
         console.log('Invalid code.');
@@ -41,18 +50,18 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber, s
       }
     }
   }
-  const UpdateUser = async() => {
-    const user = auth().currentUser
-    let userInfo
-    userInfo = {phoneNumber: user.phoneNumber, name: user.displayName}
+  const UpdateUser = async () => {
+    const user = auth().currentUser;
+    let userInfo;
+    userInfo = {phoneNumber: user.phoneNumber, name: user.displayName};
     await firestore()
-    .collection('Users')
-    .doc(auth().currentUser.uid)
-    .set(userInfo)
-    .then(() => {
-      // console.log('added');
-    });
-  }
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .set(userInfo)
+      .then(() => {
+        // console.log('added');
+      });
+  };
   const otpHandler = message => {
     const ootp = /(\d{6})/g.exec(message)[1];
     setCode(ootp);
@@ -64,21 +73,26 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber, s
       .then(p => RNOtpVerify.addListener(otpHandler))
       .catch(p => console.log(p));
     return RNOtpVerify.removeListener();
-  }, [])
+  }, []);
   // if(profileUpdated)
   return (
     <View style={styles.container}>
-      <View style={{alignItems:"flex-end", marginTop: 10, marginRight: -10}}>
-        <Icon name="close-circle-outline" size={35} onPress={() => setConfirm(null)} />
+      <View style={{alignItems: 'flex-end', marginTop: 10, marginRight: -10}}>
+        <Icon
+          name="close-circle-outline"
+          size={35}
+          onPress={() => setConfirm(null)}
+        />
       </View>
       <View style={styles.header}>
-        <Text style={styles.txtHeader}>Xác nhận mã OTP</Text>
+        <Text style={styles.txtHeader}>{t('Confirm OTP')}</Text>
         <Text style={styles.txtNoti}>
-          Một mã xác thực gồm 6 số đã được gửi đến số điện thoại {phoneNumber}
+          {t('A 6-digit verification code has been sent to the phone number')}{' '}
+          {phoneNumber}
         </Text>
       </View>
       <View style={styles.body}>
-        <Text style={styles.txtNoti}>Nhập mã để tiếp tục</Text>
+        <Text style={styles.txtNoti}>{t('Enter code to continue')}</Text>
         <OTPInputView
           style={{width: '100%', height: 100}}
           pinCount={6}
@@ -103,7 +117,7 @@ const Vertify = ({navigation, confirm, isSocial = 0, setHasPhone, phoneNumber, s
             else confirmCode();
           }}>
           <Text style={{alignSelf: 'center', fontSize: 17, color: 'white'}}>
-            Xác nhận
+            {t('Confirm')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -154,7 +168,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomWidth: 1,
     borderRadius: 5,
-    color: 'black'
+    color: 'black',
   },
 
   underlineStyleHighLighted: {

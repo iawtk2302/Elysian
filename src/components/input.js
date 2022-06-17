@@ -13,7 +13,6 @@ const Input = ({label, iconName, error, password, ...props}) => {
             alignItems: 'center',
           },
         ]}>
-        
         <TextInput
           secureTextEntry={hidePassword}
           style={{color: '#000', flex: 1, fontSize: 16, paddingVertical: 7}}
@@ -24,13 +23,6 @@ const Input = ({label, iconName, error, password, ...props}) => {
           style={{color: '#000', fontSize: 16, marginRight: 5}}
           {...props}
         />
-        {/* {password && (
-          <Icon
-            onPress={() => setHidePassword(!hidePassword)}
-            name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{color: '#000', fontSize: 22}}
-          />
-        )} */}
       </View>
       {error && <Text style={{color: 'red', fontSize: 12}}> {error}</Text>}
     </View>
@@ -44,7 +36,6 @@ const style = StyleSheet.create({
     color: '#F3F4FB',
   },
   inputContainer: {
-    // flex: 1,
     height: 47,
     flexDirection: 'row',
     paddingHorizontal: 10,
@@ -55,4 +46,3 @@ const style = StyleSheet.create({
 });
 
 export default Input;
-/* */

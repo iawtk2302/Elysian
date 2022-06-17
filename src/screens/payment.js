@@ -13,10 +13,12 @@ import CalculatePayment from '../components/CalculatePayment';
 import Loading from '../components/Loading';
 import ChooseTime from '../components/ChooseTime';
 import {ScrollView} from 'react-native-virtualized-view';
+import {useTranslation} from 'react-i18next';
 
 const Payment = () => {
   const dispatch = useDispatch();
   const completed = useSelector(selectCompleted);
+  const {t} = useTranslation();
 
   useEffect(() => {
     const loadAddress = () => {
@@ -54,7 +56,7 @@ const Payment = () => {
       {completed && (
         <Loading
           uri={require('../assets/107573-llove-you.json')}
-          title="Đang xử lý..."
+          title={t('Processing')}
         />
       )}
       <ChooseTime />

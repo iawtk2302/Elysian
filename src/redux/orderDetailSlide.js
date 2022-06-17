@@ -14,6 +14,7 @@ const orderDetailSlide = createSlice({
     waitForLoadDetail: false,
     waitForDelete: false,
     history: {},
+    order: {},
   },
   reducers: {
     setValues(state, action) {
@@ -34,7 +35,10 @@ const orderDetailSlide = createSlice({
       state.products = action.payload;
     },
     addWaitingOrder(state, action) {
-      state.waitingOrders = [...state.waitingOrders, action.payload];
+      state.waitingOrders = action.payload;
+      // state.waitingOrders?.sort((a, b) => {
+      //   return a?.createTime - b?.createTime;
+      // });
     },
     resetWaitingOrder(state) {
       state.waitingOrders = [];
@@ -46,19 +50,19 @@ const orderDetailSlide = createSlice({
       state.waitingOrders.splice(prev, 1);
     },
     addShippingOrder(state, action) {
-      state.shippingOrders = [...state.shippingOrders, action.payload];
+      state.shippingOrders = action.payload;
     },
     resetShippingOrder(state) {
       state.shippingOrders = [];
     },
     addCancelledOrder(state, action) {
-      state.cancelledOrders = [...state.cancelledOrders, action.payload];
+      state.cancelledOrders = action.payload;
     },
     resetCancelledOrder(state) {
       state.cancelledOrders = [];
     },
     addCompletedOrder(state, action) {
-      state.completedOrders = [...state.completedOrders, action.payload];
+      state.completedOrders = action.payload;
     },
     resetCompletedOrder(state) {
       state.completedOrders = [];
@@ -75,6 +79,9 @@ const orderDetailSlide = createSlice({
     },
     setHistory(state, action) {
       state.history = action.payload;
+    },
+    setOrder(state, action) {
+      state.order = action.payload;
     },
   },
 });
@@ -96,6 +103,7 @@ export const {
   setFalseWaitForDelete,
   setWaitForLoadDetail,
   setHistory,
+  setOrder,
 } = orderDetailSlide.actions;
 export const selectAllOrder = state => state.allOrder.values;
 export const selectModal = state => state.allOrder.modal;
@@ -107,5 +115,6 @@ export const selectCancelledOrders = state => state.allOrder.cancelledOrders;
 export const selectCompletedOrders = state => state.allOrder.completedOrders;
 export const selectWaitingForDelete = state => state.allOrder.waitForDelete;
 export const selectHistory = state => state.allOrder.history;
+export const selectOrder = state => state.allOrder.order;
 
 export default orderDetailSlide.reducer;

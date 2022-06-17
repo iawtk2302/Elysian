@@ -1,5 +1,5 @@
 import {View, Text, Modal, TouchableOpacity} from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import COLORS from '../common/Color';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -9,8 +9,10 @@ import {
   setCompleted,
 } from '../redux/addressSlice';
 import FormatText from '../utils/FormatText';
+import {useTranslation} from 'react-i18next';
 
 const AlertCompleted = () => {
+  const {t} = useTranslation();
   const address = useSelector(selectedAddress);
   const modal = useSelector(selectModal);
   return (
@@ -32,13 +34,15 @@ const AlertCompleted = () => {
           }}>
           <View flex={1}>
             <View style={{alignItems: 'center'}}>
-              <Text>Bạn có chắc chắn muốn đặt hàng</Text>
+              <Text style={{color: 'black'}}>
+                {t('Are you sure you want to order?')}
+              </Text>
             </View>
             <View style={{paddingTop: 20, padding: 10}}>
-              <Text>Đơn hàng sẽ được giao đến:</Text>
-              <FormatText title="Địa chỉ" content={address.detail} />
-              <FormatText title="Người nhận" content={address.name} />
-              <FormatText title="Số điện thoại" content={address.phone} />
+              <Text>{t('Orders will be delivered to')}</Text>
+              <FormatText title={t('Address')} content={address.detail} />
+              <FormatText title={t('Receiver')} content={address.name} />
+              <FormatText title={t('Phone number')} content={address.phone} />
             </View>
           </View>
           <Btn />
@@ -49,6 +53,7 @@ const AlertCompleted = () => {
 };
 
 const Btn = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const closeModal = () => {
     dispatch(openOrCloseModel());
@@ -73,7 +78,7 @@ const Btn = () => {
           marginEnd: 10,
           borderWidth: 0.5,
         }}>
-        <Text style={{color: 'black', fontWeight: '500'}}>Hủy</Text>
+        <Text style={{color: 'black', fontWeight: '500'}}>{t('Cancel')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -85,7 +90,7 @@ const Btn = () => {
           paddingBottom: 5,
           borderRadius: 10,
         }}>
-        <Text style={{color: 'white', fontWeight: '500'}}>Đồng ý</Text>
+        <Text style={{color: 'white', fontWeight: '500'}}>{t('OK')}</Text>
       </TouchableOpacity>
     </View>
   );

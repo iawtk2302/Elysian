@@ -18,9 +18,13 @@ import {removeAllProduct} from '../redux/orderSlice';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import {clearNote, selectNote} from '../redux/orderSlice';
+import {useTranslation} from 'react-i18next';
+import {calculatorDiscount} from '../utils/solveVoucher';
+import {calculatorTotal} from '../utils/solveVoucher';
 
 const BtnCompletePayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
+  const {t} = useTranslation();
   const checked = useSelector(selectChecked);
   const addressChoose = useSelector(selectedAddress);
   const completed = useSelector(selectCompleted);
@@ -28,6 +32,8 @@ const BtnCompletePayment = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const note = useSelector(selectNote);
+  const decreasePrice = calculatorDiscount();
+  const totalBeforeCheckout = calculatorTotal();
 
   let orderID = '';
   let time = null;
@@ -43,7 +49,10 @@ const BtnCompletePayment = () => {
         idAddress: address.idAddress,
         state: 'waiting',
         note: note,
+        decreasePrice: decreasePrice,
+        shippingPrice: 30000,
         createdAt: (time = firestore.Timestamp.now()),
+        totalBeforeCheckout: totalBeforeCheckout,
       })
       .then(snap => {
         orderID = snap.id;
@@ -76,8 +85,8 @@ const BtnCompletePayment = () => {
     dispatch(setChecked());
     navigation.goBack();
     showMessage({
-      message: 'Đặt hàng thành công',
-      description: 'Đơn hàng sẽ được giao đến ngay',
+      message: t('Order Success'),
+      description: t('Orders will be shipped immediately'),
       type: 'success',
     });
   };
@@ -119,7 +128,7 @@ const BtnCompletePayment = () => {
       .then(snap => {
         if (snap.size > 0) check = true;
         else {
-          Alert.alert('Có lỗi', 'Cửa hàng quá xa so với vị trí bạn chọn', [
+          Alert.alert(t('Error'), t('Error Address'), [
             {text: 'OK', onPress: () => console.log('Ok Pressed')},
           ]);
         }
@@ -133,8 +142,8 @@ const BtnCompletePayment = () => {
   const openModal = async () => {
     if (addressChoose == '') {
       Alert.alert(
-        'Chưa có địa chỉ giao hàng',
-        'Vui lòng thêm địa chỉ giao hàng',
+        t('No delivery address yet'),
+        t('Please choose a shipping address'),
         [
           {
             text: 'Cancel',
@@ -154,7 +163,7 @@ const BtnCompletePayment = () => {
     <View>
       <TouchableOpacity onPress={openModal}>
         <View style={styles.btnCompletePayment}>
-          <Text style={{color: COLORS.custom}}>Đặt hàng</Text>
+          <Text style={{color: COLORS.custom}}>{t('Order')}</Text>
         </View>
       </TouchableOpacity>
     </View>
