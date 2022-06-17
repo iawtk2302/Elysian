@@ -161,11 +161,11 @@ const Home = ({navigation}) => {
             {voucher}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.notificationContainer}>
+        <TouchableOpacity style={styles.notificationContainer} onPress={() => navigator.navigate('Notification')}>
           <Icon1
             name="notifications-outline"
             size={28}
-            onPress={() => navigator.navigate('Notification')}
+            
           />
           <View style={styles.NotiNum}>
             <Text style={styles.txtNotiNum}>{notificationNum}</Text>

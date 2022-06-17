@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, SectionList} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import ItemVoucher from '../components/itemVoucher';
 import firestore from '@react-native-firebase/firestore';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 const Voucher = () => {
   const [dataVoucher, setDataVoucher] = useState([]);
   const convertTime = time => {
@@ -44,16 +44,26 @@ const Voucher = () => {
             }
           }
         });
-        const temp = [
-          {
-            title: 'Sắp hết hạn',
-            data: tempExpired,
-          },
-          {
-            title: 'Sẵn sàng sử dụng',
-            data: tempReady,
-          },
-        ];
+        let temp;
+        if (tempExpired.length !== 0) {
+          temp = [
+            {
+              title: 'Sắp hết hạn',
+              data: tempExpired,
+            },
+            {
+              title: 'Sẵn sàng sử dụng',
+              data: tempReady,
+            },
+          ];
+        } else {
+          temp = [
+            {
+              title: 'Sẵn sàng sử dụng',
+              data: tempReady,
+            },
+          ]
+        }
         // console.log(temp)
         setDataVoucher(temp);
       });
@@ -66,7 +76,7 @@ const Voucher = () => {
       <SectionList
         sections={dataVoucher}
         keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => <ItemVoucher item={item}/>}
+        renderItem={({item}) => <ItemVoucher item={item} />}
         renderSectionHeader={({section: {title}}) => (
           <Text
             style={{

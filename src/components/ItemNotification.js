@@ -114,8 +114,8 @@ const ItemNotification = ({item}) => {
       onPress={() => {
         // ItemClick();
         // console.log(item)
-        Click();
-        // remove()
+        // Click();
+        remove()
       }}>
       <View style={{flex: 1}}>
         <SharedElement id={`${item.linkImage}`}>

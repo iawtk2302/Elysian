@@ -8,6 +8,7 @@ import auth from '@react-native-firebase/auth';
 import {ActivityIndicator} from 'react-native';
 import {Button} from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import Loading from '../components/Loading';
 const Notification = () => {
   const navigation = useNavigation()
   const [notiData, setNotiData] = useState([]);
@@ -94,6 +95,10 @@ const Notification = () => {
       </View>
     );
   }
+  if(notiData.length <= 0)
+    return(
+      <Loading uri={require('../assets/4021-no-notification-state.json')} backgroundColor={'#fff'}/>
+    )
   return (
     <ScrollView style={{marginTop: 15, flex: 1}}>
       {notiData.map((item, index) => {

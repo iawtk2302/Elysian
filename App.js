@@ -17,6 +17,7 @@ import {
 import SplashScreen from 'react-native-splash-screen';
 import COLORS from './src/common/Color';
 import FlashMessage from 'react-native-flash-message';
+import Loading from './src/components/Loading';
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -46,7 +47,7 @@ const App = () => {
   };
   const  onAuthStateChanged =(user) =>{
     setUser(user);
-    console.log(user)
+    // console.log(user)
     if(user === null){
       setHasPhone(false)
       setProfileUpdated(false)
@@ -96,7 +97,10 @@ const App = () => {
   if (loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator color={COLORS.custom} />
+        <Loading
+          uri={require('./src/assets/98092-loading.json')}
+          title="Đang tải dữ liệu..."
+        />
       </View>
     );
   }
