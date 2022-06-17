@@ -34,7 +34,6 @@ export default ModalOrderDetails = () => {
             <ScrollView showsVerticalScrollIndicator={false}>
               {arrProduct.map((item, index) => (
                 <View key={index}>
-                  {console.log(JSON.stringify(item, null, 2))}
                   <OrderDetail item={item} />
                 </View>
               ))}

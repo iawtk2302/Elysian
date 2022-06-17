@@ -5,9 +5,10 @@ import styles from '../styles/View.OrderDetail';
 import BtnCancel from './BtnCancel';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
-import {addProduct} from '../redux/orderSlice';
+import {addProduct, removeAllProduct} from '../redux/orderSlice';
 import fireStore from '@react-native-firebase/firestore';
 import {useTranslation} from 'react-i18next';
+import {removeVoucher} from '../redux/voucherSlice';
 
 const BtnActionOrder = ({state, orderID}) => {
   return (
@@ -90,8 +91,13 @@ const BtnReOrder = ({orderID}) => {
     result += parseInt(item.products.price) * parseInt(item.amount);
     return result;
   }
+  function resetCart() {
+    dispatch(removeAllProduct());
+    dispatch(removeVoucher());
+  }
 
   const nav = () => {
+    resetCart();
     loadProducts();
     showMessage({
       message: t('Order Success'),

@@ -32,7 +32,6 @@ const BtnCompletePayment = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const note = useSelector(selectNote);
-
   const decreasePrice = calculatorDiscount();
   const totalBeforeCheckout = calculatorTotal();
 
