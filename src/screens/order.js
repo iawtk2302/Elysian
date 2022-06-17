@@ -17,24 +17,24 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import Loading from '../components/Loading';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 const Order = () => {
   const [loading, setLoading] = useState(true);
   const [section, setSection] = useState([]);
   const [topping, setTopping] = useState([]);
   const [size, setSize] = useState([]);
-  const [dataAll,setDataAll]=useState([])
+  const [dataAll, setDataAll] = useState([]);
   const navigation = useNavigation();
   const orders = useSelector(state => state.orders.list);
-  const {t}=useTranslation();
+  const {t} = useTranslation();
   const [dataCategory, setDataCategory] = useState([
     {
-      title: t("Trà sữa"),
+      title: t('Trà sữa'),
       index: 0,
       select: 'true',
     },
     {
-      title: t("Trà"),
+      title: t('Trà'),
       index: 1,
       select: 'false',
     },
@@ -106,7 +106,7 @@ const Order = () => {
     const dataCF = [];
     const dataNE = [];
     const dataSC = [];
-    const temp=[]
+    const temp = [];
     await firestore()
       .collection('Products')
       .get()
@@ -129,10 +129,10 @@ const Order = () => {
           } else if (documentSnapshot.data().type === 'Nước ép') {
             dataNE.push(documentSnapshot.data());
           }
-          temp.push(documentSnapshot.data())
+          temp.push(documentSnapshot.data());
         });
       });
-    setDataAll(temp)
+    setDataAll(temp);
     const tempSection = [
       {
         title: t('Trà sữa'),
@@ -181,13 +181,6 @@ const Order = () => {
   useEffect(() => {
     addSection();
   }, []);
-  // if (loading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <ActivityIndicator color={COLORS.custom} />
-  //     </View>
-  //   );
-  // }
   const scroll = index => {
     if (index == 0) {
       sectionRef.current.scrollToLocation({
@@ -208,7 +201,7 @@ const Order = () => {
   return (
     <>
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <HeaderOrder data={dataAll} topping={topping} size={size}/>
+        <HeaderOrder data={dataAll} topping={topping} size={size} />
         <FlatList
           style={{
             height: 50,
@@ -267,7 +260,7 @@ const Order = () => {
       {loading && (
         <Loading
           uri={require('../assets/94829-loading.json')}
-          title="Đang tải dữ liệu..."
+          title={t('Loading...')}
         />
       )}
     </>

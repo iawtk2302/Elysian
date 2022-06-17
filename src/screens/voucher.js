@@ -3,7 +3,12 @@ import React, {useState, useEffect} from 'react';
 import ItemVoucher from '../components/itemVoucher';
 import firestore from '@react-native-firebase/firestore';
 import {useRoute} from '@react-navigation/native';
+<<<<<<< HEAD
+=======
+import {useTranslation} from 'react-i18next';
+>>>>>>> main
 const Voucher = () => {
+  const {t} = useTranslation();
   const [dataVoucher, setDataVoucher] = useState([]);
   const convertTime = time => {
     const newTime = new Date(time * 1000);
@@ -44,6 +49,7 @@ const Voucher = () => {
             }
           }
         });
+<<<<<<< HEAD
         let temp;
         if (tempExpired.length !== 0) {
           temp = [
@@ -64,6 +70,18 @@ const Voucher = () => {
             },
           ]
         }
+=======
+        const temp = [
+          {
+            title: t('Expiration soon'),
+            data: tempExpired,
+          },
+          {
+            title: t('Available to use'),
+            data: tempReady,
+          },
+        ];
+>>>>>>> main
         // console.log(temp)
         setDataVoucher(temp);
       });

@@ -19,7 +19,6 @@ export default StyleSheet.create({
     color: 'black',
   },
   btnContainer: {
-    width: 80,
     backgroundColor: COLORS.backgroundWeak,
     alignItems: 'center',
     borderRadius: 10,

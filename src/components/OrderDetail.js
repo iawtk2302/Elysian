@@ -4,6 +4,7 @@ import styles from '../styles/View.OrderDetail';
 import {Divider} from 'react-native-paper';
 import FormatNumber from '../utils/FormatNumber';
 import totalTopping from '../utils/totalTopping';
+import {useTranslation} from 'react-i18next';
 
 const OrderDetail = ({item}) => {
   return (
@@ -42,6 +43,7 @@ const OrderDetail = ({item}) => {
 };
 
 const Detail = ({data}) => {
+  const {t} = useTranslation();
   return (
     <View
       style={{
@@ -50,20 +52,21 @@ const Detail = ({data}) => {
       }}>
       <Text style={{color: 'black', fontSize: 16}}>{data.products.name}</Text>
       <Text>
-        Kích cỡ:{' '}
+        {t('Size')}:{' '}
         <Text style={{color: 'black', fontWeight: 'bold'}}>
           {data.size.name}
         </Text>
       </Text>
       <View style={styles.layout}>
         <Text>
-          Số lượng:{' '}
+          {t('Quantity')}:{' '}
           <Text style={{color: 'black', fontWeight: 'bold'}}>
             {data.amount}
           </Text>
         </Text>
         <Text>
-          Giá: <FormatNumber number={+data.products.price + +data.size.price} />
+          {t('Price')}:{' '}
+          <FormatNumber number={+data.products.price + +data.size.price} />
         </Text>
       </View>
     </View>
@@ -71,6 +74,7 @@ const Detail = ({data}) => {
 };
 
 const ShowTopping = ({topping}) => {
+  const {t} = useTranslation();
   return (
     <View>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -86,7 +90,7 @@ const ShowTopping = ({topping}) => {
           </Text>
         </View>
         <Text style={{alignSelf: 'center'}}>
-          Giá: <FormatNumber number={topping.price} />
+          {t('Price')}: <FormatNumber number={topping.price} />
         </Text>
       </View>
     </View>
@@ -94,11 +98,12 @@ const ShowTopping = ({topping}) => {
 };
 
 const PennyTotal = ({amount, price, priceTopping}) => {
+  const {t} = useTranslation();
   return (
     <View style={styles.layout}>
       <Text>x{amount}</Text>
       <Text>
-        Thành tiền:{' '}
+        {t('Merchandise Subtotal')}:{' '}
         <FormatNumber
           number={parseInt(amount) * parseInt(price) + priceTopping}
         />

@@ -10,16 +10,19 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {calculatorDiscount, calculatorTotal} from '../utils/solveVoucher';
 import COLORS from '../common/Color';
+import {useTranslation} from 'react-i18next';
+
 const CalculatePayment = () => {
+  const {t} = useTranslation();
   const total = calculatorTotal();
   return (
     <View style={[styles.aroundContainer]}>
       <Text style={{fontWeight: '700', color: 'black', fontSize: 14}}>
-        Tổng cộng
+        {t('Total')}
       </Text>
-      <Total title="Thành tiền: " content={total} />
+      <Total title={t('Merchandise Subtotal')} content={total} />
       <Discount />
-      <Ship/>
+      <Ship />
       <Payment />
     </View>
   );
@@ -50,6 +53,7 @@ const Discount = () => {
 };
 
 const DiscountText = ({voucher}) => {
+  const {t} = useTranslation();
   const navigation = useNavigation();
   const discount = calculatorDiscount();
   if (voucher === '')
@@ -59,12 +63,7 @@ const DiscountText = ({voucher}) => {
         onPress={() => {
           navigation.navigate('Voucher');
         }}>
-        {/* {voucher === '' ? (
-          <DiscountText content="Chọn Voucher" />
-        ) : (
-          <DiscountText content={voucher.title} />
-        )} */}
-        <Text style={{color: COLORS.custom}}>Chọn voucher</Text>
+        <Text style={{color: COLORS.custom}}>{t('Select voucher')}</Text>
         <Ionicons name="chevron-forward-outline" size={20} />
       </TouchableOpacity>
     );
@@ -76,7 +75,7 @@ const DiscountText = ({voucher}) => {
           navigation.navigate('Voucher');
         }}>
         <View>
-          <Text style={{color: COLORS.custom}}>Chọn voucher</Text>
+          <Text style={{color: COLORS.custom}}>{t('Select voucher')}</Text>
           <Text>{voucher.title}</Text>
         </View>
         <NumberFormat
@@ -92,41 +91,41 @@ const DiscountText = ({voucher}) => {
     );
 };
 const Ship = () => {
+  const {t} = useTranslation();
   return (
     <View>
       <View style={[styles.totalItemContainer, {marginBottom: 10}]}>
-      <Text>
-        Phí vận chuyển
-      </Text>
-      <NumberFormat
-        value={30000}
-        displayType="text"
-        thousandSeparator
-        suffix="đ"
-        renderText={value => (
-          <Text style={{color: 'black'}}>{value}</Text>
-        )}
-      />
-    </View>
-    <View>
+        <Text>{t('Shipping Subtotal')}</Text>
+        <NumberFormat
+          value={30000}
+          displayType="text"
+          thousandSeparator
+          suffix="đ"
+          renderText={value => <Text style={{color: 'black'}}>{value}</Text>}
+        />
+      </View>
+      <View>
         <Divider />
       </View>
     </View>
   );
 };
 const Payment = () => {
+  const {t} = useTranslation();
   return (
     <View style={[styles.totalItemContainer, {marginBottom: 0}]}>
-      <Text style={{fontWeight: '600', color: 'black'}}>
-        Số tiền thanh toán
+      <Text style={{fontWeight: '600', color: 'black', fontSize: 17}}>
+        {t('Total Payment')}
       </Text>
       <NumberFormat
-        value={parseInt(calculatorTotalPrice())}
+        value={calculatorTotalPrice()}
         displayType="text"
         thousandSeparator
         suffix="đ"
         renderText={value => (
-          <Text style={{color: 'black', fontWeight: '600'}}>{value}</Text>
+          <Text style={{color: 'black', fontWeight: '600', fontSize: 17}}>
+            {value}
+          </Text>
         )}
       />
     </View>

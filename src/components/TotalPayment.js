@@ -5,6 +5,7 @@ import BtnCompletePayment from './BtnCompletePayment';
 import NumberFormat from 'react-number-format';
 import {useSelector} from 'react-redux';
 import calculatorTotalPrice from '../utils/calculatorTotalPrice';
+import {useTranslation} from 'react-i18next';
 
 const TotalPayment = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -23,9 +24,13 @@ const TotalPayment = () => {
 };
 
 const TotalPrice = ({total, amount}) => {
+  const {t} = useTranslation();
   return (
     <View>
-      <Text style={{color: 'white'}}>Giao hàng 🌟 {amount} sản phẩm</Text>
+      <Text style={{color: 'white'}}>
+        {t('DeliveryPayment')} 🌟 {amount}{' '}
+        {amount == 1 ? t('Item') : t('Items')}
+      </Text>
       <Text style={{fontWeight: '600', color: 'white'}}>
         <NumberFormat
           value={parseInt(total)}

@@ -1,26 +1,15 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  SafeAreaView,
-  TouchableHighlight,
-} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
+import {useTranslation} from 'react-i18next';
 
 const ItemHistory = ({iitem, setRerender}) => {
-  // console.log(item)
-  // console.log(iitem)
-  // console.log(iitem.id);
-  // const [item, setItem] = useState(iitem);
-  // console.log(id)
-  // const [newItem, setNewItem] = useState()
+  const {t} = useTranslation();
   const [colorStatus, setColorStatus] = useState(
     iitem.status === 'delivery'
       ? '#4FC4F5'
-      : iitem.status == 'complete'
+      : iitem.status == 'completed'
       ? 'green'
       : 'red',
   );
@@ -40,17 +29,6 @@ const ItemHistory = ({iitem, setRerender}) => {
       date.getSeconds()
     );
   };
-  // firestore().collection('Orders').doc(id).onSnapshot(onResult, onError);
-  // function onError(error) {
-  //   console.error(error);
-  // }
-  // const [rerender, setRerender] = useState(false)
-  // function onResult(QuerySnapshot) {
-  //   console.log(QuerySnapshot.data());
-  //   // console.log('first')
-  //   // setRerender(QuerySnapshot.data())
-  //   setNewItem(QuerySnapshot.data())
-  // }
 
   useEffect(() => {
     if (iitem.id !== undefined) {
@@ -59,17 +37,16 @@ const ItemHistory = ({iitem, setRerender}) => {
         .doc(iitem.id)
         .onSnapshot(documentSnapshot => {
           console.log('User data: ', documentSnapshot.data());
-          // setItem(documentSnapshot.data());
-          setRerender(true)
+          setRerender(true);
         });
       setColorStatus(
         iitem.status === 'delivery'
           ? '#4FC4F5'
-          : iitem.status == 'complete'
+          : iitem.status == 'completed'
           ? 'green'
           : 'red',
       );
-      return () => subscriber()
+      return () => subscriber();
     }
   }, []);
 
@@ -128,8 +105,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 120,
-    // borderWidth: 1,
-    // borderColor: 'black',
     alignItems: 'center',
     marginBottom: 10,
     borderRadius: 20,
@@ -142,11 +117,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 25,
     color: 'black',
-    // textTransform: 'uppercase',
   },
   price: {
     alignItems: 'flex-end',
-    // marginRight: 15,
     marginLeft: 20,
   },
 });

@@ -34,7 +34,10 @@ const orderDetailSlide = createSlice({
       state.products = action.payload;
     },
     addWaitingOrder(state, action) {
-      state.waitingOrders = [...state.waitingOrders, action.payload];
+      state.waitingOrders = action.payload;
+      // state.waitingOrders?.sort((a, b) => {
+      //   return a?.createTime - b?.createTime;
+      // });
     },
     resetWaitingOrder(state) {
       state.waitingOrders = [];
@@ -46,19 +49,19 @@ const orderDetailSlide = createSlice({
       state.waitingOrders.splice(prev, 1);
     },
     addShippingOrder(state, action) {
-      state.shippingOrders = [...state.shippingOrders, action.payload];
+      state.shippingOrders = action.payload;
     },
     resetShippingOrder(state) {
       state.shippingOrders = [];
     },
     addCancelledOrder(state, action) {
-      state.cancelledOrders = [...state.cancelledOrders, action.payload];
+      state.cancelledOrders = action.payload;
     },
     resetCancelledOrder(state) {
       state.cancelledOrders = [];
     },
     addCompletedOrder(state, action) {
-      state.completedOrders = [...state.completedOrders, action.payload];
+      state.completedOrders = action.payload;
     },
     resetCompletedOrder(state) {
       state.completedOrders = [];

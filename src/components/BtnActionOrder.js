@@ -7,6 +7,7 @@ import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
 import {addProduct} from '../redux/orderSlice';
 import fireStore from '@react-native-firebase/firestore';
+import {useTranslation} from 'react-i18next';
 
 const BtnActionOrder = ({state, orderID}) => {
   return (
@@ -31,6 +32,7 @@ const BtnActionOrder = ({state, orderID}) => {
 };
 
 const BtnReOrder = ({orderID}) => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   let arrDetailOrder = [];
 
@@ -92,8 +94,8 @@ const BtnReOrder = ({orderID}) => {
   const nav = () => {
     loadProducts();
     showMessage({
-      message: 'Đặt hàng thành công',
-      description: 'Đến giỏ hàng để xem chi tiết',
+      message: t('Order Success'),
+      description: t('Go to cart to view details'),
       type: 'success',
     });
   };
@@ -102,15 +104,16 @@ const BtnReOrder = ({orderID}) => {
     <TouchableOpacity
       onPress={nav}
       style={{backgroundColor: COLORS.custom, borderRadius: 10}}>
-      <Text style={styles.textAction}>Đặt hàng</Text>
+      <Text style={styles.textAction}>{t('Re-order')}</Text>
     </TouchableOpacity>
   );
 };
 const BtnContact = () => {
+  const {t} = useTranslation();
   return (
     <TouchableOpacity
       style={{backgroundColor: COLORS.custom, borderRadius: 10}}>
-      <Text style={styles.textAction}>Liên hệ</Text>
+      <Text style={styles.textAction}>{t('Contact')}</Text>
     </TouchableOpacity>
   );
 };
@@ -126,13 +129,14 @@ const changeColor = ({state}) => {
 };
 
 const changeState = ({state}) => {
+  const {t} = useTranslation();
   return state === 'waiting'
-    ? 'Chờ xử lý'
+    ? t('Waiting')
     : state === 'shipping'
-    ? 'Đang giao'
+    ? t('Shipping')
     : state === 'cancelled'
-    ? 'Đã hủy'
-    : 'Hoàn thành';
+    ? t('Cancelled')
+    : t('Completed');
 };
 
 export default BtnActionOrder;

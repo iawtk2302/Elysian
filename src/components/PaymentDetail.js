@@ -6,12 +6,12 @@ import COLORS from '../common/Color';
 import {useNavigation} from '@react-navigation/native';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeProduct} from '../redux/orderSlice';
 import {showMessage} from 'react-native-flash-message';
 import {removeVoucher} from '../redux/voucherSlice';
 import Note from './Note';
+import {useTranslation} from 'react-i18next';
 
 const PaymentDetail = () => {
   const arrProduct = useSelector(state => state.orders.list);
@@ -39,6 +39,7 @@ const PaymentDetail = () => {
 };
 
 const Options = ({data, rowMap}) => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const arrProduct = useSelector(state => state.orders.list);
@@ -56,7 +57,7 @@ const Options = ({data, rowMap}) => {
       navigation.goBack();
     }
     showMessage({
-      message: `Đã xóa ${data.item.count} ${data.item.product.name}`,
+      message: `${t('Deleted')} ${data.item.count} ${data.item.product.name}`,
       type: 'warning',
     });
   };
@@ -66,16 +67,25 @@ const Options = ({data, rowMap}) => {
         onPress={() => deleteItem(data, rowMap)}
         style={[styles.optionContainer, {backgroundColor: COLORS.custom}]}>
         <View>
-          <Ionicons name="trash" size={20} style={{color: 'white'}} />
-          <Text style={styles.optionsText}>Xóa</Text>
+          <Ionicons
+            name="trash"
+            size={20}
+            style={{color: 'white', alignSelf: 'center'}}
+          />
+          <Text style={styles.optionsText}>{t('Delete')}</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity
+        onPress={() => closeRow(rowMap, data.item.key)}
         style={[styles.optionContainer, {backgroundColor: 'black'}]}>
         <View>
-          <FontAwesome name="pencil-alt" size={20} style={{color: 'white'}} />
-          <Text style={styles.optionsText}>Sửa</Text>
+          <Ionicons
+            name="close"
+            size={25}
+            style={{color: 'white', alignSelf: 'center'}}
+          />
+          <Text style={styles.optionsText}>{t('Close')}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -84,15 +94,19 @@ const Options = ({data, rowMap}) => {
 
 const Header = () => {
   const Navigation = useNavigation();
+  const {t} = useTranslation();
   const navProduct = () => {
     Navigation.goBack();
   };
   return (
     <View style={styles.container}>
-      <Text>Sản phẩm đã chọn</Text>
+      <Text>{t('Selected product')}</Text>
       <TouchableOpacity onPress={navProduct}>
         <View style={styles.btnContainer}>
-          <Text style={{color: COLORS.custom}}>+ Thêm</Text>
+          <Text
+            style={{color: COLORS.custom, paddingStart: 10, paddingEnd: 10}}>
+            + {t('Add more')}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>

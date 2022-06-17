@@ -16,6 +16,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {googleLogin, signIn, onFacebookButtonPress} from '../utils/Auth';
 import auth from '@react-native-firebase/auth';
 import Vertify from './Vertify';
+import {useTranslation} from 'react-i18next';
 const SignIn = ({navigation}) => {
   GoogleSignin.configure({
     webClientId:
@@ -24,13 +25,18 @@ const SignIn = ({navigation}) => {
   const [confirm, setConfirm] = useState(null);
   const [phone, setPhone] = useState('');
   const [isPress, setIsPress] = useState(false);
+  const {t} = useTranslation();
   async function signInWithPhoneNumber(phoneNumber) {
+<<<<<<< HEAD
     const format = /[!@#$%^&*()_\-=\[\]{};':"\\|,.<>\/?]+/;
     const formatphone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
     if(format.test(phoneNumber) || !formatphone.test(phoneNumber)){
       ToastAndroid.show("Số điện thoại chưa đúng", 3)
       return;
     }
+=======
+    console.log('first');
+>>>>>>> main
     try {
       if (phoneNumber.charAt(0) === '0') {
         let a = phoneNumber.substring(1);
@@ -62,23 +68,21 @@ const SignIn = ({navigation}) => {
             />
           </View>
           <View style={styles.footer}>
-            <Text style={{alignSelf: 'center'}}>Chào mừng đến với Elysian</Text>
+            <Text style={{alignSelf: 'center'}}>{t('Welcome to Elysian')}</Text>
             <Text style={styles.name}>ELYSIAN</Text>
             <Input
               keyboardType="numeric"
-              placeholder="Nhập số điện thoai"
+              placeholder={t('Enter your phone number')}
               onChangeText={text => setPhone(text)}
             />
             <TouchableOpacity
               style={isPress ? styles.btnLogin : styles.btnLogin1}
               disabled={!isPress}
               onPress={() => signInWithPhoneNumber(phone)}>
-              <Text style={styles.txtSignin}>Đăng nhập</Text>
+              <Text style={styles.txtSignin}>{t('Log in')}</Text>
             </TouchableOpacity>
 
-            <Text style={styles.OtherSignIn}>- Hoặc -</Text>
-
-            {/* Button Sign in with google */}
+            <Text style={styles.OtherSignIn}>- {t('Or')} -</Text>
             <TouchableOpacity
               style={styles.gg}
               activeOpacity={0.7}
@@ -91,7 +95,7 @@ const SignIn = ({navigation}) => {
               />
               <View style={styles.txtgg}>
                 <Text style={{color: '#000', fontSize: 16}}>
-                  Tiếp tục bằng google
+                  {t('Continue with')} google
                 </Text>
               </View>
             </TouchableOpacity>
@@ -106,7 +110,7 @@ const SignIn = ({navigation}) => {
               />
               <View style={styles.txtgg}>
                 <Text style={{color: '#000', fontSize: 16}}>
-                  Tiếp tục bằng facebook
+                  {t('Continue with')} facebook
                 </Text>
               </View>
             </TouchableOpacity>
