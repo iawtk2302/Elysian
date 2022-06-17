@@ -18,27 +18,6 @@ import fireauth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useTranslation} from 'react-i18next';
 const InfoUser = () => {
-<<<<<<< HEAD
-    const navigation=useNavigation()
-    const router=useRoute()
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [image, setImage] = useState()
-    const [modalVisible, setModalVisible] = useState(false)
-    const [checkName,setCheckName]=useState(true)
-    const [checkEmail,setCheckEmail]=useState(true)
-    const [isChange,setIsChange]=useState(false)
-    const {t}=useTranslation()
-    const openCamera = () => {
-        ImagePicker.openCamera({
-            cropping: true,
-            cropperCircleOverlay: true
-        }).then(image => {
-            setImage(image.path)
-            setModalVisible(false)
-        }).catch((e) => { }
-        );
-=======
   const navigation = useNavigation();
   const router = useRoute();
   const [name, setName] = useState();
@@ -137,7 +116,6 @@ const InfoUser = () => {
       } else {
         setIsChange(false);
       }
->>>>>>> cc4165b5ca405ad2431e25382255a4854f94282c
     }
   }, [name, email, image]);
   const removeAscent = str => {
