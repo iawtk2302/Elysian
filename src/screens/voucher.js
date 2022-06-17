@@ -46,16 +46,27 @@ const Voucher = () => {
             }
           }
         });
-        const temp = [
-          {
-            title: t('Expiration soon'),
-            data: tempExpired,
-          },
-          {
-            title: t('Available to use'),
-            data: tempReady,
-          },
-        ];
+      let temp;
+        if(tempExpired.length <= 0){
+          temp = [
+            {
+              title: t('Available to use'),
+              data: tempReady,
+            },
+          ];
+        }
+        else {
+          temp = [
+            {
+              title: t('Expiration soon'),
+              data: tempExpired,
+            },
+            {
+              title: t('Available to use'),
+              data: tempReady,
+            },
+          ];
+        }
         // console.log(temp)
         setDataVoucher(temp);
       });
