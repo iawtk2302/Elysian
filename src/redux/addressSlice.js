@@ -37,6 +37,17 @@ const addressSlice = createSlice({
     setTimePicker(state, action) {
       state.timePicker = action.payload;
     },
+    clear(){
+      return {
+        value: '',
+        selected: 0,
+        checked: false,
+        modal: false,
+        completed: false,
+        modalTime: false,
+        timePicker: null,
+      }
+    }
   },
 });
 
@@ -48,6 +59,7 @@ export const {
   setCompleted,
   setModalTime,
   setTimePicker,
+  clear
 } = addressSlice.actions;
 export const selectedAddress = state => state.address.value;
 export const selectedID = state => state.address.selected;

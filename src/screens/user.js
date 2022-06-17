@@ -18,6 +18,9 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeLang} from '../redux/langSlice';
 import { useTranslation } from 'react-i18next';
+import { removeAllProduct } from '../redux/orderSlice';
+import { removeVoucher } from '../redux/voucherSlice';
+import { clear } from '../redux/addressSlice';
 const User = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -48,6 +51,12 @@ const User = () => {
   const dispatch = useDispatch();
   const changeLanguage=(lang)=>{
     dispatch(changeLang(lang))
+  }
+  const logout=()=>{
+    signOut()
+    dispatch(removeAllProduct())
+    dispatch(removeVoucher())
+    dispatch(clear())
   }
   useEffect(() => {
     firestore()
@@ -295,7 +304,7 @@ const User = () => {
           marginTop: 10,
         }}
         activeOpacity={1}
-        onPress={signOut}>
+        onPress={logout}>
         <Icon name="log-out-outline" size={24} color="black" />
         <Text style={{marginLeft: 10, color: 'black'}}>{t('Thoát ứng dụng')}</Text>
       </TouchableOpacity>

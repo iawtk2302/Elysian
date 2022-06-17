@@ -112,7 +112,7 @@
         "Default": "Mặc định",
         "Time": "Thời gian",
         "Voucher": "Khuyến mãi",
-        "Repair address" : "Sủa địa chỉ",
+        "Repair address" : "Sửa địa chỉ",
         "Support": "Hỗ trợ",
         "Enter your phone number": "Nhập số điện thoại",
         "Update": "Cập nhật",
@@ -146,7 +146,7 @@
         "Add" :"Thêm",
         "to cart successfully" : "vào giỏ hàng thành công",
         "Deteled": "Đã xóa",
-        "Use voucher successfully!": "Sử dụng voucher thành công!",
+        "Use voucher successfully!": "Sử dụng mã giảm giá thành công!",
         "You are not eligible to use!": "Bạn chưa đủ điều kiện để sử dụng",
         "Expires in": "Hết hạn trong ",
         "hours": " giờ",
@@ -160,7 +160,9 @@
         "Set address to default": "Đặt làm mặc định",
         "Complete": "Hoàn thành",
         "Phone number is not invalid": "Số điện thoại không hợp lệ",
-        "Full name is not valid": "Họ và tên không hợp lệ"
+        "Full name is not valid": "Họ và tên không hợp lệ",
+        "Decrease price": "Giảm giá",
+        "New address": "Địa chỉ mới"
 
 
     }
