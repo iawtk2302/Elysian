@@ -15,7 +15,7 @@ const InfoUser = () => {
     const [name, setName] = useState()
     const [email, setEmail] = useState()
     const [image, setImage] = useState()
-    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false)
     const [checkName,setCheckName]=useState(true)
     const [checkEmail,setCheckEmail]=useState(true)
     const [isChange,setIsChange]=useState(false)
